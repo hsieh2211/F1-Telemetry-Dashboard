@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 st.set_page_config(page_title="F1 數據儀表板", page_icon="🏎️")
-st.title('🏁 F1 賽道戰術數據儀表板')
+st.title('🏁 Fast1ap：F1 賽道戰術數據儀表板')
 
 # 1. 建立快取
 if not os.path.exists('f1_cache'):
