@@ -4,26 +4,32 @@ import fastf1.plotting
 import matplotlib.pyplot as plt
 import os
 
-# 1. 網頁頁面配置
-st.set_page_config(page_title="Fast1ap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
-st.title('🏁 Fast1ap Pro: 2026 賽道戰術數據儀表板')
+# 1. 專業車手全名映射表
+DRIVER_NAMES = {
+    'VER': 'Max Verstappen (Red Bull)',
+    'RUS': 'George Russell (Mercedes)',
+    'ANT': 'Kimi Antonelli (Mercedes)',
+    'HAM': 'Lewis Hamilton (Ferrari)',
+    'NOR': 'Lando Norris (McLaren)',
+    'PIA': 'Oscar Piastri (McLaren)',
+    'LEC': 'Charles Leclerc (Ferrari)',
+    'SAI': 'Carlos Sainz (Williams)',
+    'ALO': 'Fernando Alonso (Aston Martin)'
+}
 
-# 2. 快取設定
-if not os.path.exists('f1_cache'): os.makedirs('f1_cache')
-fastf1.Cache.enable_cache('f1_cache')
+# 2. 網頁頁面配置
+st.set_page_config(page_title="Fast1ap Pro - 2026 F1 Analytics", page_icon="🏎️", layout="wide")
+st.title('🏁 Fast1ap Pro: 2026 賽道戰術數據儀表板')
 
 # 3. 側邊欄與賽事選擇
 st.sidebar.header("戰術控制中心")
 
-# 修正：新手教學區 (更新正確的 Delta 邏輯)
-with st.sidebar.expander("❓ 如何判讀數據？(新手指南)"):
-    st.write("**Speed (時速)**: 曲線越高代表該路段尾速越快。")
-    st.write("**Delta (時間差)**: 曲線往上代表「基準車手」拉開差距；往下代表「對手」正在追趕。")
-    st.write("**Brake (煞車)**: 觀察車手入彎時踩下煞車的精確時機。")
-
 type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
 selected_type_label = st.sidebar.selectbox('1. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
+
+if not os.path.exists('f1_cache'): os.makedirs('f1_cache')
+fastf1.Cache.enable_cache('f1_cache')
 
 @st.cache_data
 def get_session_data(s_type):
@@ -34,24 +40,21 @@ def get_session_data(s_type):
 with st.spinner('正在分析數據...'):
     session = get_session_data(selected_type_code)
 
-# ==========================================
-# 🌟 重大修復：動態生成車手全名與車隊清單
-# 不再手寫字典，直接從官方 API 的 results 抓取
-# ==========================================
+# 動態生成車手清單
 driver_map = {}
 for index, row in session.results.iterrows():
-    # 組合出例如： "George Russell (Mercedes)"
     driver_map[row['Abbreviation']] = f"{row['FullName']} ({row['TeamName']})"
 
 driver_list = session.results['Abbreviation'].tolist()
-# UI 選單使用動態字典
 driver1 = st.sidebar.selectbox('2. 基準車手 (A)', driver_list, index=0, 
                                format_func=lambda x: f"{x} - {driver_map.get(x, 'Unknown')}")
 driver2 = st.sidebar.selectbox('3. 對比車手 (B)', driver_list, index=1, 
                                format_func=lambda x: f"{x} - {driver_map.get(x, 'Unknown')}")
 
-# 4. 數據分頁
-tab1, tab2 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數據摘要 (Summary)"])
+# ==========================================
+# 🌟 重大升級：加入第三個百科分頁
+# ==========================================
+tab1, tab2, tab3 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數據摘要 (Summary)", "📖 新手教學百科 (Guide)"])
 
 with tab1:
     try:
@@ -62,7 +65,6 @@ with tab1:
         fig, (ax_s, ax_d, ax_b) = plt.subplots(3, 1, figsize=(12, 10), height_ratios=[3, 2, 1], sharex=True)
         plt.style.use('dark_background')
 
-        # 第一層：時速
         ax_s.set_title(f"2026 Australia GP: {driver1} vs {driver2} ({selected_type_code})", fontsize=14)
         ax_s.plot(ref_tel['Distance'], ref_tel['Speed'], color='cyan', label=f"{driver1} (Base)")
         ax_s.plot(comp_tel['Distance'], comp_tel['Speed'], color='magenta', linestyle='--', label=f"{driver2} (Comp)")
@@ -70,19 +72,13 @@ with tab1:
         ax_s.legend(loc='lower right')
         ax_s.grid(True, linestyle=':', alpha=0.3)
 
-        # 第二層：Delta Time (🌟 重大修復：正負號與文字標籤)
         ax_d.plot(ref_tel['Distance'], delta_time, color='white', linewidth=1)
         ax_d.axhline(0, color='grey', linestyle='--')
-        
-        # 修正 Y 軸標籤：正數代表基準車手(driver1)快，負數代表對比車手(driver2)快
         ax_d.set_ylabel(f'Delta (s)\n(+) {driver1} Faster\n(-) {driver2} Faster')
-        
-        # 填色維持：正數區塊(基準車手贏)我們改用紅色或自己喜歡的顏色，這裡維持紅綠對比
         ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time > 0), color='red', alpha=0.3)
         ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time < 0), color='green', alpha=0.3)
         ax_d.grid(True, linestyle=':', alpha=0.3)
 
-        # 第三層：煞車
         ax_b.plot(ref_tel['Distance'], ref_tel['Brake'], color='cyan')
         ax_b.plot(comp_tel['Distance'], comp_tel['Brake'], color='magenta', alpha=0.5)
         ax_b.set_ylabel('Brake')
@@ -91,17 +87,12 @@ with tab1:
 
         st.pyplot(fig)
         
-        # 🌟 修正：最底下的中文防呆面板
         st.info(f"""
-        **💡 Delta Time (時間差) 正確判讀指南：**
-        這張圖表計算的是「{driver2} 減去 {driver1} 的時間差」。
-        * 🟥 **紅色區塊 (曲線向上 / 正數)**：代表對手花費更多時間。這表示 **基準車手 {driver1} 比較快**，正在無情拉開差距！
-        * 🟩 **綠色區塊 (曲線向下 / 負數)**：代表對手花費較少時間。這表示 **對手 {driver2} 比較快**，正在縮小差距。
+        **💡 Delta Time (時間差) 判讀指南：** 🟥 **紅色區塊 (正數)**：{driver1} 較快，正在拉開差距。 | 🟩 **綠色區塊 (負數)**：{driver2} 較快，正在縮小差距。
         """)
 
     except Exception as e:
         st.error("此組合數據暫時無法載入。")
-        st.write(e)
 
 with tab2:
     st.subheader("戰情摘要")
@@ -116,3 +107,30 @@ with tab2:
         colB.write(f"⏱️ **{driver2}** 最快圈: `{str(l2.LapTime)[10:19]}`")
     except:
         pass
+
+# ==========================================
+# 🌟 實作百科內容 (使用 st.expander 做出點擊展開的互動感)
+# ==========================================
+with tab3:
+    st.header("🏎️ F1 2026 戰術數據全解析：新手友善指南")
+    st.markdown("歡迎來到 Fast1ap 數據中心！如果你是第一次看 F1 的數據圖，請參考以下的圖表解密。")
+    
+    st.subheader("📊 1. 三層圖表解碼")
+    with st.expander("👉 Speed (時速)：直線有多快？"):
+        st.write("最上層的圖表顯示賽車在賽道上的瞬間時速。**曲線的高點通常出現在大直線的末端**，這時賽車可能突破 330 km/h。當曲線急遽下降，代表賽車正在重踩煞車進入彎道。")
+        
+    with st.expander("👉 Delta Time (時間差)：誰在贏？ (最關鍵)"):
+        st.write("中間的圖表是工程師最看重的數據。它將兩台車在賽道同一位置的時間相減：")
+        st.write("- **紅色向上隆起**：代表基準車手表現更好，正在**無情拉開距離**。")
+        st.write("- **綠色向下凹陷**：代表對手在這個路段跑得更快，正在**努力追趕**。")
+        
+    with st.expander("👉 Brake (煞車)：膽量對決"):
+        st.write("最下方的圖表顯示車手何時踩下煞車。你可以藉此觀察兩人的**防守風格**。越晚踩煞車（線越晚跳起來）代表車手的侵略性越高，但也越容易錯過彎道頂點。")
+
+    st.subheader("🏎️ 2. 關於 2026 新規範 (專題技術背景)")
+    with st.expander("👉 為什麼 2026 數據很重要？"):
+        st.write("2026 年 F1 迎來了巨大的規則改動，包含了**主動式空力套件 (Active Aero)** 與 **50% 電力驅動的全新 ERS 系統**。這代表過去的數據都不再適用，每一場比賽的遙測分析都成為了各車隊重新摸索物理極限的關鍵。這也是本資工專題開發此系統的核心動機。")
+
+# 5. 頁尾
+st.markdown("---")
+st.caption("Data Source: FastF1 API | 中國科技大學資工系專題製作 - F1 Telemetry & Strategy Insights")
