@@ -120,71 +120,96 @@ with tab2:
     except:
         st.warning("無法獲取部分細節資料。")
 
-# ----------------- 分頁 3: 帥氣互動百科 (Custom HTML/JS) -----------------
+# ----------------- 分頁 3: 互動式教學百科  -----------------
 with tab3:
-    st.header("🏎️ F1 戰術數據全解析：互動式教學面板")
-    st.markdown("點擊下方卡片，探索各項遙測數據在 2026 賽季中的戰術意義。")
+    st.header("🏎️ F1 戰術數據全解析：高階遙測指南")
+    st.markdown("歡迎來到 Fast1ap 數據中心！點擊下方資料卡，解密 2026 賽車物理極限。")
     
-    encyclopedia_html = """
+    pro_html = """
     <!DOCTYPE html>
     <html>
     <head>
     <style>
-        body { background-color: #0E1117; color: white; font-family: sans-serif; margin: 0; padding: 10px; }
-        .card {
-            background-color: #1E1E1E;
-            border-left: 5px solid #00FFFF;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        body {
+            background-color: #0E1117; color: #E0E0E0; font-family: 'Segoe UI', sans-serif;
+            margin: 0; padding: 15px;
         }
-        .card:hover { transform: translateX(8px); background-color: #252525; border-left-color: #FF00FF; }
-        .title { font-size: 1.1em; font-weight: bold; margin: 0; display: flex; justify-content: space-between; }
-        .content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; color: #BBB; line-height: 1.5; }
-        .expanded .content { max-height: 200px; margin-top: 10px; border-top: 1px solid #333; padding-top: 10px; }
-        .green { color: #00FF00; font-weight: bold; }
-        .red { color: #FF4444; font-weight: bold; }
+        .card {
+            background: linear-gradient(145deg, #1a1c23, #121418);
+            border: 1px solid #2a2d35;
+            border-left: 6px solid #00FFFF;
+            border-radius: 10px; padding: 20px; margin-bottom: 20px;
+            cursor: pointer; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.15);
+            border-left-color: #FF00FF;
+            background: linear-gradient(145deg, #1e2129, #15171c);
+        }
+        .title { font-size: 1.25em; font-weight: 600; margin: 0; color: #FFF; display: flex; justify-content: space-between; align-items: center; }
+        .icon { transition: transform 0.4s ease; color: #888; font-size: 1.2em; }
+        .card.expanded .icon { transform: rotate(180deg); color: #FF00FF; }
+        .content {
+            max-height: 0; opacity: 0; transition: all 0.4s ease;
+            color: #B0B3B8; line-height: 1.7; font-size: 1.05em;
+        }
+        .card.expanded .content {
+            max-height: 800px; opacity: 1; margin-top: 15px; padding-top: 15px;
+            border-top: 1px dashed #3a3f4b;
+        }
+        .tag {
+            display: inline-block; padding: 3px 8px; border-radius: 4px;
+            font-size: 0.8em; font-weight: bold; margin-bottom: 12px; margin-right: 8px;
+        }
+        .tag-cyan { background: rgba(0, 255, 255, 0.1); color: #00FFFF; }
+        .tag-magenta { background: rgba(255, 0, 255, 0.1); color: #FF00FF; }
+        ul { margin-top: 10px; padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        .green { color: #00FFCC; font-weight: 600; }
+        .red { color: #FF4444; font-weight: 600; }
     </style>
     </head>
     <body>
         <div class="card" onclick="this.classList.toggle('expanded')">
-            <p class="title">⏱️ Delta Time (時間差) <span style="color:#555">▼</span></p>
+            <p class="title">⏱️ Delta Time (時間差與微型區段) <span class="icon">▼</span></p>
             <div class="content">
-                本系統的核心演算法。透過毫秒級插值對齊，計算兩車在同一位置的時間差。<br>
-                <span class="green">● 綠色向上</span>：基準車手 A 比較快。<br>
-                <span class="red">● 紅色向下</span>：對手 B 比較快。
+                <span class="tag tag-cyan">核心演算法</span><span class="tag tag-magenta">戰術價值：極高</span><br>
+                這是本系統最具價值的分析指標。我們不僅比較單圈總時間，而是透過空間插值對齊，將賽道切分成無數個「微區段」來相減。<br>
+                <ul>
+                    <li><span class="green">🟩 綠色曲線向上</span>：代表基準車手 (A) 在該路段花費的時間更少，正在無情拉開差距。</li>
+                    <li><span class="red">🟥 紅色曲線向下</span>：代表對比車手 (B) 擁有更佳的牽引力或尾速，正在追趕。</li>
+                </ul>
+                <b>💡 工程師視角：</b>Delta Time 曲線斜率越陡，代表兩車在該路段的性能差異越巨大（通常發生在大直線的 DRS 開啟瞬間）。
             </div>
         </div>
+
         <div class="card" onclick="this.classList.toggle('expanded')">
-            <p class="title">💨 Speed (時速分析) <span style="color:#555">▼</span></p>
+            <p class="title">💨 Speed (時速與空力效率) <span class="icon">▼</span></p>
             <div class="content">
-                觀察大直線底的「尾速」與彎道中心的「最低速」。<br>
-                2026 年新車導入主動式空力套件，直線阻力更小，尾速將比以往更高。
+                <span class="tag tag-cyan">物理指標</span><br>
+                遙測時速直接反映了賽車的引擎出力 (PU) 與空氣動力學效率 (Aero Efficiency)。<br>
+                <ul>
+                    <li><b>大直線尾速 (Top Speed)：</b>考驗 2026 世代 MGU-K 電池的電量分配策略。若曲線提早平緩，代表車輛發生「削波 (Clipping)」，電力已耗盡。</li>
+                    <li><b>彎中最低速 (Apex Speed)：</b>圖表上呈 V 字型的谷底。數值越高，代表賽車擁有越強大的機械抓地力與下壓力。</li>
+                </ul>
             </div>
         </div>
+
         <div class="card" onclick="this.classList.toggle('expanded')">
-            <p class="title">🛑 Brake (煞車時機) <span style="color:#555">▼</span></p>
+            <p class="title">🛑 Brake (煞車點與侵略性) <span class="icon">▼</span></p>
             <div class="content">
-                顯示車手踩下煞車的精確距離點。<br>
-                「晚煞車」是超車的關鍵，但也考驗車手對新世代動能回收系統 (ERS) 的操控。
-            </div>
-        </div>
-        <div class="card" onclick="this.classList.toggle('expanded')">
-            <p class="title">🔋 為什麼選擇 2026 賽季？ <span style="color:#555">▼</span></p>
-            <div class="content">
-                2026 是 F1 規則大改的一年，動力單元電力佔比提升至 50%。<br>
-                開發此儀表板旨在幫助工程師即時分析新規則下的車輛動態差異。
+                <span class="tag tag-cyan">駕駛風格</span><br>
+                這條曲線顯示了極速超過 300km/h 的賽車，在幾十公尺內急煞至 80km/h 的瞬間。<br>
+                <ul>
+                    <li><b>晚煞車 (Late Braking)：</b>在圖表上線條較晚跳起。這是最致命的超車武器，要求極高的輪胎溫度控制與膽識。</li>
+                    <li><b>循跡煞車 (Trail Braking)：</b>煞車並非只是 0 與 1。優秀的車手會帶著些微煞車入彎，以維持前輪重量壓迫，增加轉向抓地力。</li>
+                </ul>
             </div>
         </div>
     </body>
     </html>
     """
-    components.html(encyclopedia_html, height=500)
-
-# ==========================================
-# 4. 系統頁尾
-# ==========================================
-st.markdown("---")
-st.caption("Data Source: FastF1 API | F1 Telemetry & Strategy Insights Project v1.0")
+    components.html(pro_html, height=600, scrolling=True)
