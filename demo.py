@@ -11,7 +11,7 @@ import os
 st.set_page_config(page_title="Fast1ap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
 st.title('🏁 Fast1ap Pro: 2026 賽道戰術數據儀表板')
 
-# 建立資料快取 (資工專題必備，優化效能)
+# 建立資料快取 (優化效能)
 if not os.path.exists('f1_cache'): 
     os.makedirs('f1_cache')
 fastf1.Cache.enable_cache('f1_cache')
