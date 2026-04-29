@@ -117,7 +117,7 @@ with tab1:
         # [Layer 2] Delta Time (動態填色)
         ax_d.plot(ref_tel['Distance'], delta_time, color='white', linewidth=1)
         ax_d.axhline(0, color='grey', linestyle='--')
-        ax_d.set_ylabel(f'Delta (s)\n(+) {driver1} Faster')
+        ax_d.set_ylabel(f'Delta (s)\n(+) {driver1} Faster\n(-) {driver2} Faster')
         ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time > 0), color='green', alpha=0.3)
         ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time < 0), color='red', alpha=0.3)
         ax_d.grid(True, linestyle=':', alpha=0.3)
