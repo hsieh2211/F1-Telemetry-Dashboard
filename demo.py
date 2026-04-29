@@ -22,7 +22,7 @@ fastf1.Cache.enable_cache('f1_cache')
 st.sidebar.header("⚙️ 戰術控制中心")
 
 # 獲取並清洗 2026 賽程表
-@st.cache_data
+@st.cache_data(ttl=86400)
 def get_clean_event_list(year):
     try:
         schedule = fastf1.get_event_schedule(year)
@@ -49,7 +49,7 @@ type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
 selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def get_session_data(year, event, s_type):
     session = fastf1.get_session(year, event, s_type)
     session.load()
