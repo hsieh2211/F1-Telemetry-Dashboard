@@ -21,35 +21,59 @@ fastf1.Cache.enable_cache('f1_cache')
 # ==========================================
 st.sidebar.header("⚙️ 戰術控制中心")
 
-# 比賽類型切換
+# 獲取並清洗 2026 賽程表
+@st.cache_data
+def get_clean_event_list(year):
+    try:
+        schedule = fastf1.get_event_schedule(year)
+        # 排除季前測試
+        valid_events = schedule[schedule['EventFormat'] != 'testing']
+        
+        # 🌟 專題亮點：手動排除 2026 停辦或異常的賽事
+        excluded_events = ['Bahrain Grand Prix', 'Saudi Arabian Grand Prix']
+        valid_events = valid_events[~valid_events['EventName'].isin(excluded_events)]
+        
+        return valid_events['EventName'].tolist()
+    except:
+        # 斷網時的備用清單
+        return ['Australian Grand Prix', 'Japanese Grand Prix', 'Chinese Grand Prix']
+
+current_year = 2026
+event_list = get_clean_event_list(current_year)
+
+# 1. 選擇分站賽道 (動態選單)
+selected_event = st.sidebar.selectbox('1. 選擇分站賽道', event_list, index=0)
+
+# 2. 選擇比賽類型
 type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
-selected_type_label = st.sidebar.selectbox('1. 選擇比賽類型', list(type_mapping.keys()))
+selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
 
 @st.cache_data
-def get_session_data(s_type):
-    # 目前預設 2026 澳洲站
-    session = fastf1.get_session(2026, 'Australia', s_type)
+def get_session_data(year, event, s_type):
+    session = fastf1.get_session(year, event, s_type)
     session.load()
     return session
 
-with st.spinner(f'正在載入 2026 澳洲站 {selected_type_label} 數據...'):
+# 🌟 最強防呆：處理「還沒跑的比賽」或「無數據」狀況
+with st.spinner(f'正在載入 {current_year} {selected_event} 數據...'):
     try:
-        session = get_session_data(selected_type_code)
+        session = get_session_data(current_year, selected_event, selected_type_code)
     except Exception as e:
-        st.error(f"數據載入失敗：{e}")
-        st.stop()
+        st.warning(f"⚠️ 無法載入【{selected_event}】的遙測數據。")
+        st.info("💡 可能原因：\n1. 該分站的比賽時間尚未到來（目前為 2026 年 4 月）。\n2. F1 官方 API 尚未釋出該場次的遙測封包。")
+        st.stop() # 停止往下執行，保護系統不當機
 
-# 動態生成車手字典 (FullName + TeamName)
+# 3. 動態車手名單綁定
 driver_map = {}
 for index, row in session.results.iterrows():
     driver_map[row['Abbreviation']] = f"{row['FullName']} ({row['TeamName']})"
 
 driver_list = session.results['Abbreviation'].tolist()
 
-driver1 = st.sidebar.selectbox('2. 基準車手 (A)', driver_list, index=0, 
+driver1 = st.sidebar.selectbox('3. 基準車手 (A)', driver_list, index=0, 
                                format_func=lambda x: f"{x} - {driver_map.get(x, x)}")
-driver2 = st.sidebar.selectbox('3. 對比車手 (B)', driver_list, index=1, 
+driver2 = st.sidebar.selectbox('4. 對比車手 (B)', driver_list, index=1, 
                                format_func=lambda x: f"{x} - {driver_map.get(x, x)}")
 
 # ==========================================
