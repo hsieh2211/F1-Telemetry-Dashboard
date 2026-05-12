@@ -11,10 +11,10 @@ import os
 st.set_page_config(page_title="Fast1ap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
 st.title('🏁 Fast1ap Pro: 2026 賽道戰術數據儀表板')
 
-# 建立資料快取 (優化效能)
-if not os.path.exists('f1_cache'): 
-    os.makedirs('f1_cache')
-fastf1.Cache.enable_cache('f1_cache')
+# 建立資料快取 (強制捨棄壞檔，建立全新 v2 快取)
+if not os.path.exists('f1_cache_v2'):
+    os.makedirs('f1_cache_v2')
+fastf1.Cache.enable_cache('f1_cache_v2')
 
 # ==========================================
 # 2. 側邊欄控制中心
