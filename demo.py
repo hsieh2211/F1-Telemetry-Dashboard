@@ -50,9 +50,9 @@ selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_ma
 selected_type_code = type_mapping[selected_type_label]
 
 @st.cache_resource(ttl=3600)
-def get_session_data(year, event, s_type):
+def get_session_data(year, event, s_type, version=1): # 👈 這裡偷塞一個 version=1
     session = fastf1.get_session(year, event, s_type)
-    session.load()  # 確保這行有在裡面
+    session.load() # 👈 再次確認這行真的有寫！它是最重要的！
     return session
 
 # 🌟 最強防呆：處理「還沒跑的比賽」或「無數據」狀況
