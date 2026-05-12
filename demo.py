@@ -95,11 +95,11 @@ with tab1:
         # ==========================================
         # 1. 解決油門破 100% 的感測器雜訊
 ref_tel['Throttle'] = ref_tel['Throttle'].clip(lower=0, upper=100)
-        comp_tel['Throttle'] = comp_tel['Throttle'].clip(lower=0, upper=100)
+comp_tel['Throttle'] = comp_tel['Throttle'].clip(lower=0, upper=100)
 
         # 2. 解決低採樣率導致的「油門煞車重疊」假象
 ref_tel.loc[ref_tel['Brake'] > 0, 'Throttle'] = 0
-        comp_tel.loc[comp_tel['Brake'] > 0, 'Throttle'] = 0
+comp_tel.loc[comp_tel['Brake'] > 0, 'Throttle'] = 0
 
         # ==========================================
         # 視覺化架構：建立四層聯動畫布 (加入動力分配層)
