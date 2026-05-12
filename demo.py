@@ -148,9 +148,9 @@ with tab1:
                 * ⚡ **動力分配 (Throttle)**：2026 年新制下電力佔比達 50%。若車手在入彎前「提早放開油門 (Throttle 下降)」，代表正在執行 **Lift and Coast (收油滑行)** 以強制作為電池回充 (ERS Recovery)。
                 """)
     
-           except Exception as e:
-            st.error(f"🚨 系統真實錯誤抓漏：{e}")
-            st.exception(e)  # 讓 Streamlit 把完整的紅字追蹤報告印出來
+        except Exception as e:
+                st.error(f"🚨 系統真實錯誤抓漏：{e}")
+                st.exception(e)  # 讓 Streamlit 把完整的紅字追蹤報告印出來
     
     # ----------------- 分頁 2: 數據摘要 -----------------
     with tab2:
