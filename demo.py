@@ -49,16 +49,16 @@ type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
 selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
 
-@st.cache_resource(ttl=3600)
-def get_session_data(year, event, s_type, version=1): # 👈 這裡偷塞一個 version=1
+# 刪除或註解掉 @st.cache_resource，完全交給 FastF1 的 f1_cache 處理
+def get_session_data(year, event, s_type):
     session = fastf1.get_session(year, event, s_type)
-    session.load() # 👈 再次確認這行真的有寫！它是最重要的！
+    session.load()
     return session
 
 # 🌟 最強防呆：處理「還沒跑的比賽」或「無數據」狀況
 with st.spinner(f'正在載入 {current_year} {selected_event} 數據...'):
     try:
-        session = get_session_data(current_year, selected_event, selected_type_code, 1)
+       session = get_session_data(current_year, selected_event, selected_type_code)
     except Exception as e:
         st.warning(f"⚠️ 無法載入【{selected_event}】的遙測數據。")
         st.info("💡 可能原因：\n1. 該分站的比賽時間尚未到來（目前為 2026 年 4 月）。\n2. F1 官方 API 尚未釋出該場次的遙測封包。")
