@@ -81,12 +81,14 @@ driver2 = st.sidebar.selectbox('4. 對比車手 (B)', driver_list, index=1,
 # ==========================================
 tab1, tab2, tab3 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數據摘要 (Summary)", "📖 互動式教學百科 (Guide)"])
 
-# ----------------- 分頁 1: 戰術圖表 -----------------
-with tab1:
-    try:
-        l1 = session.laps.pick_drivers(driver1).pick_fastest()
-        l2 = session.laps.pick_drivers(driver2).pick_fastest()
-        delta_time, ref_tel, comp_tel = fastf1.utils.delta_time(l1, l2)
+# ---------------- 分頁 1：戰情圖表 ----------------
+        with tab1:
+            try:
+                # 🔥 終極護城河：不管 Streamlit 剛剛把資料搞丟去哪裡，畫圖前強制喚醒！
+                session.load() 
+                
+                l1 = session.laps.pick_drivers(driver1).pick_fastest()
+                l2 = session.laps.pick_drivers(driver2).pick_fastest()
         
         # ==========================================
         # 🌟 新增：資料清洗與物理邏輯校正 (Data Cleansing)
