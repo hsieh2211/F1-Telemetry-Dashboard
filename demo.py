@@ -90,7 +90,6 @@ with tab1:
                 l1 = session.laps.pick_drivers(driver1).pick_fastest()
                 l2 = session.laps.pick_drivers(driver2).pick_fastest()
                 
-                # 🚨 剛剛被你不小心刪掉的救命程式碼，幫你補回來了！
                 delta_time, ref_tel, comp_tel = fastf1.utils.delta_time(l1, l2)
 
                 # ==========================================
@@ -115,42 +114,41 @@ with tab1:
                 ax_s.set_ylabel('Speed (km/h)')
                 ax_s.legend(loc='lower right')
                 ax_s.grid(True, linestyle=':', alpha=0.3)
-        
-                # [Layer 2] Delta Time (動態填色)
+
+                # [Layer 2] Delta Time (時間差)
                 ax_d.plot(ref_tel['Distance'], delta_time, color='white', linewidth=1)
                 ax_d.axhline(0, color='grey', linestyle='--')
-                ax_d.set_ylabel(f'Delta (s)\n(+) {driver1} Faster\n(-) {driver2} Faster')
+                ax_d.set_ylabel(f"Delta (s)\n(+) {driver1} Faster\n(-) {driver2} Faster")
                 ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time > 0), color='green', alpha=0.3)
                 ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time < 0), color='red', alpha=0.3)
                 ax_d.grid(True, linestyle=':', alpha=0.3)
-        
-                # 🌟 [Layer 3] 新增：動力分配層 (Throttle & Lift and Coast 分析)
+
+                # [Layer 3] 新增：動力分配層 (Throttle & Lift and Coast 分析)
                 ax_t.plot(ref_tel['Distance'], ref_tel['Throttle'], color='cyan', alpha=0.8)
                 ax_t.plot(comp_tel['Distance'], comp_tel['Throttle'], color='magenta', linestyle='--', alpha=0.8)
                 ax_t.set_ylabel('Throttle (%)')
-                # 加入防呆參考線：100% 代表全油門 (電力輸出最大化)
                 ax_t.axhline(100, color='grey', linestyle=':', alpha=0.5)
                 ax_t.grid(True, linestyle=':', alpha=0.3)
-        
+
                 # [Layer 4] 煞車層 (Brake)
                 ax_b.plot(ref_tel['Distance'], ref_tel['Brake'], color='cyan')
                 ax_b.plot(comp_tel['Distance'], comp_tel['Brake'], color='magenta', alpha=0.5)
                 ax_b.set_ylabel('Brake')
                 ax_b.set_xlabel('Distance (m)')
                 ax_b.grid(True, linestyle=':', alpha=0.3)
-        
+
                 st.pyplot(fig)
-            
-                # 🌟 修改防呆面板的文字，加入動力系統的解說
+
+                # 修改防呆面板的文字，加入動力系統的解說
                 st.info(f"""
                 **💡 2026 動力與戰術判讀指南：**
                 * 🟩 **時間差 (Delta)**：綠色向上區塊代表 **{driver1}** 正在拉開優勢。
                 * ⚡ **動力分配 (Throttle)**：2026 年新制下電力佔比達 50%。若車手在入彎前「提早放開油門 (Throttle 下降)」，代表正在執行 **Lift and Coast (收油滑行)** 以強制作為電池回充 (ERS Recovery)。
                 """)
-    
-        except Exception as e:
+
+            except Exception as e:
                 st.error(f"🚨 系統真實錯誤抓漏：{e}")
-                st.exception(e)  # 讓 Streamlit 把完整的紅字追蹤報告印出來
+                st.exception(e)
     
     # ----------------- 分頁 2: 數據摘要 -----------------
     with tab2:
