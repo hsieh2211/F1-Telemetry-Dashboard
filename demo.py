@@ -58,7 +58,7 @@ def get_session_data(year, event, s_type, version=1): # 👈 這裡偷塞一個 
 # 🌟 最強防呆：處理「還沒跑的比賽」或「無數據」狀況
 with st.spinner(f'正在載入 {current_year} {selected_event} 數據...'):
     try:
-        session = get_session_data(current_year, selected_event, selected_type_code)
+        session = get_session_data(current_year, selected_event, selected_type_code, 1)
     except Exception as e:
         st.warning(f"⚠️ 無法載入【{selected_event}】的遙測數據。")
         st.info("💡 可能原因：\n1. 該分站的比賽時間尚未到來（目前為 2026 年 4 月）。\n2. F1 官方 API 尚未釋出該場次的遙測封包。")
