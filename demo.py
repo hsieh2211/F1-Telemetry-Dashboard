@@ -49,10 +49,10 @@ type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
 selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
 
-@st.cache_data(ttl=3600)
+@st.cache_resource(ttl=3600)
 def get_session_data(year, event, s_type):
     session = fastf1.get_session(year, event, s_type)
-    session.load()
+    session.load()  # 確保這行有在裡面
     return session
 
 # 🌟 最強防呆：處理「還沒跑的比賽」或「無數據」狀況
