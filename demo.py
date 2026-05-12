@@ -147,7 +147,8 @@ with tab1:
         """)
 
     except Exception as e:
-        st.error("分析失敗：請確認車手是否皆有完賽成績。")
+        st.error(f"🚨 系統真實錯誤抓漏：{e}")
+        st.exception(e)  # 讓 Streamlit 把完整的紅字追蹤報告印出來
 
 # ----------------- 分頁 2: 數據摘要 -----------------
 with tab2:
