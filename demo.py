@@ -11,10 +11,10 @@ import os
 st.set_page_config(page_title="Fast1ap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
 st.title('🏁 Fast1ap Pro: 2026 賽道戰術數據儀表板')
 
-# 建立資料快取 (強制捨棄壞檔，建立全新 v2 快取)
-if not os.path.exists('f1_cache_v2'):
-    os.makedirs('f1_cache_v2')
-fastf1.Cache.enable_cache('f1_cache_v2')
+# 建立資料快取 (強制換一個全新的名字，拋棄舊帳)
+if not os.path.exists('f1_cache_v3'):  # 👈 改成 v3
+    os.makedirs('f1_cache_v3')
+fastf1.Cache.enable_cache('f1_cache_v3') # 👈 改成 v3
 
 # ==========================================
 # 2. 側邊欄控制中心
@@ -49,7 +49,8 @@ type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
 selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
 
-# 刪除或註解掉 @st.cache_resource，完全交給 FastF1 的 f1_cache 處理
+# 🔥 護盾全開：Streamlit 抓過一次資料就會存在記憶體，絕對不會再去煩 F1 官方！
+@st.cache_resource(ttl=86400)
 def get_session_data(year, event, s_type):
     session = fastf1.get_session(year, event, s_type)
     session.load()
