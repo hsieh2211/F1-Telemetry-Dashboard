@@ -8,7 +8,7 @@ import os
 # ==========================================
 # 1. 系統與品牌配置
 # ==========================================
-st.set_page_config(page_title="Fast1ap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
+st.set_page_config(page_title="Fastlap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
 st.title('🏁 Fast1ap Pro: 2026 賽道戰術數據儀表板')
 
 # 建立資料快取 (強制換一個全新的名字，拋棄舊帳)
