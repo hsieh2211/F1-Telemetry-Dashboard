@@ -340,3 +340,7 @@ with tab1:
         
         # 增加高度以容納更多內容與搜尋列
         components.html(encyclopedia_html, height=750, scrolling=True)
+        import os
+if os.path.exists('f1_cache_v3'):
+    st.info("📂 報告老闆，雲端快取資料夾裡面現在有這些檔案：")
+    st.write(os.listdir('f1_cache_v3'))
