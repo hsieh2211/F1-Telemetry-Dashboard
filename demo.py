@@ -160,9 +160,11 @@ with tab1:
         st.markdown("### 🗺️ 賽道路線與配速熱力圖 (Track Speed Map)")
         
         # 1. 取得基準車手 (ref_tel) 的 X, Y 座標與速度數據
-        x = ref_tel['X'].values
-        y = ref_tel['Y'].values
-        speed = ref_tel['Speed'].values
+# 改從最快單圈 (l1) 直接獲取完整的原始遙測數據 (包含 X, Y 座標)
+        raw_tel = l1.get_telemetry()
+        x = raw_tel['X'].values
+        y = raw_tel['Y'].values
+        speed = raw_tel['Speed'].values
 
         # 2. 將散落的座標點轉換為連續的線段陣列 (Line segments)
         points = np.array([x, y]).T.reshape(-1, 1, 2)
