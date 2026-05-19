@@ -4,6 +4,14 @@ import fastf1.plotting
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 import os
+import streamlit as st
+import fastf1
+import fastf1.plotting
+import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
+import os
+import numpy as np               # 👈 貼在這裡
+import matplotlib.collections as mcoll  # 👈 貼在這裡
 
 # ==========================================
 # 1. 系統與品牌配置
@@ -146,7 +154,43 @@ with tab1:
         * 🟩 **時間差 (Delta)**：綠色向上區塊代表 **{driver1}** 正在拉開優勢。
         * ⚡ **動力分配 (Throttle)**：2026 年新制下電力佔比達 50%。若車手在入彎前「提早放開油門 (Throttle 下降)」，代表正在執行 **Lift and Coast (收油滑行)** 以強制作為電池回充 (ERS Recovery)。
         """)
+# ==========================================
+        # 🌟 視覺大絕招：2D 賽道路線與配速熱力圖
+        # ==========================================
+        st.markdown("### 🗺️ 賽道路線與配速熱力圖 (Track Speed Map)")
+        
+        # 1. 取得基準車手 (ref_tel) 的 X, Y 座標與速度數據
+        x = ref_tel['X'].values
+        y = ref_tel['Y'].values
+        speed = ref_tel['Speed'].values
 
+        # 2. 將散落的座標點轉換為連續的線段陣列 (Line segments)
+        points = np.array([x, y]).T.reshape(-1, 1, 2)
+        segments = np.concatenate([points[:-1], points[1:]], axis=1)
+
+        # 3. 建立熱力圖顏色映射 (速度越快顏色越亮，使用 'plasma' 漸層)
+        norm = plt.Normalize(speed.min(), speed.max())
+        lc = mcoll.LineCollection(segments, cmap='plasma', norm=norm, linewidth=6)
+        lc.set_array(speed)
+
+        # 4. 建立 2D 賽動畫布
+        fig_track, ax_track = plt.subplots(figsize=(10, 6))
+        
+        # 將彩色賽道加入畫布
+        ax_track.add_collection(lc)
+        
+        # 🔥 關鍵：確保賽道 X 與 Y 比例 1:1 絕對不變形，並隱藏雜亂的座標軸
+        ax_track.axis('equal')
+        ax_track.axis('off')
+
+        # 5. 加入側邊顏色條 (Colorbar) 標示速度數值
+        cbar = fig_track.colorbar(lc, ax=ax_track, pad=0.02)
+        cbar.set_label('Speed (km/h)', fontsize=12)
+
+        ax_track.set_title(f"{current_year} {selected_event} - {driver1} Track Speed Map", fontsize=14, pad=15)
+
+        st.pyplot(fig_track)
+        
     except Exception as e:
         st.error(f"🚨 系統真實錯誤抓漏：{e}")
         st.exception(e)
@@ -340,7 +384,4 @@ with tab1:
         
         # 增加高度以容納更多內容與搜尋列
         components.html(encyclopedia_html, height=750, scrolling=True)
-        import os
-if os.path.exists('f1_cache_v3'):
-    st.info("📂 報告老闆，雲端快取資料夾裡面現在有這些檔案：")
-    st.write(os.listdir('f1_cache_v3'))
+       
