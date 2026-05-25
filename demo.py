@@ -20,9 +20,9 @@ st.set_page_config(page_title="Fastlap Pro - F1 Analytics", page_icon="🏎️",
 st.title('🏁 Fastlap Pro: 2026 賽道戰術數據儀表板')
 
 # 建立資料快取 (強制換一個全新的名字，拋棄舊帳)
-if not os.path.exists('f1_cache_v3'):  # 👈 改成 v3
-    os.makedirs('f1_cache_v3')
-fastf1.Cache.enable_cache('f1_cache_v3') # 👈 改成 v3
+if not os.path.exists('f1_cache_v99'):  # 👈 
+    os.makedirs('f1_cache_v99')
+fastf1.Cache.enable_cache('f1_cache_v99') # 👈 
 
 # ==========================================
 # 2. 側邊欄控制中心
