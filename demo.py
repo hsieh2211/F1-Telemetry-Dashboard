@@ -58,8 +58,7 @@ type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
 selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
 
-# 🔥 護盾全開 + 錯誤攔截機制
-@st.cache_resource(ttl=86400)
+# 🔥 護盾全開 + 錯誤攔截機制 (直接讀取硬碟快取，不使用 RAM)
 def get_session_data(year, event, s_type):
     session = fastf1.get_session(year, event, s_type)
     try:
