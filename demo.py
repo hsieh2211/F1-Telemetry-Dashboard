@@ -65,7 +65,7 @@ def get_session_data(year, event, s_type):
         session.load()
         return session
     except Exception as e:
-        st.cache_resource.clear()
+        st.error(f"🛑 錯誤真面目：{e}")  # 👈 就是要新增這一行！
         return None
 
 # 處理「還沒跑的比賽」或「無數據」狀況
