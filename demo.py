@@ -53,25 +53,30 @@ event_list = get_clean_event_list(current_year)
 selected_event = st.sidebar.selectbox('1. 選擇分站賽道', event_list, index=0)
 
 # 2. 選擇比賽類型
+# ----------------------------------------------------
 type_mapping = {'正賽 (Race)': 'R', '排位賽 (Qualifying)': 'Q'}
 selected_type_label = st.sidebar.selectbox('2. 選擇比賽類型', list(type_mapping.keys()))
 selected_type_code = type_mapping[selected_type_label]
 
-# 🔥 護盾全開：Streamlit 抓過一次資料就會存在記憶體，絕對不會再去煩 F1 官方！
+# 🔥 護盾全開 + 錯誤攔截機制
 @st.cache_resource(ttl=86400)
 def get_session_data(year, event, s_type):
     session = fastf1.get_session(year, event, s_type)
-    session.load()
-    return session
-
-# 🌟 最強防呆：處理「還沒跑的比賽」或「無數據」狀況
-with st.spinner(f'正在載入 {current_year} {selected_event} 數據...'):
     try:
-       session = get_session_data(current_year, selected_event, selected_type_code)
+        session.load()
+        return session
     except Exception as e:
-        st.warning(f"⚠️ 無法載入【{selected_event}】的遙測數據。")
-        st.info("💡 可能原因：\n1. 該分站的比賽時間尚未到來（目前為 2026 年 4 月）。\n2. F1 官方 API 尚未釋出該場次的遙測封包。")
-        st.stop() # 停止往下執行，保護系統不當機
+        st.cache_resource.clear()
+        return None
+
+# 處理「還沒跑的比賽」或「無數據」狀況
+with st.spinner(f"正在載入 {current_year} {selected_event} 數據..."):
+    session = get_session_data(current_year, selected_event, selected_type_code)
+    
+    if session is None:
+        st.warning("⚠️ 官方伺服器尚未釋出此場次的完整遙測數據，或連線發生異常。請嘗試點擊側邊欄的「清除快取並修復錯誤」，或切換其他分站。")
+        st.stop()
+# ----------------------------------------------------
 
 # 3. 動態車手名單綁定
 driver_map = {}
