@@ -30,7 +30,7 @@ fastf1.Cache.enable_cache('f1_cache_v99') # 👈
 st.sidebar.header("⚙️ 戰術控制中心")
 
 # 獲取並清洗 2026 賽程表
-@st.cache_data(ttl=86400)
+@st.cache_data(ttl=604800)
 def get_clean_event_list(year):
     try:
         schedule = fastf1.get_event_schedule(year)
