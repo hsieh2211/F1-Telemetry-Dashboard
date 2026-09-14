@@ -1,5 +1,7 @@
 import streamlit as st
 import fastf1
+from fastf1.logger import set_log_level
+set_log_level("DEBUG")
 import fastf1.plotting
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
@@ -97,8 +99,7 @@ tab1, tab2, tab3 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數�
 # ---------------- 分頁 1：戰情圖表 ----------------
 with tab1:
     try:
-        # 🔥 終極護城河：不管 Streamlit 剛剛把資料搞丟去哪裡，畫圖前強制喚醒！
-        session.load()
+      
         
         l1 = session.laps.pick_drivers(driver1).pick_fastest()
         l2 = session.laps.pick_drivers(driver2).pick_fastest()
