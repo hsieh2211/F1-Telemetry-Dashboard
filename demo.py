@@ -199,7 +199,7 @@ with tab1:
         st.pyplot(fig_track)
         
     except Exception as e:
-        st.warning(f"⚠️ 遭受 F1 官方伺服器阻擋，無法獲取 {selected_event} 的完整數據。這不是系統當機，而是雲端 IP 遭到限制。請切換其他已快取的分站，或改用電腦本機執行。")
+      st.exception(e)
 
         
     # ----------------- 分頁 2: 數據摘要 -----------------
