@@ -48,7 +48,7 @@ def get_clean_event_list(year):
         # 斷網時的備用清單
         return ['Australian Grand Prix', 'Japanese Grand Prix', 'Chinese Grand Prix']
 
-current_year = 2026
+current_year = 2025
 event_list = get_clean_event_list(current_year)
 
 # 1. 選擇分站賽道 (動態選單)
