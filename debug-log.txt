@@ -1,0 +1,3247 @@
+[     UTC     ] Logs for f1-telemetry-dashboard-gjhcvpyqwiuphhtx3vdnu2.streamlit.app/
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[14:34:56] 🚀 Starting up repository: 'f1-telemetry-dashboard', branch: 'main', main module: 'demo.py'
+
+[14:34:56] 🐙 Cloning repository...
+
+[14:34:57] 🐙 Cloning into '/mount/src/f1-telemetry-dashboard'...
+
+[14:34:57] 🐙 Cloned repository!
+
+[14:34:57] 🐙 Pulling code changes from Github...
+
+[14:34:58] 📦 Processing dependencies...
+
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+
+Using uv pip install.
+
+Using Python 3.14.7 environment at /home/adminuser/venv
+
+Resolved 62 packages in 1.20s
+
+Prepared 62 packages in 3.55s
+
+Installed 62 packages in 336ms
+
+ + altair==6.2.2
+
+ + annotated-types==0.8.0
+
+ + anyio==4.15.1
+
+ + attrs==26.1.0
+
+ + cattrs==26.2.0
+
+ + certifi==2026.7.22
+
+ + cffi==2.1.1
+
+ + charset-normalizer==3.5.1
+
+ + click==8.5.0
+
+ + contourpy==1.4.0
+
+ + cryptography==50.0.1
+
+ + cycler==0.12.1
+
+ + fastf1==3.8.3
+
+ + fonttools==4.65.0
+
+ + h11==0.16.0
+
+ + httptools==0.8.0
+
+ + idna==3.19
+
+ + itsdangerous==2.2.0
+
+ + jinja2==3.1.6
+
+ + jsonschema==4.26.0
+
+ + jsonschema-specifications==2025.9.1
+
+ + kiwisolver==1.5.1
+
+ + markupsafe==3.0.3
+
+ + matplotlib==3.11.2
+
+ + msgpack==1.1.2
+
+ + narwhals==2.26.0
+
+ + numpy==2.5.3
+
+ + packaging==26.3
+
+ + pandas==2.3.3
+
+ + pillow==12.3.0
+
+ + platformdirs==4.11.8
+
+ + protobuf==7.36.1
+
+ + pyarrow==25.0.1
+
+ + pycparser==3.0
+
+ + pydantic==2.13.5
+
+ + pydantic-core==2.46.5
+
+ + pydeck==0.9.3
+
+ + pyjwt==2.14.0
+
+ + pyparsing==3.3.2
+
+ + python-dateutil==2.9.0.post0
+
+ + python-multipart==0.0.32
+
+ + pytz==2026.3.post1
+
+ + rapidfuzz==3.14.6
+
+ + referencing==0.37.0
+
+ + requests==2.34.2
+
+ + requests-cache==1.3.3
+
+ + rpds-py==2026.6.3
+
+ + scipy==1.18.1
+
+ + signalrcore==1.0.2
+
+ + six==1.17.0
+
+ + starlette==[2026-09-14 14:35:03.712622] 1.6.0
+
+ + streamlit==1.63.0
+
+ + timple==0.1.8[2026-09-14 14:35:03.712930] 
+
+ + toml==0.10.2
+
+ + typing-extensions==4.16.0
+
+ + typing-inspection==0.4.4
+
+ + tzdata==2026.4
+
+ + url-normalize==3.0.0
+
+ + urllib3==2.7.0
+
+ + uvicorn==0.53.0
+
+ + watchdog==6.0.0
+
+ + websockets==16.1.1
+
+Checking if Streamlit is installed
+
+Found Streamlit version 1.63.0 in the environment
+
+Detected pyarrow 25.0.1 (known segfault, apache/arrow#50471). Replacing with pyarrow<25.
+
+Using uv pip install.
+
+Using Python 3.14.7 environment at /home/adminuser/venv
+
+Resolved 1 package in 38ms
+
+Prepared 1 package in 983ms
+
+Uninstalled 1 package in 24ms
+
+Installed 1 package in 136ms
+
+ - pyarrow==25.0.1
+
+ + pyarrow==24.0.0
+
+Installing rich for an improved exception logging
+
+Using uv pip install.
+
+Using Python 3.14.7 environment at /home/adminuser/venv
+
+Resolved 4 packages in 204ms
+
+Prepared 4 packages in 116ms
+
+Installed 4 packages in 13ms
+
+ + markdown-it-py==4.2.0
+
+ [2026-09-14 14:35:09.906522] + mdurl==0.1.2
+
+ + pygments==2.21.0
+
+ + rich==15.0.0
+
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+[14:35:10] 🐍 Python dependencies were installed from /mount/src/f1-telemetry-dashboard/requirements.txt using uv.
+
+Check if streamlit is installed
+
+Streamlit is already installed
+
+[14:35:12] 📦 Processed dependencies!
+
+2026-09-14 14:35:14.401 Uvicorn server started on :::8501
+
+
+
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+logger      WARNING 	Failed to load session info data!
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+core        WARNING 	Failed to load extended driver information!
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+logger      WARNING 	Failed to load session status data!
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+logger      WARNING 	Failed to load total lap count!
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+logger      WARNING 	Failed to load track status data!
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+logger      WARNING 	Failed to load timing data!
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+logger      WARNING 	Failed to load weather data!
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+logger      WARNING 	Failed to load race control messages!
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+logger      WARNING 	Failed to load session info data!
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+core        WARNING 	Failed to load extended driver information!
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+logger      WARNING 	Failed to load session status data!
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+logger      WARNING 	Failed to load total lap count!
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+logger      WARNING 	Failed to load track status data!
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+logger      WARNING 	Failed to load timing data!
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+logger      WARNING 	Failed to load weather data!
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+logger      WARNING 	Failed to load race control messages!
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+2026-09-14 14:35:43.398 Please replace `st.components.v1.html` with `st.iframe`.
+
+
+`st.components.v1.html` will be removed after 2026-06-01.
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+logger      WARNING 	Failed to load session info data!
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+core        WARNING 	Failed to load extended driver information!
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+logger      WARNING 	Failed to load session status data!
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+logger      WARNING 	Failed to load total lap count!
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+logger      WARNING 	Failed to load track status data!
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+logger      WARNING 	Failed to load timing data!
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+logger      WARNING 	Failed to load weather data!
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+logger      WARNING 	Failed to load race control messages!
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+logger      WARNING 	Failed to load session info data!
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+core        WARNING 	Failed to load extended driver information!
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+logger      WARNING 	Failed to load session status data!
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+logger      WARNING 	Failed to load total lap count!
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+logger      WARNING 	Failed to load track status data!
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+logger      WARNING 	Failed to load timing data!
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+logger      WARNING 	Failed to load weather data!
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+logger      WARNING 	Failed to load race control messages!
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+2026-09-14 15:03:26.876 Please replace `st.components.v1.html` with `st.iframe`.
+
+
+`st.components.v1.html` will be removed after 2026-06-01.
+
+[15:12:00] 🐙 Pulling code changes from Github...
+
+[15:12:01] 📦 Processing dependencies...
+
+[15:12:01] 📦 Processed dependencies!
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session info data!
+
+logger        DEBUG 	Traceback for failure in session info data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1452, in _load_session_info
+
+    self._session_info = api.session_info(self.api_path,
+
+                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+
+                                          livedata=livedata)
+
+                                          ^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1730, in session_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+[15:12:02] 🔄 Updated app!
+
+core        WARNING 	Failed to load extended driver information!
+
+core          DEBUG 	Exception while loading driver list
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2459, in _drivers_from_f1_api
+
+    f1di = api.driver_info(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1564, in driver_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session status data!
+
+logger        DEBUG 	Traceback for failure in session status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2136, in _load_session_status_data
+
+    session_status = api.session_status_data(self.api_path,
+
+                                             livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1362, in session_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load total lap count!
+
+logger        DEBUG 	Traceback for failure in total lap count
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2118, in _load_total_lap_count
+
+    lap_count = api.lap_count(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1505, in lap_count
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load track status data!
+
+logger        DEBUG 	Traceback for failure in track status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2105, in _load_track_status_data
+
+    track_status = api.track_status_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1306, in track_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+logger      WARNING 	Failed to load session info data!
+
+logger        DEBUG 	Traceback for failure in session info data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1452, in _load_session_info
+
+    self._session_info = api.session_info(self.api_path,
+
+                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+
+                                          livedata=livedata)
+
+                                          ^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1730, in session_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load timing data!
+
+logger        DEBUG 	Traceback for failure in lap timing data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1458, in _load_laps_data
+
+    = api._extended_timing_data(self.api_path, livedata=livedata)
+
+      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 201, in _extended_timing_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core          DEBUG 	Failed to add first lap time for driver '16'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '63'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '44'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '6'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '41'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '1'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '12'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '31'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '10'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '14'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '5'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '23'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '87'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '55'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '77'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '3'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '43'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '30'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '11'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '18'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Failed to load extended driver information!
+
+core          DEBUG 	Exception while loading driver list
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2459, in _drivers_from_f1_api
+
+    f1di = api.driver_info(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1564, in driver_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session status data!
+
+logger        DEBUG 	Traceback for failure in session status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2136, in _load_session_status_data
+
+    session_status = api.session_status_data(self.api_path,
+
+                                             livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1362, in session_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load total lap count!
+
+logger        DEBUG 	Traceback for failure in total lap count
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2118, in _load_total_lap_count
+
+    lap_count = api.lap_count(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1505, in lap_count
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load weather data!
+
+logger        DEBUG 	Traceback for failure in weather data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2611, in _load_weather_data
+
+    weather_data = api.weather_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1656, in weather_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load track status data!
+
+logger        DEBUG 	Traceback for failure in track status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2105, in _load_track_status_data
+
+    track_status = api.track_status_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1306, in track_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load race control messages!
+
+logger        DEBUG 	Traceback for failure in race control messages
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2618, in _load_race_control_messages
+
+    race_control_messages = api.race_control_messages(self.api_path,
+
+                                                      livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1433, in race_control_messages
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+2026-09-14 15:12:07.998 Please replace `st.components.v1.html` with `st.iframe`.
+
+
+`st.components.v1.html` will be removed after 2026-06-01.
+
+logger      WARNING 	Failed to load timing data!
+
+logger        DEBUG 	Traceback for failure in lap timing data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1458, in _load_laps_data
+
+    = api._extended_timing_data(self.api_path, livedata=livedata)
+
+      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 201, in _extended_timing_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core          DEBUG 	Failed to add first lap time for driver '16'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '63'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '44'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '6'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '41'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '1'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '12'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '31'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '10'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '14'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '5'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '23'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '87'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '55'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '77'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '3'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '43'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '30'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '11'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '18'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load weather data!
+
+logger        DEBUG 	Traceback for failure in weather data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2611, in _load_weather_data
+
+    weather_data = api.weather_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1656, in weather_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load race control messages!
+
+logger        DEBUG 	Traceback for failure in race control messages
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2618, in _load_race_control_messages
+
+    race_control_messages = api.race_control_messages(self.api_path,
+
+                                                      livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1433, in race_control_messages
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+2026-09-14 15:12:10.491 Please replace `st.components.v1.html` with `st.iframe`.
+
+
+`st.components.v1.html` will be removed after 2026-06-01.
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session info data!
+
+logger        DEBUG 	Traceback for failure in session info data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1452, in _load_session_info
+
+    self._session_info = api.session_info(self.api_path,
+
+                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+
+                                          livedata=livedata)
+
+                                          ^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1730, in session_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Failed to load extended driver information!
+
+core          DEBUG 	Exception while loading driver list
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2459, in _drivers_from_f1_api
+
+    f1di = api.driver_info(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1564, in driver_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session status data!
+
+logger        DEBUG 	Traceback for failure in session status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2136, in _load_session_status_data
+
+    session_status = api.session_status_data(self.api_path,
+
+                                             livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1362, in session_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load total lap count!
+
+logger        DEBUG 	Traceback for failure in total lap count
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2118, in _load_total_lap_count
+
+    lap_count = api.lap_count(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1505, in lap_count
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load track status data!
+
+logger        DEBUG 	Traceback for failure in track status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2105, in _load_track_status_data
+
+    track_status = api.track_status_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1306, in track_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load timing data!
+
+logger        DEBUG 	Traceback for failure in lap timing data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1458, in _load_laps_data
+
+    = api._extended_timing_data(self.api_path, livedata=livedata)
+
+      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 201, in _extended_timing_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core          DEBUG 	Failed to add first lap time for driver '16'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '63'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '44'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '6'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '41'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '1'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '12'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '31'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '10'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '14'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '5'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '23'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '87'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '55'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '77'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '3'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '43'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '30'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '11'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '18'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session info data!
+
+logger        DEBUG 	Traceback for failure in session info data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1452, in _load_session_info
+
+    self._session_info = api.session_info(self.api_path,
+
+                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+
+                                          livedata=livedata)
+
+                                          ^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1730, in session_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Failed to load extended driver information!
+
+core          DEBUG 	Exception while loading driver list
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2459, in _drivers_from_f1_api
+
+    f1di = api.driver_info(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1564, in driver_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session status data!
+
+logger        DEBUG 	Traceback for failure in session status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2136, in _load_session_status_data
+
+    session_status = api.session_status_data(self.api_path,
+
+                                             livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1362, in session_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load weather data!
+
+logger        DEBUG 	Traceback for failure in weather data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2611, in _load_weather_data
+
+    weather_data = api.weather_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1656, in weather_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load total lap count!
+
+logger        DEBUG 	Traceback for failure in total lap count
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2118, in _load_total_lap_count
+
+    lap_count = api.lap_count(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1505, in lap_count
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load race control messages!
+
+logger        DEBUG 	Traceback for failure in race control messages
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2618, in _load_race_control_messages
+
+    race_control_messages = api.race_control_messages(self.api_path,
+
+                                                      livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1433, in race_control_messages
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+2026-09-14 15:12:19.089 Please replace `st.components.v1.html` with `st.iframe`.
+
+
+`st.components.v1.html` will be removed after 2026-06-01.
+
+logger      WARNING 	Failed to load track status data!
+
+logger        DEBUG 	Traceback for failure in track status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2105, in _load_track_status_data
+
+    track_status = api.track_status_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1306, in track_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load timing data!
+
+logger        DEBUG 	Traceback for failure in lap timing data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1458, in _load_laps_data
+
+    = api._extended_timing_data(self.api_path, livedata=livedata)
+
+      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 201, in _extended_timing_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core          DEBUG 	Failed to add first lap time for driver '16'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '63'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '44'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '6'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '41'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '1'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '12'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '31'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '10'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '14'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '5'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '23'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '87'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '55'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '77'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '3'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '43'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '30'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '11'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '18'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load weather data!
+
+logger        DEBUG 	Traceback for failure in weather data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2611, in _load_weather_data
+
+    weather_data = api.weather_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1656, in weather_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load race control messages!
+
+logger        DEBUG 	Traceback for failure in race control messages
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2618, in _load_race_control_messages
+
+    race_control_messages = api.race_control_messages(self.api_path,
+
+                                                      livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1433, in race_control_messages
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+2026-09-14 15:12:22.341 Please replace `st.components.v1.html` with `st.iframe`.
+
+
+`st.components.v1.html` will be removed after 2026-06-01.
+
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.3]
+
+req            INFO 	No cached data found for session_info. Loading data...
+
+_api           INFO 	Fetching session info data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session info data!
+
+logger        DEBUG 	Traceback for failure in session info data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1452, in _load_session_info
+
+    self._session_info = api.session_info(self.api_path,
+
+                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+
+                                          livedata=livedata)
+
+                                          ^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1730, in session_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for driver_info. Loading data...
+
+_api           INFO 	Fetching driver list...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Failed to load extended driver information!
+
+core          DEBUG 	Exception while loading driver list
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2459, in _drivers_from_f1_api
+
+    f1di = api.driver_info(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1564, in driver_info
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for session_status_data. Loading data...
+
+_api           INFO 	Fetching session status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load session status data!
+
+logger        DEBUG 	Traceback for failure in session status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2136, in _load_session_status_data
+
+    session_status = api.session_status_data(self.api_path,
+
+                                             livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1362, in session_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for lap_count. Loading data...
+
+_api           INFO 	Fetching lap count data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load total lap count!
+
+logger        DEBUG 	Traceback for failure in total lap count
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2118, in _load_total_lap_count
+
+    lap_count = api.lap_count(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1505, in lap_count
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for track_status_data. Loading data...
+
+_api           INFO 	Fetching track status data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load track status data!
+
+logger        DEBUG 	Traceback for failure in track status data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2105, in _load_track_status_data
+
+    track_status = api.track_status_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1306, in track_status_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for _extended_timing_data. Loading data...
+
+_api           INFO 	Fetching timing data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load timing data!
+
+logger        DEBUG 	Traceback for failure in lap timing data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 1458, in _load_laps_data
+
+    = api._extended_timing_data(self.api_path, livedata=livedata)
+
+      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 201, in _extended_timing_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core          DEBUG 	Failed to add first lap time for driver '16'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '63'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '44'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '6'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '41'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '1'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '12'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '31'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '10'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '14'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '5'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '23'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '87'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '55'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '77'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '3'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '43'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '30'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '11'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core          DEBUG 	Failed to add first lap time for driver '18'
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2088, in _add_first_lap_time_from_ergast
+
+    self._laps.loc[
+
+    ^^^^^^^^^^
+
+AttributeError: 'Session' object has no attribute '_laps'. Did you mean: 'laps'?
+
+core        WARNING 	Failed to add first lap time from Ergast for drivers: ['16', '63', '44', '6', '41', '1', '12', '31', '10', '14', '5', '23', '87', '55', '77', '3', '43', '30', '11', '18']
+
+req            INFO 	No cached data found for car_data. Loading data...
+
+_api           INFO 	Fetching car data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car telemetry data is unavailable!
+
+req            INFO 	No cached data found for position_data. Loading data...
+
+_api           INFO 	Fetching position data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+core        WARNING 	Car position data is unavailable!
+
+core        WARNING 	Failed to determine `Session.t0_date`!
+
+req            INFO 	No cached data found for weather_data. Loading data...
+
+_api           INFO 	Fetching weather data...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load weather data!
+
+logger        DEBUG 	Traceback for failure in weather data
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2611, in _load_weather_data
+
+    weather_data = api.weather_data(self.api_path, livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1656, in weather_data
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+req            INFO 	No cached data found for race_control_messages. Loading data...
+
+_api           INFO 	Fetching race control messages...
+
+_api          DEBUG 	Falling back to livetiming mirror (https://livetiming-mirror.fastf1.dev)
+
+logger      WARNING 	Failed to load race control messages!
+
+logger        DEBUG 	Traceback for failure in race control messages
+
+Traceback (most recent call last):
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/logger.py", line 112, in __wrapped
+
+    return func(*args, **kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/core.py", line 2618, in _load_race_control_messages
+
+    race_control_messages = api.race_control_messages(self.api_path,
+
+                                                      livedata=livedata)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/req.py", line 459, in _cached_api_request
+
+    data = func(api_path, **func_kwargs)
+
+  File "/home/adminuser/venv/lib/python3.14/site-packages/fastf1/_api.py", line 1433, in race_control_messages
+
+    raise SessionNotAvailableError(
+
+    ...<2 lines>...
+
+    )
+
+fastf1._api.SessionNotAvailableError: No data for this session! If this session only finished recently, please try again in a few minutes.
+
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', '31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+2026-09-14 15:23:13.828 Please replace `st.components.v1.html` with `st.iframe`.
+
+
+`st.components.v1.html` will be removed after 2026-06-01.
