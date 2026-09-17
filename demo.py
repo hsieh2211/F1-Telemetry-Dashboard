@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
 import logging
+from datetime import datetime, timezone
+from race_data import read_catalogue, existing_path, read_payload, session_state, SESSION_NAMES
 
 import streamlit as st
 import numpy as np
@@ -11,55 +13,14 @@ import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Fastlap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
 st.title("🏁 Fastlap Pro：F1 賽道戰術數據儀表板")
-st.caption("已保存賽事資料｜目前收錄 2026 澳洲站正賽；新增場次需先匯出資料。")
+st.caption("已保存賽事資料｜正賽／排位賽最快圈比較；尚未開賽或尚未匯出的場次會顯示提示。")
 tab1, tab2, tab3 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數據摘要 (Summary)", "📖 互動式教學百科 (Guide)"])
 
 
 @st.cache_data(max_entries=4, show_spinner=False)
-def load_saved_data(path, version):
+def load_saved_data(path, version, expected):
     # version changes when the deployed file changes, invalidating the cache.
-    with open(path, encoding="utf-8") as source:
-        payload = json.load(source)
-    if (payload.get("year"), payload.get("event"), payload.get("session")) != (
-        2026, "Australian Grand Prix", "R"
-    ):
-        raise ValueError("資料檔的年份或場次不符")
-    valid = {}
-    skipped = []
-    columns = ["Time", "Distance", "Speed", "Throttle", "Brake", "X", "Y"]
-    for driver in payload.get("drivers", []):
-        code = driver.get("code", "未知車手")
-        try:
-            if not isinstance(code, str) or not code or code in valid:
-                raise ValueError("車手代碼無效或重複")
-            lap_seconds = float(driver["lap_seconds"])
-            if not np.isfinite(lap_seconds) or lap_seconds <= 0:
-                raise ValueError("圈速無效")
-            frame = pd.DataFrame(driver["telemetry"])[columns].copy()
-            frame = frame.apply(pd.to_numeric, errors="raise")
-            values = frame.to_numpy(dtype=float)
-            if len(frame) < 2 or not np.isfinite(values).all():
-                raise ValueError("遙測缺少有效數值")
-            if not (np.diff(frame["Time"]) > 0).all():
-                raise ValueError("時間必須遞增")
-            if not (np.diff(frame["Distance"]) > 0).all():
-                raise ValueError("距離必須遞增")
-            if frame["Time"].iloc[0] < -0.01 or abs(frame["Time"].iloc[-1] - lap_seconds) > 0.1:
-                raise ValueError("遙測時間與圈速不符")
-            if not frame["Brake"].isin([0, 1]).all():
-                raise ValueError("煞車訊號無效")
-            valid[code] = {
-                "name": str(driver["name"]),
-                "team": str(driver["team"]),
-                "lap_seconds": lap_seconds,
-                "compound": str(driver.get("compound", "未知")),
-                "telemetry": frame,
-            }
-        except (KeyError, TypeError, ValueError) as error:
-            skipped.append(f"{code}：{error}")
-    if len(valid) < 2:
-        raise ValueError("資料中可用車手不足兩位，請重新匯出")
-    return payload["year"], payload["event"], payload["session"], valid, skipped
+    return read_payload(path, expected)
 
 
 def comparison_delta(reference, comparison):
@@ -80,29 +41,56 @@ def format_lap(seconds):
 
 
 ready = False
+root = Path(__file__).resolve().parent
+st.sidebar.header("⚙️ 戰術控制中心")
 try:
-    root = Path(__file__).resolve().parent
-    filename = "2026_australia_race.json"
-    # Support both the uploaded repository layout and the local export layout.
-    path = root / filename
-    if not path.is_file():
-        path = root / "data" / filename
-    file_info = path.stat()
-    current_year, selected_event, selected_type_code, drivers, skipped = load_saved_data(
-        str(path), (file_info.st_mtime_ns, file_info.st_size)
+    catalogue = read_catalogue(root / "data" / "schedule_2026.json")
+    current_year = catalogue["year"]
+    events = catalogue["events"]
+    now = datetime.now(timezone.utc)
+    def event_label(index):
+        event = events[index]
+        available = sum(existing_path(root, current_year, event["event"], c).is_file()
+                        for c in SESSION_NAMES)
+        return f'{event["event"]} ｜已存 {available}/2 場'
+    event_index = st.sidebar.selectbox("1. 選擇分站", range(len(events)), format_func=event_label)
+    selected = events[event_index]
+    selected_event = selected["event"]
+    selected_type_code = st.sidebar.selectbox(
+        "2. 比賽類型", list(SESSION_NAMES), format_func=SESSION_NAMES.get
     )
-    ready = True
-except (OSError, ValueError, TypeError, KeyError) as error:
-    logging.exception("Failed to load saved race data")
+    start = selected["sessions"][selected_type_code]["start_utc"]
+    state, message = session_state(start, now)
+    st.sidebar.caption(f'賽程更新：{catalogue.get("updated_at", "未知")[:10]}；時間以 UTC 計算。')
+    st.sidebar.caption("資料需先在本機匯出並上傳；網站不會自動下載新場次。")
+    path = existing_path(root, current_year, selected_event, selected_type_code)
+    if state in ("future", "unknown"):
+        for tab in (tab1, tab2):
+            with tab:
+                st.info(f"{selected_event} · {SESSION_NAMES[selected_type_code]}：{message}")
+                if start:
+                    st.caption(f"預定開賽：{start}（UTC）")
+    elif not path.is_file():
+        for tab in (tab1, tab2):
+            with tab:
+                st.info(message + "。")
+                st.caption("賽程時間不等於完賽證明。若已完賽，請執行批次匯出並上傳 data 資料夾；資料源延遲或取消的場次可能沒有遙測。")
+    else:
+        file_info = path.stat()
+        current_year, selected_event, selected_type_code, drivers, skipped = load_saved_data(
+            str(path), (file_info.st_mtime_ns, file_info.st_size),
+            (current_year, selected_event, selected_type_code)
+        )
+        ready = True
+except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError) as error:
+    logging.exception("Failed to load saved race data or schedule")
     with tab1:
-        st.error(f"無法讀取已保存的賽事資料：{error}")
+        st.error(f"此場次或賽程資料無法讀取：{error}")
+        st.info("請切換其他分站，或重新匯出此場次；教學百科仍可使用。")
     with tab2:
-        st.info("資料載入後即可查看摘要。")
+        st.info("有效資料載入後即可查看摘要。")
 
 if ready:
-    st.sidebar.header("⚙️ 戰術控制中心")
-    st.sidebar.selectbox("1. 已收錄分站", [f"{current_year} {selected_event}"])
-    st.sidebar.selectbox("2. 比賽類型", ["正賽 (Race)"])
     driver_list = list(drivers)
     driver_map = {code: f"{info['name']} ({info['team']})" for code, info in drivers.items()}
     driver1 = st.sidebar.selectbox(

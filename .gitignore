@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+f1_cache*/
+.venv/
+*.tmp
