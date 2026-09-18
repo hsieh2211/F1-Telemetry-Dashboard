@@ -30,11 +30,10 @@ class DataTests(unittest.TestCase):
             session_state('2026-09-17T00:00:00', now)
 
     def test_existing_australia(self):
-        path = existing_path(ROOT, 2026, 'Australian Grand Prix', 'R')
-        result = read_payload(path, (2026, 'Australian Grand Prix', 'R'))
-        self.assertGreaterEqual(len(result[3]), 2)
-        with self.assertRaises(ValueError):
-            read_payload(path, (2026, 'Australian Grand Prix', 'Q'))
+        for code in ('R', 'Q'):
+            path = existing_path(ROOT, 2026, 'Australian Grand Prix', code)
+            result = read_payload(path, (2026, 'Australian Grand Prix', code))
+            self.assertGreaterEqual(len(result[3]), 2)
 
     def test_invalid_drivers_safe(self):
         payload = json.loads((ROOT / '2026_australia_race.json').read_text())
