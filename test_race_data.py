@@ -35,11 +35,12 @@ class DataTests(unittest.TestCase):
             result = read_payload(path, (2026, 'Australian Grand Prix', code))
             self.assertGreaterEqual(len(result[3]), 2)
 
-    def test_existing_china_qualifying_has_tyre_life(self):
-        path = existing_path(ROOT, 2026, 'Chinese Grand Prix', 'Q')
-        result = read_payload(path, (2026, 'Chinese Grand Prix', 'Q'))
-        self.assertGreaterEqual(len(result[3]), 2)
-        self.assertTrue(all(driver['tyre_life'] is not None for driver in result[3].values()))
+    def test_existing_china_sessions_have_tyre_life(self):
+        for code in ('R', 'Q'):
+            path = existing_path(ROOT, 2026, 'Chinese Grand Prix', code)
+            result = read_payload(path, (2026, 'Chinese Grand Prix', code))
+            self.assertGreaterEqual(len(result[3]), 2)
+            self.assertTrue(all(driver['tyre_life'] is not None for driver in result[3].values()))
 
     def test_invalid_drivers_safe(self):
         payload = json.loads((ROOT / '2026_australia_race.json').read_text())
