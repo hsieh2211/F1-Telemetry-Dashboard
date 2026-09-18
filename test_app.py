@@ -17,11 +17,13 @@ class AppTests(unittest.TestCase):
             self.assertFalse(app.exception)
             self.assertTrue(any('尚未開賽' in i.value for i in app.info))
             self.assertEqual(len(app.selectbox), 2)
+        missing_app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30)
         with patch('race_data.Path.is_file', return_value=False), patch(
                 'race_data.session_state', return_value=('missing', '資料尚未收錄')):
-            app.selectbox[0].set_value(1).run()
-            self.assertFalse(app.exception)
-            self.assertTrue(any('尚未收錄' in i.value for i in app.info))
+            missing_app.run()
+            missing_app.selectbox[0].set_value(1).run()
+            self.assertFalse(missing_app.exception)
+            self.assertTrue(any('尚未收錄' in i.value for i in missing_app.info))
 
 
 if __name__ == '__main__':
