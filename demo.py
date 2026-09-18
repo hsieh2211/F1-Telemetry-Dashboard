@@ -206,7 +206,13 @@ if ready:
             column.write(info["team"])
             column.metric("最快圈", format_lap(info["lap_seconds"]))
             column.write(f"輪胎：{info['compound']}")
-        st.caption("目前匯出檔未包含輪胎使用圈數，因此不顯示胎齡。")
+            tyre_life = info["tyre_life"]
+            if tyre_life is None:
+                column.write("最快圈胎齡：未提供")
+            else:
+                displayed_life = int(tyre_life) if tyre_life.is_integer() else round(tyre_life, 1)
+                column.write(f"最快圈胎齡：{displayed_life} 圈")
+        st.caption("胎齡是該最快圈所用輪胎從裝上後計算的使用圈數；舊資料未包含時會標示未提供。")
 
 with tab3:
     st.header("🏎️ F1 戰術數據全解析：互動式百科中心")

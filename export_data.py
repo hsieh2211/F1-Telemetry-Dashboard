@@ -11,6 +11,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+import numpy as np
+
 from race_data import (UTC, COLUMNS, SESSION_NAMES, read_catalogue, read_payload,
                        validate_payload, existing_path, data_path, session_state)
 
@@ -75,10 +77,14 @@ def export_session(fastf1, year, event, code):
                 raise ValueError("沒有有效最快圈")
             frame = lap.get_telemetry().add_distance()[COLUMNS].copy()
             frame["Time"] = frame["Time"].dt.total_seconds()
+            tyre_life = float(lap["TyreLife"])
+            if not np.isfinite(tyre_life) or tyre_life <= 0:
+                tyre_life = None
             drivers.append({"code": str(driver_code), "name": str(row["FullName"]),
                             "team": str(row["TeamName"]),
                             "lap_seconds": lap["LapTime"].total_seconds(),
                             "compound": str(lap["Compound"]),
+                            "tyre_life": tyre_life,
                             "telemetry": json.loads(frame.to_json(orient="records"))})
         except Exception as error:
             skipped.append(f"{driver_code}: {error}")

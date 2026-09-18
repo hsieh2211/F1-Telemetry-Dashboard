@@ -43,6 +43,16 @@ class DataTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_payload(payload)
 
+    def test_tyre_life_is_optional_but_validated(self):
+        payload = json.loads((ROOT / '2026_australia_race.json').read_text())
+        legacy = validate_payload(payload)[3]
+        self.assertIsNone(next(iter(legacy.values()))['tyre_life'])
+        payload['drivers'][0]['tyre_life'] = 3
+        result = validate_payload(payload)[3]
+        self.assertEqual(result[payload['drivers'][0]['code']]['tyre_life'], 3.0)
+        payload['drivers'][0]['tyre_life'] = 0
+        self.assertTrue(any('胎齡無效' in item for item in validate_payload(payload)[4]))
+
     def test_atomic_failure_preserves_file(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'file.json'

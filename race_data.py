@@ -85,6 +85,11 @@ def validate_payload(payload, expected=None):
             lap_seconds = float(driver["lap_seconds"])
             if not np.isfinite(lap_seconds) or lap_seconds <= 0:
                 raise ValueError("圈速無效")
+            tyre_life = driver.get("tyre_life")
+            if tyre_life is not None:
+                tyre_life = float(tyre_life)
+                if not np.isfinite(tyre_life) or tyre_life <= 0:
+                    raise ValueError("胎齡無效")
             frame = pd.DataFrame(driver["telemetry"])[COLUMNS].copy()
             frame = frame.apply(pd.to_numeric, errors="raise")
             if len(frame) < 2 or not np.isfinite(frame.to_numpy(dtype=float)).all():
@@ -99,6 +104,7 @@ def validate_payload(payload, expected=None):
                 raise ValueError("煞車訊號無效")
             valid[code] = {"name": str(driver["name"]), "team": str(driver["team"]),
                            "lap_seconds": lap_seconds, "compound": str(driver.get("compound", "未知")),
+                           "tyre_life": tyre_life,
                            "telemetry": frame}
         except (KeyError, TypeError, ValueError, OverflowError) as error:
             skipped.append(f"{code}：{error}")
