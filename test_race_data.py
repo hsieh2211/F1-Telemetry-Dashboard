@@ -9,7 +9,7 @@ from argparse import Namespace
 
 from race_data import (read_catalogue, read_payload, session_state,
                        validate_payload, existing_path, data_path)
-from export_data import atomic_json, run, export_session
+from export_data import atomic_json, compact_telemetry, run, export_session
 
 ROOT = Path(__file__).resolve().parent
 
@@ -93,6 +93,14 @@ class DataTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 atomic_json(path, {'broken': float('nan')})
             self.assertEqual(json.loads(path.read_text()), {'old': True})
+
+    def test_compact_telemetry_preserves_endpoints(self):
+        import pandas as pd
+        frame = pd.DataFrame({'value': range(1000)})
+        compact = compact_telemetry(frame, max_points=300)
+        self.assertEqual(len(compact), 300)
+        self.assertEqual(compact.iloc[0]['value'], 0)
+        self.assertEqual(compact.iloc[-1]['value'], 999)
 
     def test_unfinished_session_not_exported(self):
         import pandas as pd

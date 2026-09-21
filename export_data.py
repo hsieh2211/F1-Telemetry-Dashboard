@@ -17,6 +17,15 @@ from race_data import (UTC, COLUMNS, SESSION_NAMES, read_catalogue, read_payload
                        validate_payload, existing_path, data_path, session_state)
 
 ROOT = Path(__file__).resolve().parent
+MAX_TELEMETRY_POINTS = 300
+
+
+def compact_telemetry(frame, max_points=MAX_TELEMETRY_POINTS):
+    """Keep web payloads small while preserving lap endpoints and shape."""
+    if len(frame) <= max_points:
+        return frame.reset_index(drop=True)
+    indices = np.linspace(0, len(frame) - 1, max_points, dtype=int)
+    return frame.iloc[np.unique(indices)].reset_index(drop=True)
 
 
 def atomic_json(path, payload):
@@ -82,6 +91,7 @@ def export_session(fastf1, year, event, code):
                 raise ValueError("沒有有效最快圈")
             frame = lap.get_telemetry().add_distance()[COLUMNS].copy()
             frame["Time"] = frame["Time"].dt.total_seconds()
+            frame = compact_telemetry(frame)
             tyre_life = float(lap["TyreLife"])
             if not np.isfinite(tyre_life) or tyre_life <= 0:
                 tyre_life = None
