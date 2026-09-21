@@ -11,6 +11,15 @@ import matplotlib.pyplot as plt
 import matplotlib.collections as mcoll
 import streamlit.components.v1 as components
 
+# Keep the UI session list self-contained so Streamlit hot reloads a newly
+# deployed session type even when an older imported race_data module is still
+# alive in the worker process.
+SESSION_NAMES = {
+    "R": "正賽 (Race)",
+    "Q": "排位賽 (Qualifying)",
+    "S": "衝刺賽 (Sprint)",
+}
+
 st.set_page_config(page_title="Fastlap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
 st.title("🏁 Fastlap Pro：F1 賽道戰術數據儀表板")
 st.caption("已保存賽事資料｜正賽／排位賽／衝刺賽最快圈比較；尚未開賽或尚未匯出的場次會顯示提示。")
