@@ -8,6 +8,16 @@ ROOT = Path(__file__).resolve().parent
 
 
 class AppTests(unittest.TestCase):
+    def test_sprint_session_available(self):
+        app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+        app.selectbox[0].set_value(1).run()
+        self.assertFalse(app.exception)
+        self.assertIn('衝刺賽 (Sprint)', app.selectbox[1].options)
+        app.selectbox[1].set_value('S').run()
+        self.assertFalse(app.exception)
+        self.assertEqual(len(app.selectbox), 4)
+        self.assertEqual(len(app.selectbox[2].options), 22)
+
     def test_available_missing_and_future(self):
         app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
         self.assertFalse(app.exception)
