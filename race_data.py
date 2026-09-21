@@ -82,6 +82,16 @@ def validate_payload(payload, expected=None):
                 raise ValueError("車手格式無效")
             if not isinstance(code, str) or not code or code in valid:
                 raise ValueError("車手代碼無效或重複")
+            available = driver.get("available", True)
+            if not isinstance(available, bool):
+                raise ValueError("車手資料狀態無效")
+            if not available:
+                reason = str(driver.get("reason", "沒有有效最快圈"))
+                valid[code] = {"name": str(driver["name"]), "team": str(driver["team"]),
+                               "available": False, "reason": reason,
+                               "lap_seconds": None, "compound": None,
+                               "tyre_life": None, "telemetry": None}
+                continue
             lap_seconds = float(driver["lap_seconds"])
             if not np.isfinite(lap_seconds) or lap_seconds <= 0:
                 raise ValueError("圈速無效")
@@ -103,12 +113,13 @@ def validate_payload(payload, expected=None):
             if not frame["Brake"].isin([0, 1]).all():
                 raise ValueError("煞車訊號無效")
             valid[code] = {"name": str(driver["name"]), "team": str(driver["team"]),
+                           "available": True,
                            "lap_seconds": lap_seconds, "compound": str(driver.get("compound", "未知")),
                            "tyre_life": tyre_life,
                            "telemetry": frame}
         except (KeyError, TypeError, ValueError, OverflowError) as error:
             skipped.append(f"{code}：{error}")
-    if len(valid) < 2:
+    if sum(driver["available"] for driver in valid.values()) < 2:
         raise ValueError("資料中可用車手不足兩位，請重新匯出")
     return (*identity, valid, skipped)
 

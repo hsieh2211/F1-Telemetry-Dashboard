@@ -33,7 +33,9 @@ class DataTests(unittest.TestCase):
         for code in ('R', 'Q'):
             path = existing_path(ROOT, 2026, 'Australian Grand Prix', code)
             result = read_payload(path, (2026, 'Australian Grand Prix', code))
-            self.assertGreaterEqual(len(result[3]), 2)
+            self.assertEqual(len(result[3]), 22)
+            available = [driver for driver in result[3].values() if driver['available']]
+            self.assertTrue(all(driver['tyre_life'] is not None for driver in available))
 
     def test_existing_china_sessions_have_tyre_life(self):
         for code in ('R', 'Q'):
@@ -59,6 +61,17 @@ class DataTests(unittest.TestCase):
         self.assertEqual(result[payload['drivers'][0]['code']]['tyre_life'], 3.0)
         payload['drivers'][0]['tyre_life'] = 0
         self.assertTrue(any('胎齡無效' in item for item in validate_payload(payload)[4]))
+
+    def test_unavailable_driver_stays_in_roster(self):
+        payload = json.loads((ROOT / '2026_australia_race.json').read_text())
+        payload['drivers'].append({
+            'code': 'DNS', 'name': 'No timed lap', 'team': 'Test',
+            'available': False, 'reason': '沒有有效最快圈'
+        })
+        drivers = validate_payload(payload)[3]
+        self.assertIn('DNS', drivers)
+        self.assertFalse(drivers['DNS']['available'])
+        self.assertIsNone(drivers['DNS']['telemetry'])
 
     def test_atomic_failure_preserves_file(self):
         with tempfile.TemporaryDirectory() as directory:

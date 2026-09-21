@@ -92,16 +92,27 @@ except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError) as
 
 if ready:
     driver_list = list(drivers)
-    driver_map = {code: f"{info['name']} ({info['team']})" for code, info in drivers.items()}
+    available_codes = [code for code, info in drivers.items() if info["available"]]
+    driver_map = {
+        code: f"{info['name']} ({info['team']})" + (" — 無有效圈速" if not info["available"] else "")
+        for code, info in drivers.items()
+    }
     driver1 = st.sidebar.selectbox(
-        "3. 基準車手 (A)", driver_list, index=0,
+        "3. 基準車手 (A)", driver_list, index=driver_list.index(available_codes[0]),
         format_func=lambda code: f"{code} - {driver_map[code]}"
     )
     driver2 = st.sidebar.selectbox(
-        "4. 對比車手 (B)", driver_list, index=1,
+        "4. 對比車手 (B)", driver_list, index=driver_list.index(available_codes[1]),
         format_func=lambda code: f"{code} - {driver_map[code]}"
     )
-    st.sidebar.caption(f"目前資料集收錄 {len(drivers)} 位車手；未收錄者不列入選單。")
+    st.sidebar.caption(f"完整車手名單 {len(drivers)} 位；其中 {len(available_codes)} 位有可比較的最快圈遙測。")
+    unavailable = [code for code in (driver1, driver2) if not drivers[code]["available"]]
+    if unavailable:
+        for tab in (tab1, tab2):
+            with tab:
+                for code in unavailable:
+                    st.info(f"{code} — {drivers[code]['name']}：{drivers[code]['reason']}，因此無法繪製最快圈比較。")
+        st.stop()
     if skipped:
         st.sidebar.warning("部分車手資料未通過檢查")
         with st.sidebar.expander("查看原因"):

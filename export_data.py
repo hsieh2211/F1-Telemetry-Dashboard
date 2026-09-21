@@ -71,8 +71,13 @@ def export_session(fastf1, year, event, code):
     drivers, skipped = [], []
     for _, row in session.results.iterrows():
         driver_code = row["Abbreviation"]
+        driver = {"code": str(driver_code), "name": str(row["FullName"]),
+                  "team": str(row["TeamName"])}
         try:
-            lap = session.laps.pick_drivers(driver_code).pick_fastest()
+            driver_laps = session.laps.pick_drivers(driver_code)
+            lap = driver_laps.pick_fastest()
+            if lap is None:
+                lap = driver_laps.pick_fastest(only_by_time=True)
             if lap is None:
                 raise ValueError("沒有有效最快圈")
             frame = lap.get_telemetry().add_distance()[COLUMNS].copy()
@@ -80,20 +85,36 @@ def export_session(fastf1, year, event, code):
             tyre_life = float(lap["TyreLife"])
             if not np.isfinite(tyre_life) or tyre_life <= 0:
                 tyre_life = None
-            drivers.append({"code": str(driver_code), "name": str(row["FullName"]),
-                            "team": str(row["TeamName"]),
-                            "lap_seconds": lap["LapTime"].total_seconds(),
-                            "compound": str(lap["Compound"]),
-                            "tyre_life": tyre_life,
-                            "telemetry": json.loads(frame.to_json(orient="records"))})
+            driver.update({"available": True,
+                           "lap_seconds": lap["LapTime"].total_seconds(),
+                           "compound": str(lap["Compound"]),
+                           "tyre_life": tyre_life,
+                           "telemetry": json.loads(frame.to_json(orient="records"))})
         except Exception as error:
-            skipped.append(f"{driver_code}: {error}")
+            reason = str(error)
+            driver.update({"available": False, "reason": reason})
+            skipped.append(f"{driver_code}: {reason}")
+        drivers.append(driver)
     payload = {"year": year, "event": event, "session": code, "drivers": drivers,
                "exported_at": datetime.now(UTC).isoformat(), "source": "FastF1",
                "fastf1_version": fastf1.__version__, "session_finalised": True}
     _, _, _, valid, invalid = validate_payload(payload, (year, event, code))
-    payload["drivers"] = [driver for driver in drivers if driver["code"] in valid]
+    invalid_reasons = {}
+    for item in invalid:
+        invalid_code, separator, reason = item.partition("：")
+        if separator:
+            invalid_reasons[invalid_code] = reason
+    normalized = []
+    for driver in drivers:
+        if driver["code"] in valid:
+            normalized.append(driver)
+        else:
+            normalized.append({"code": driver["code"], "name": driver["name"],
+                               "team": driver["team"], "available": False,
+                               "reason": invalid_reasons.get(driver["code"], "遙測資料未通過檢查")})
+    payload["drivers"] = normalized
     payload["skipped_drivers"] = skipped + invalid
+    validate_payload(payload, (year, event, code))
     return payload
 
 

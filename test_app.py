@@ -12,6 +12,11 @@ class AppTests(unittest.TestCase):
         app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
         self.assertFalse(app.exception)
         self.assertEqual(len(app.selectbox), 4)
+        self.assertEqual(len(app.selectbox[2].options), 22)
+        unavailable_app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+        unavailable_app.selectbox[2].set_value('HUL').run()
+        self.assertFalse(unavailable_app.exception)
+        self.assertTrue(any('無法繪製' in i.value for i in unavailable_app.info))
         with patch('race_data.session_state', return_value=('future', '尚未開賽')):
             app.selectbox[0].set_value(22).run()
             self.assertFalse(app.exception)
