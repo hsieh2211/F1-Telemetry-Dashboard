@@ -92,6 +92,16 @@ class DataTests(unittest.TestCase):
             self.assertTrue(all(driver['lap_number'] is not None for driver in available))
             self.assertTrue(all(driver['tyre_life'] is not None for driver in available))
 
+    def test_existing_monaco_is_complete(self):
+        for code in ('R', 'Q'):
+            path = existing_path(ROOT, 2026, 'Monaco Grand Prix', code)
+            result = read_payload(path, (2026, 'Monaco Grand Prix', code))
+            self.assertEqual(len(result[3]), 22)
+            available = [driver for driver in result[3].values() if driver['available']]
+            self.assertGreaterEqual(len(available), 20)
+            self.assertTrue(all(driver['lap_number'] is not None for driver in available))
+            self.assertTrue(all(driver['tyre_life'] is not None for driver in available))
+
     def test_invalid_drivers_safe(self):
         payload = json.loads((ROOT / '2026_australia_race.json').read_text())
         payload['drivers'].append(None)
