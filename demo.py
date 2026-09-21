@@ -13,7 +13,7 @@ import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Fastlap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
 st.title("🏁 Fastlap Pro：F1 賽道戰術數據儀表板")
-st.caption("已保存賽事資料｜正賽／排位賽最快圈比較；尚未開賽或尚未匯出的場次會顯示提示。")
+st.caption("已保存賽事資料｜正賽／排位賽／衝刺賽最快圈比較；尚未開賽或尚未匯出的場次會顯示提示。")
 tab1, tab2, tab3 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數據摘要 (Summary)", "📖 互動式教學百科 (Guide)"])
 
 
@@ -50,14 +50,16 @@ try:
     now = datetime.now(timezone.utc)
     def event_label(index):
         event = events[index]
-        available = sum(existing_path(root, current_year, event["event"], c).is_file()
-                        for c in SESSION_NAMES)
-        return f'{event["event"]} ｜已存 {available}/2 場'
+        session_codes = [code for code in SESSION_NAMES if code in event["sessions"]]
+        available = sum(existing_path(root, current_year, event["event"], code).is_file()
+                        for code in session_codes)
+        return f'{event["event"]} ｜已存 {available}/{len(session_codes)} 場'
     event_index = st.sidebar.selectbox("1. 選擇分站", range(len(events)), format_func=event_label)
     selected = events[event_index]
     selected_event = selected["event"]
+    selected_session_codes = [code for code in SESSION_NAMES if code in selected["sessions"]]
     selected_type_code = st.sidebar.selectbox(
-        "2. 比賽類型", list(SESSION_NAMES), format_func=SESSION_NAMES.get
+        "2. 比賽類型", selected_session_codes, format_func=SESSION_NAMES.get
     )
     start = selected["sessions"][selected_type_code]["start_utc"]
     state, message = session_state(start, now)

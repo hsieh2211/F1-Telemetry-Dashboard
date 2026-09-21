@@ -19,6 +19,13 @@ class DataTests(unittest.TestCase):
         schedule = read_catalogue(ROOT / 'data/schedule_2026.json')
         self.assertGreater(len(schedule['events']), 20)
         self.assertEqual(set(schedule['events'][0]['sessions']), {'R', 'Q'})
+        sprint_events = {
+            event['event'] for event in schedule['events']
+            if 'S' in event['sessions']
+        }
+        self.assertTrue({
+            'Chinese Grand Prix', 'Miami Grand Prix', 'Canadian Grand Prix'
+        }.issubset(sprint_events))
 
     def test_future_waiting_missing_unknown(self):
         now = datetime(2026, 9, 17, tzinfo=timezone.utc)

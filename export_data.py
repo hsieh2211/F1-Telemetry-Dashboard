@@ -49,7 +49,7 @@ def refresh_catalogue(fastf1, year, path):
     events = []
     for _, row in schedule.iterrows():
         sessions = {}
-        for code, name in (("R", "Race"), ("Q", "Qualifying")):
+        for code, name in (("R", "Race"), ("Q", "Qualifying"), ("S", "Sprint")):
             start = None
             for number in range(1, 6):
                 if row[f"Session{number}"] == name:
@@ -58,7 +58,8 @@ def refresh_catalogue(fastf1, year, path):
                         stamp = pd.Timestamp(value)
                         stamp = stamp.tz_localize("UTC") if stamp.tzinfo is None else stamp.tz_convert("UTC")
                         start = stamp.isoformat()
-            sessions[code] = {"start_utc": start}
+            if code in ("R", "Q") or start is not None:
+                sessions[code] = {"start_utc": start}
         events.append({"round": int(row["RoundNumber"]), "event": row["EventName"], "sessions": sessions})
     if not events:
         raise ValueError("賽程為空；保留舊賽程，不覆寫")
@@ -148,6 +149,8 @@ def run(args, fastf1, root=ROOT):
         if args.event and event["event"] != args.event:
             continue
         for code in args.sessions:
+            if code not in event["sessions"]:
+                continue
             record = {"event": event["event"], "session": code}
             state, message = session_state(event["sessions"][code]["start_utc"], now)
             path = existing_path(root, args.year, event["event"], code)

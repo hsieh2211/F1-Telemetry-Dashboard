@@ -8,7 +8,11 @@ import numpy as np
 import pandas as pd
 
 UTC = timezone.utc
-SESSION_NAMES = {"R": "正賽 (Race)", "Q": "排位賽 (Qualifying)"}
+SESSION_NAMES = {
+    "R": "正賽 (Race)",
+    "Q": "排位賽 (Qualifying)",
+    "S": "衝刺賽 (Sprint)",
+}
 COLUMNS = ["Time", "Distance", "Speed", "Throttle", "Brake", "X", "Y"]
 
 
@@ -30,7 +34,11 @@ def read_catalogue(path):
         if not isinstance(event["event"], str) or event["event"] in names:
             raise ValueError("分站名稱重複或無效")
         names.add(event["event"])
-        for code in SESSION_NAMES:
+        if not {"R", "Q"}.issubset(event["sessions"]):
+            raise ValueError("賽程缺少正賽或排位賽")
+        for code in event["sessions"]:
+            if code not in SESSION_NAMES:
+                raise ValueError("賽程包含不支援的場次類型")
             parse_utc(event["sessions"][code]["start_utc"])
     return catalogue
 
