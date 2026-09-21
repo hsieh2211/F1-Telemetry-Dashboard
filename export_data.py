@@ -28,6 +28,41 @@ def compact_telemetry(frame, max_points=MAX_TELEMETRY_POINTS):
     return frame.iloc[np.unique(indices)].reset_index(drop=True)
 
 
+def telemetry_for_lap(lap, driver_laps):
+    """Return the real lap telemetry, recovering track coordinates if absent."""
+    try:
+        frame = lap.get_telemetry().add_distance()[COLUMNS].copy()
+    except (KeyError, ValueError):
+        # Some sessions retain complete car channels after positional data has
+        # stopped. Preserve the selected lap's speed/control data and align the
+        # route geometry from an earlier complete lap by normalized progress.
+        frame = lap.get_car_data().add_distance().copy()
+        reference = None
+        timed = driver_laps[driver_laps["LapTime"].notna()].sort_values("LapNumber")
+        for _, candidate in timed.iterlaps():
+            try:
+                candidate_frame = candidate.get_telemetry().add_distance()
+                if len(candidate_frame) >= 2:
+                    reference = candidate_frame
+                    break
+            except (KeyError, ValueError):
+                continue
+        if reference is None:
+            raise ValueError("缺少可對齊的賽道位置資料")
+        frame_progress = frame["Distance"] / frame["Distance"].iloc[-1]
+        reference_progress = reference["Distance"] / reference["Distance"].iloc[-1]
+        frame["X"] = np.interp(frame_progress, reference_progress, reference["X"])
+        frame["Y"] = np.interp(frame_progress, reference_progress, reference["Y"])
+        sampled_span = (frame["Time"].iloc[-1] - frame["Time"].iloc[0]).total_seconds()
+        lap_seconds = lap["LapTime"].total_seconds()
+        if sampled_span <= 0:
+            raise ValueError("車輛遙測時間範圍無效")
+        frame["Time"] = ((frame["Time"] - frame["Time"].iloc[0])
+                         * (lap_seconds / sampled_span))
+        frame = frame[COLUMNS].copy()
+    return compact_telemetry(frame)
+
+
 def atomic_json(path, payload):
     text = json.dumps(payload, ensure_ascii=False, allow_nan=False)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -90,9 +125,8 @@ def export_session(fastf1, year, event, code):
                 lap = driver_laps.pick_fastest(only_by_time=True)
             if lap is None:
                 raise ValueError("沒有有效最快圈")
-            frame = lap.get_telemetry().add_distance()[COLUMNS].copy()
+            frame = telemetry_for_lap(lap, driver_laps)
             frame["Time"] = frame["Time"].dt.total_seconds()
-            frame = compact_telemetry(frame)
             tyre_life = float(lap["TyreLife"])
             if not np.isfinite(tyre_life) or tyre_life <= 0:
                 tyre_life = None
