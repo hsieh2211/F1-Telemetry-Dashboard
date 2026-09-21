@@ -89,12 +89,19 @@ def validate_payload(payload, expected=None):
                 reason = str(driver.get("reason", "沒有有效最快圈"))
                 valid[code] = {"name": str(driver["name"]), "team": str(driver["team"]),
                                "available": False, "reason": reason,
-                               "lap_seconds": None, "compound": None,
+                               "lap_seconds": None, "lap_number": None, "compound": None,
                                "tyre_life": None, "telemetry": None}
                 continue
             lap_seconds = float(driver["lap_seconds"])
             if not np.isfinite(lap_seconds) or lap_seconds <= 0:
                 raise ValueError("圈速無效")
+            lap_number = driver.get("lap_number")
+            if lap_number is not None:
+                lap_number_value = float(lap_number)
+                if (not np.isfinite(lap_number_value) or lap_number_value <= 0 or
+                        not lap_number_value.is_integer()):
+                    raise ValueError("最快圈圈次無效")
+                lap_number = int(lap_number_value)
             tyre_life = driver.get("tyre_life")
             if tyre_life is not None:
                 tyre_life = float(tyre_life)
@@ -114,7 +121,8 @@ def validate_payload(payload, expected=None):
                 raise ValueError("煞車訊號無效")
             valid[code] = {"name": str(driver["name"]), "team": str(driver["team"]),
                            "available": True,
-                           "lap_seconds": lap_seconds, "compound": str(driver.get("compound", "未知")),
+                           "lap_seconds": lap_seconds, "lap_number": lap_number,
+                           "compound": str(driver.get("compound", "未知")),
                            "tyre_life": tyre_life,
                            "telemetry": frame}
         except (KeyError, TypeError, ValueError, OverflowError) as error:

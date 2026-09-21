@@ -87,6 +87,7 @@ def export_session(fastf1, year, event, code):
                 tyre_life = None
             driver.update({"available": True,
                            "lap_seconds": lap["LapTime"].total_seconds(),
+                           "lap_number": int(lap["LapNumber"]),
                            "compound": str(lap["Compound"]),
                            "tyre_life": tyre_life,
                            "telemetry": json.loads(frame.to_json(orient="records"))})

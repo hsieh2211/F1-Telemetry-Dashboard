@@ -13,6 +13,7 @@ class AppTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertEqual(len(app.selectbox), 4)
         self.assertEqual(len(app.selectbox[2].options), 22)
+        self.assertTrue(any('最快圈圈次：第' in item.value for item in app.markdown))
         unavailable_app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
         unavailable_app.selectbox[2].set_value('HUL').run()
         self.assertFalse(unavailable_app.exception)

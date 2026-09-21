@@ -216,6 +216,11 @@ if ready:
             column.markdown(f"**{code} — {info['name']}**")
             column.write(info["team"])
             column.metric("最快圈", format_lap(info["lap_seconds"]))
+            lap_number = info["lap_number"]
+            if lap_number is None:
+                column.write("最快圈圈次：未提供")
+            else:
+                column.write(f"最快圈圈次：第 {lap_number} 圈")
             column.write(f"輪胎：{info['compound']}")
             tyre_life = info["tyre_life"]
             if tyre_life is None:
@@ -223,7 +228,7 @@ if ready:
             else:
                 displayed_life = int(tyre_life) if tyre_life.is_integer() else round(tyre_life, 1)
                 column.write(f"最快圈胎齡：{displayed_life} 圈")
-        st.caption("胎齡是該最快圈所用輪胎從裝上後計算的使用圈數；舊資料未包含時會標示未提供。")
+        st.caption("圈次是該車手跑出最快圈時的比賽圈數；胎齡是當時該套輪胎的使用圈數。舊資料未包含時會標示未提供。")
 
 with tab3:
     st.header("🏎️ F1 戰術數據全解析：互動式百科中心")
