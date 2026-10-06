@@ -147,6 +147,22 @@ class DataTests(unittest.TestCase):
                 self.assertTrue(all(driver['lap_number'] is not None for driver in result[3].values()))
                 self.assertTrue(all(driver['tyre_life'] is not None for driver in result[3].values()))
 
+    def test_existing_belgian_sessions_keep_complete_roster(self):
+        for code, count in (('R', 21), ('Q', 22)):
+            with self.subTest(session=code):
+                result = read_payload(
+                    existing_path(ROOT, 2026, 'Belgian Grand Prix', code),
+                    (2026, 'Belgian Grand Prix', code))
+                self.assertEqual(len(result[3]), 22)
+                self.assertEqual(result[4], [])
+                available = [driver for driver in result[3].values() if driver['available']]
+                self.assertEqual(len(available), count)
+                self.assertTrue(all(driver['lap_number'] is not None for driver in available))
+                self.assertTrue(all(driver['tyre_life'] is not None for driver in available))
+                if code == 'R':
+                    self.assertFalse(result[3]['RUS']['available'])
+                    self.assertIn('沒有有效最快圈', result[3]['RUS']['reason'])
+
     def test_invalid_drivers_safe(self):
         payload = json.loads((ROOT / '2026_australia_race.json').read_text())
         payload['drivers'].append(None)
