@@ -25,6 +25,20 @@ class AppTests(unittest.TestCase):
             self.assertEqual(len(app.selectbox[2].options), 22)
             self.assertTrue(any('最快圈圈次：第' in m.value for m in app.markdown))
 
+    def test_austria_sessions_stay_offline(self):
+        with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
+            app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+            app.selectbox[0].set_value(7).run()
+            app.selectbox[2].set_value('BOT').run()
+            for code in ('R', 'Q'):
+                with self.subTest(session=code):
+                    app.selectbox[1].set_value(code).run()
+                    self.assertFalse(app.exception)
+                    self.assertFalse(app.error)
+                    self.assertEqual(len(app.selectbox[2].options), 22)
+                    self.assertTrue(any('最快圈圈次：第' in m.value for m in app.markdown))
+                    self.assertFalse(any('最快圈胎齡：未提供' in m.value for m in app.markdown))
+
     def test_sprint_session_available(self):
         app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
         app.selectbox[0].set_value(1).run()
