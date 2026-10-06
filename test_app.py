@@ -53,6 +53,25 @@ class AppTests(unittest.TestCase):
                     self.assertTrue(any('最快圈圈次：第' in m.value for m in app.markdown))
                     self.assertFalse(any('最快圈胎齡：未提供' in m.value for m in app.markdown))
 
+    def test_belgian_sessions_stay_offline_and_handle_no_lap(self):
+        with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
+            app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+            app.selectbox[0].set_value(9).run()
+            self.assertFalse(app.exception)
+            self.assertFalse(app.error)
+            self.assertEqual(len(app.selectbox[2].options), 22)
+            self.assertTrue(any('最快圈圈次：第' in m.value for m in app.markdown))
+            app.selectbox[2].set_value('RUS').run()
+            self.assertFalse(app.exception)
+            self.assertFalse(app.error)
+            self.assertTrue(any('沒有有效最快圈' in i.value for i in app.info))
+            app.selectbox[1].set_value('Q').run()
+            self.assertFalse(app.exception)
+            self.assertFalse(app.error)
+            self.assertEqual(len(app.selectbox[2].options), 22)
+            self.assertTrue(any('最快圈圈次：第' in m.value for m in app.markdown))
+            self.assertFalse(any('最快圈胎齡：未提供' in m.value for m in app.markdown))
+
     def test_sprint_session_available(self):
         app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
         app.selectbox[0].set_value(1).run()
