@@ -29,7 +29,8 @@ def open_analysis(index, code):
 
 
 def render_home(root):
-    st.html((root / "homepage.css").read_text(encoding="utf-8"))
+    css = (root / "homepage.css").read_text(encoding="utf-8")
+    st.html(f"<style>{css}</style>")
     st.markdown('<div class="fp-brand">FASTLAP <span>PRO</span> <small>2026 賽季 · 繁體中文觀賽與數據</small></div>', unsafe_allow_html=True)
     st.markdown('<div class="fp-hero"><div><p>從認識，到深入</p><h1>每一圈，<br>都有值得<span>看懂的細節。</span></h1><p>從你支持的車手，到一圈之間的差距。一起探索 Formula 1。</p></div><div class="fp-year" aria-hidden="true">20<br>26</div></div>', unsafe_allow_html=True)
     st.markdown('[探索本季賽事 ↓](#season-races)　　[第一次看 F1 ↓](#getting-started)　　[用數據看一個彎 ↓](#real-example)')
