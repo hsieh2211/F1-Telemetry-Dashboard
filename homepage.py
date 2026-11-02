@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-import matplotlib.pyplot as plt
+import pandas as pd
 import streamlit as st
 
 from race_data import read_catalogue, read_payload, existing_path, SESSION_NAMES
@@ -135,20 +135,38 @@ def render_case(year, event, code, drivers, available):
     d1, d2 = drivers[ref], drivers[comp]
     a.metric(f"{ref} 個人最快圈", f"{d1['lap_seconds']:.3f} 秒")
     b.metric(f"{comp} 個人最快圈", f"{d2['lap_seconds']:.3f} 秒")
-    fig, ax = plt.subplots(figsize=(10, 3.5))
-    fig.patch.set_facecolor("#181b20")
-    ax.set_facecolor("#181b20")
-    for c, d, color, style in ((ref, d1, "#ff6558", "-"), (comp, d2, "#f1f0ec", "--")):
-        ax.plot(d["telemetry"]["Distance"], d["telemetry"]["Speed"], label=c, color=color, linestyle=style)
-    ax.set(xlabel="Distance (m)", ylabel="Speed (km/h)")
-    ax.xaxis.label.set_color("white")
-    ax.yaxis.label.set_color("white")
-    ax.tick_params(colors="white")
-    ax.grid(alpha=.15)
-    ax.legend()
-    fig.tight_layout()
-    st.pyplot(fig)
-    plt.close(fig)
+    # Keep every offline sample; browser rendering preserves readable labels
+    # and a fixed plotting height when the available width changes.
+    samples = pd.concat([
+        d["telemetry"][["Distance", "Speed"]].assign(Driver=c)
+        for c, d in ((ref, d1), (comp, d2))
+    ], ignore_index=True)
+    st.vega_lite_chart(samples, {
+        "height": 300,
+        "mark": {"type": "line", "strokeWidth": 2, "clip": True},
+        "encoding": {
+            "x": {"field": "Distance", "type": "quantitative",
+                  "title": "距離（m）", "axis": {"tickCount": 5, "format": ",.0f"}},
+            "y": {"field": "Speed", "type": "quantitative",
+                  "title": "速度（km/h）", "scale": {"zero": False},
+                  "axis": {"tickCount": 5}},
+            "color": {"field": "Driver", "type": "nominal", "title": None,
+                      "scale": {"domain": [ref, comp], "range": ["#ff6558", "#f1f0ec"]},
+                      "legend": {"orient": "top"}},
+            "strokeDash": {"field": "Driver", "type": "nominal", "title": None,
+                           "scale": {"domain": [ref, comp], "range": [[1, 0], [6, 4]]}},
+            "tooltip": [
+                {"field": "Driver", "type": "nominal", "title": "車手"},
+                {"field": "Distance", "type": "quantitative", "title": "距離（m）", "format": ".0f"},
+                {"field": "Speed", "type": "quantitative", "title": "速度（km/h）", "format": ".1f"},
+            ],
+        },
+        "config": {
+            "axis": {"labelFontSize": 12, "titleFontSize": 13, "titlePadding": 10},
+            "legend": {"labelFontSize": 13},
+            "view": {"stroke": None},
+        },
+    }, width="stretch", key="home_speed_chart")
     depth = st.radio("閱讀深度", ["先看懂", "看判讀", "查方法"], horizontal=True, key="case_depth")
     if depth == "先看懂":
         gap = abs(d1["lap_seconds"] - d2["lap_seconds"])
