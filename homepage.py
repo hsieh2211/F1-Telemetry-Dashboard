@@ -31,9 +31,25 @@ def open_analysis(index, code):
 def render_home(root):
     css = (root / "homepage.css").read_text(encoding="utf-8")
     st.html(f"<style>{css}</style>")
-    st.markdown('<div class="fp-brand">FASTLAP <span>PRO</span> <small>2026 賽季 · 繁體中文觀賽與數據</small></div>', unsafe_allow_html=True)
-    st.markdown('<div class="fp-hero"><div><p>從認識，到深入</p><h1>每一圈，<br>都有值得<span>看懂的細節。</span></h1><p>從你支持的車手，到一圈之間的差距。一起探索 Formula 1。</p></div><div class="fp-year" aria-hidden="true">20<br>26</div></div>', unsafe_allow_html=True)
-    st.markdown('[探索本季賽事 ↓](#season-races)　　[第一次看 F1 ↓](#getting-started)　　[用數據看一個彎 ↓](#real-example)')
+    # Avoid Markdown heading wrappers changing the hero grid and colors.
+    st.html('''
+        <div class="fp-brand">FASTLAP <span class="fp-brand-accent">PRO</span>
+            <small>2026 賽季 · 繁體中文觀賽與數據</small>
+        </div>
+        <section class="fp-hero" aria-label="Fastlap Pro 2026 賽季介紹">
+            <div class="fp-hero-copy">
+                <p class="fp-eyebrow">從認識，到深入</p>
+                <h1 class="fp-title">每一圈，都有值得<br><span class="fp-title-accent">看懂的細節。</span></h1>
+                <p class="fp-description">從你支持的車手，到一圈之間的差距。一起探索 Formula 1。</p>
+                <nav class="fp-home-links" aria-label="首頁探索入口">
+                    <a class="fp-primary-link" href="#season-races">探索本季賽事 ↓</a>
+                    <a href="#getting-started">第一次看 F1 ↓</a>
+                    <a href="#real-example">圖表怎麼看 ↓</a>
+                </nav>
+            </div>
+            <div class="fp-year" aria-hidden="true">20<br>26</div>
+        </section>
+    ''')
     try:
         catalogue = read_catalogue(root / "data" / "schedule_2026.json")
         if catalogue["year"] != 2026:
