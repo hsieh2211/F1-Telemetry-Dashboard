@@ -40,7 +40,7 @@ def render_home(root):
             <div class="fp-hero-copy">
                 <p class="fp-eyebrow">從認識，到深入</p>
                 <h1 class="fp-title">每一圈，都有值得<br><span class="fp-title-accent">看懂的細節。</span></h1>
-                <p class="fp-description">從你支持的車手，到一圈之間的差距。一起探索 Formula 1。</p>
+                <p class="fp-description">從你支持的車手，到一圈之間的差距。一起探索 <span class="fp-nowrap">Formula 1。</span></p>
                 <nav class="fp-home-links" aria-label="首頁探索入口">
                     <a class="fp-primary-link" href="#season-races">探索本季賽事 ↓</a>
                     <a href="#getting-started">第一次看 F1 ↓</a>
@@ -141,14 +141,22 @@ def render_case(year, event, code, drivers, available):
         d["telemetry"][["Distance", "Speed"]].assign(Driver=c)
         for c, d in ((ref, d1), (comp, d2))
     ], ignore_index=True)
+    # Set finite domains from the actual samples so initial rendering does not
+    # need to infer extents before Streamlit supplies the Arrow dataset.
+    distance_domain = [float(samples["Distance"].min()), float(samples["Distance"].max())]
+    speed_min, speed_max = float(samples["Speed"].min()), float(samples["Speed"].max())
+    speed_padding = max((speed_max - speed_min) * .05, 1.0)
+    speed_domain = [max(0.0, speed_min - speed_padding), speed_max + speed_padding]
     st.vega_lite_chart(samples, {
         "height": 300,
         "mark": {"type": "line", "strokeWidth": 2, "clip": True},
         "encoding": {
             "x": {"field": "Distance", "type": "quantitative",
-                  "title": "距離（m）", "axis": {"tickCount": 5, "format": ",.0f"}},
+                  "title": "距離（m）", "scale": {"domain": distance_domain, "nice": False},
+                  "axis": {"tickCount": 5, "format": ",.0f"}},
             "y": {"field": "Speed", "type": "quantitative",
-                  "title": "速度（km/h）", "scale": {"zero": False},
+                  "title": "速度（km/h）",
+                  "scale": {"domain": speed_domain, "zero": False, "nice": False},
                   "axis": {"tickCount": 5}},
             "color": {"field": "Driver", "type": "nominal", "title": None,
                       "scale": {"domain": [ref, comp], "range": ["#ff6558", "#f1f0ec"]},
