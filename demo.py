@@ -21,6 +21,13 @@ SESSION_NAMES = {
 }
 
 st.set_page_config(page_title="Fastlap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
+if st.session_state.get("page", "home") == "home":
+    from homepage import render_home
+    render_home(Path(__file__).resolve().parent)
+    st.stop()
+if st.button("← 回到 2026 首頁"):
+    st.session_state["page"] = "home"
+    st.rerun()
 st.title("🏁 Fastlap Pro：F1 賽道戰術數據儀表板")
 st.caption("已保存賽事資料｜正賽／排位賽／衝刺賽最快圈比較；尚未開賽或尚未匯出的場次會顯示提示。")
 tab1, tab2, tab3 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數據摘要 (Summary)", "📖 互動式教學百科 (Guide)"])
@@ -63,12 +70,14 @@ try:
         available = sum(existing_path(root, current_year, event["event"], code).is_file()
                         for code in session_codes)
         return f'{event["event"]} ｜已存 {available}/{len(session_codes)} 場'
-    event_index = st.sidebar.selectbox("1. 選擇分站", range(len(events)), format_func=event_label)
+    event_index = st.sidebar.selectbox("1. 選擇分站", range(len(events)), format_func=event_label, key="event_index")
     selected = events[event_index]
     selected_event = selected["event"]
     selected_session_codes = [code for code in SESSION_NAMES if code in selected["sessions"]]
+    if st.session_state.get("session_code") not in selected_session_codes:
+        st.session_state["session_code"] = selected_session_codes[0]
     selected_type_code = st.sidebar.selectbox(
-        "2. 比賽類型", selected_session_codes, format_func=SESSION_NAMES.get
+        "2. 比賽類型", selected_session_codes, format_func=SESSION_NAMES.get, key="session_code"
     )
     start = selected["sessions"][selected_type_code]["start_utc"]
     state, message = session_state(start, now)

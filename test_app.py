@@ -7,10 +7,16 @@ from streamlit.testing.v1 import AppTest
 ROOT = Path(__file__).resolve().parent
 
 
+def analysis_app():
+    app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30)
+    app.session_state['page'] = 'analysis'
+    return app
+
+
 class AppTests(unittest.TestCase):
     def test_barcelona_sessions_stay_offline(self):
         with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
-            app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+            app = analysis_app().run()
             app.selectbox[0].set_value(6).run()
             self.assertFalse(app.exception)
             self.assertFalse(app.error)
@@ -27,7 +33,7 @@ class AppTests(unittest.TestCase):
 
     def test_austria_sessions_stay_offline(self):
         with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
-            app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+            app = analysis_app().run()
             app.selectbox[0].set_value(7).run()
             app.selectbox[2].set_value('BOT').run()
             for code in ('R', 'Q'):
@@ -41,7 +47,7 @@ class AppTests(unittest.TestCase):
 
     def test_british_sessions_stay_offline(self):
         with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
-            app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+            app = analysis_app().run()
             app.selectbox[0].set_value(8).run()
             app.selectbox[2].set_value('VER').run()
             for code in ('R', 'Q'):
@@ -55,7 +61,7 @@ class AppTests(unittest.TestCase):
 
     def test_belgian_sessions_stay_offline_and_handle_no_lap(self):
         with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
-            app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+            app = analysis_app().run()
             app.selectbox[0].set_value(9).run()
             self.assertFalse(app.exception)
             self.assertFalse(app.error)
@@ -73,7 +79,7 @@ class AppTests(unittest.TestCase):
             self.assertFalse(any('最快圈胎齡：未提供' in m.value for m in app.markdown))
 
     def test_sprint_session_available(self):
-        app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+        app = analysis_app().run()
         app.selectbox[0].set_value(1).run()
         self.assertFalse(app.exception)
         self.assertIn('衝刺賽 (Sprint)', app.selectbox[1].options)
@@ -83,12 +89,12 @@ class AppTests(unittest.TestCase):
         self.assertEqual(len(app.selectbox[2].options), 22)
 
     def test_available_missing_and_future(self):
-        app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+        app = analysis_app().run()
         self.assertFalse(app.exception)
         self.assertEqual(len(app.selectbox), 4)
         self.assertEqual(len(app.selectbox[2].options), 22)
         self.assertTrue(any('最快圈圈次：第' in item.value for item in app.markdown))
-        unavailable_app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+        unavailable_app = analysis_app().run()
         unavailable_app.selectbox[2].set_value('HUL').run()
         self.assertFalse(unavailable_app.exception)
         self.assertTrue(any('無法繪製' in i.value for i in unavailable_app.info))
@@ -97,7 +103,7 @@ class AppTests(unittest.TestCase):
             self.assertFalse(app.exception)
             self.assertTrue(any('尚未開賽' in i.value for i in app.info))
             self.assertEqual(len(app.selectbox), 2)
-        missing_app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30)
+        missing_app = analysis_app()
         with patch('race_data.Path.is_file', return_value=False), patch(
                 'race_data.session_state', return_value=('missing', '資料尚未收錄')):
             missing_app.run()
