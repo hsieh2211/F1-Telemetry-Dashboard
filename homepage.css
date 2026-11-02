@@ -1,6 +1,7 @@
 /* Loaded only on the homepage; native analysis charts remain unchanged. */
 [data-testid="stAppViewContainer"] {background:#101114;color:#f2f1ed;}
-[data-testid="stMainBlockContainer"] {max-width:1200px;padding-top:2rem;padding-bottom:3rem;}
+[data-testid="stMainBlockContainer"] {max-width:1200px;padding-top:5rem;padding-bottom:3rem;}
+[data-testid="stMain"] {scroll-padding-top:5rem;}
 .fp-brand,.fp-hero,.fp-hero * {box-sizing:border-box;}
 .fp-brand {font:bold italic 24px Arial,sans-serif;border-bottom:1px solid #34363c;padding:8px 0 18px;}
 .fp-brand .fp-brand-accent {color:#ff6558;}
@@ -23,7 +24,7 @@
     .fp-year {font-size:88px;}
 }
 @media(max-width:650px) {
-    [data-testid="stMainBlockContainer"] {padding-top:1.25rem;padding-left:1rem;padding-right:1rem;}
+    [data-testid="stMainBlockContainer"] {padding-top:5rem;padding-left:1rem;padding-right:1rem;}
     .fp-hero {grid-template-columns:minmax(0,1fr);padding:22px 0 24px;gap:0;}
     .fp-year {display:none;}
     .fp-brand {font-size:22px;padding-bottom:14px;}
