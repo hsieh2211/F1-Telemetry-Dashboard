@@ -7,6 +7,7 @@ import pandas as pd
 import streamlit as st
 
 from race_data import read_catalogue, read_payload, existing_path, SESSION_NAMES
+from race_guide import load_guides, render_next_race, render_race_guide
 
 
 def taipei_time(value):
@@ -60,15 +61,22 @@ def render_home(root):
         return
 
     events, year = catalogue["events"], catalogue["year"]
+    try:
+        guides = load_guides(root)
+    except (OSError, ValueError, TypeError):
+        guides = {}
     st.header("2026 賽事與分析", anchor="season-races")
     st.caption("先選一站，再看一圈。分析範圍為各車手最快圈，並非整場逐圈資料。")
+    render_next_race(events, guides)
     featured = next((i for i, e in enumerate(events) if e["event"] == "United States Grand Prix"), 0)
     col1, col2 = st.columns([2, 1])
     index = col1.selectbox("選擇 2026 分站", range(len(events)), index=featured,
-                           format_func=lambda i: events[i]["event"], key="home_event")
+                           format_func=lambda i: (guides.get("events", {}).get(events[i]["event"], {}).get("title", events[i]["event"]) + " · " + events[i]["event"]), key="home_event")
     event = events[index]
     codes = [c for c in SESSION_NAMES if c in event["sessions"]]
     code = col2.selectbox("場次", codes, format_func=SESSION_NAMES.get, key="home_session")
+    render_race_guide(event, code, guides, catalogue)
+    st.markdown("**這個場次的離線分析**")
     path = existing_path(root, year, event["event"], code)
     case = None
     if path.is_file():
