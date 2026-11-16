@@ -19,7 +19,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/mclaren"
         }
-      ]
+      ],
+      "watch": {
+        "question": "同一台 MCL40，Norris 與 Piastri 的時間差出現在哪一段？",
+        "look_for": "先比較同場排位、同胎種的兩個有效圈，分別看直線與彎道附近的速度變化。",
+        "needs": "要談誰整場較穩，還需要連續圈速、交通與輪胎使用段。"
+      }
     },
     "mercedes": {
       "name": "Mercedes",
@@ -37,7 +42,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/mercedes"
         }
-      ]
+      ],
+      "watch": {
+        "question": "Russell 與 Antonelli 駕駛 W17，兩個最快圈的條件接近嗎？",
+        "look_for": "先看圈次、胎種與胎齡，再找速度、油門與煞車同時變化的區段。",
+        "needs": "其他車隊也用 Mercedes 動力；跨隊差距不能直接算成引擎或某位車手的優勢。"
+      }
     },
     "red-bull-racing": {
       "name": "Red Bull Racing",
@@ -60,7 +70,12 @@
           "title": "2026 季中代打公告",
           "url": "https://www.formula1.com/en/latest/article/red-bull-confirm-hadjar-to-miss-dutch-grand-prix-as-lawson-steps-up-and-tsunoda-returns.3D3k7oc9dUwwEBZC7upjR1.3D3k7oc9dUwwEBZC7upjR1"
         }
-      ]
+      ],
+      "watch": {
+        "question": "這一站 Verstappen 的隊友是 Hadjar，還是代打的 Lawson？",
+        "look_for": "先核對本站匯出名單，再比較兩位實際駕駛 RB22 的車手。",
+        "needs": "跨場比較 Hadjar 與 Lawson，需要另外控制賽道、天候與賽車版本；不能把兩人紀錄合成一位隊友。"
+      }
     },
     "ferrari": {
       "name": "Ferrari",
@@ -78,7 +93,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/ferrari"
         }
-      ]
+      ],
+      "watch": {
+        "question": "Leclerc 與 Hamilton 的 SF-26，在進彎與出彎各呈現什麼差異？",
+        "look_for": "選一段距離，同時看速度下降、煞車切換與油門恢復，而非只看整圈秒數。",
+        "needs": "目前沒有共同 GPS 對齊或車載影像佐證，不能據此斷言誰晚煞幾公尺；過往冠軍也不是本圈證據。"
+      }
     },
     "williams": {
       "name": "Williams",
@@ -96,7 +116,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/williams"
         }
-      ]
+      ],
+      "watch": {
+        "question": "Albon 與 Sainz 的 FW48，差距集中在直線還是轉彎區段？",
+        "look_for": "先找同場、同胎種的最快圈，再描述差異出現的位置；不要預先替兩人貼風格標籤。",
+        "needs": "即使同用 Mercedes 動力，FW48 與 W17 仍是不同賽車；要解釋成因還需設定、油量與能量訊號。"
+      }
     },
     "racing-bulls": {
       "name": "Racing Bulls",
@@ -119,7 +144,12 @@
           "title": "2026 季中代打公告",
           "url": "https://www.formula1.com/en/latest/article/red-bull-confirm-hadjar-to-miss-dutch-grand-prix-as-lawson-steps-up-and-tsunoda-returns.3D3k7oc9dUwwEBZC7upjR1.3D3k7oc9dUwwEBZC7upjR1"
         }
-      ]
+      ],
+      "watch": {
+        "question": "Lindblad 在這站的隊友是 Lawson 還是 Tsunoda？",
+        "look_for": "先從本站名單找出 VCARB 03 的實際組合，再看同場比較條件。",
+        "needs": "Red Bull Racing 與 Racing Bulls 不是同一參賽車隊；換隊前後的圈速不能直接當同車測試。"
+      }
     },
     "aston-martin": {
       "name": "Aston Martin",
@@ -137,7 +167,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/aston-martin"
         }
-      ]
+      ],
+      "watch": {
+        "question": "Alonso 與 Stroll 的 AMR26，出彎加速差異能延續到直線嗎？",
+        "look_for": "看油門恢復後速度曲線如何變化，並先核對胎種與胎齡。",
+        "needs": "2026 使用 Honda 動力是背景；沒有部署訊號，不能把某段加速差直接歸因於 Honda。"
+      }
     },
     "haas": {
       "name": "Haas F1 Team",
@@ -161,7 +196,12 @@
           "title": "2026 年 11 月 4 日車隊席次公告",
           "url": "https://www.haasf1team.com/news/team-statement-driver-update-0"
         }
-      ]
+      ],
+      "watch": {
+        "question": "這份 VF-26 紀錄，是哪一位車手實際跑出的？",
+        "look_for": "墨西哥與巴西有不同代打／更替；先看本站名單，再與 Bearman 比較。缺姓名或車隊時保留未提供。",
+        "needs": "Ocon、Hirakawa 與 Câmara 的資料屬於不同出賽情境；缺有效最快圈也不等於未參賽。"
+      }
     },
     "audi": {
       "name": "Audi",
@@ -179,7 +219,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/audi"
         }
-      ]
+      ],
+      "watch": {
+        "question": "Audi 首季的 R26，Hülkenberg 與 Bortoleto 各在哪段較快？",
+        "look_for": "先從同場的兩圈找差異，再檢查輪胎條件；把本季 Audi 與舊賽季 Sauber 紀錄分開。",
+        "needs": "換了底盤與動力規則，不能用跨年單圈秒數直接衡量 Audi 的進步幅度。"
+      }
     },
     "alpine": {
       "name": "Alpine",
@@ -197,7 +242,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/alpine"
         }
-      ]
+      ],
+      "watch": {
+        "question": "使用 Mercedes 動力的 A526，Gasly 與 Colapinto 的差異在哪？",
+        "look_for": "在同場比較直線與減速區段，先核對胎種與胎齡，不先把直線差歸因於換引擎。",
+        "needs": "要比較改用 Mercedes 前後的效果，需要處理跨年規則、賽車、天氣與輪胎差異。"
+      }
     },
     "cadillac": {
       "name": "Cadillac",
@@ -215,7 +265,12 @@
           "title": "F1 官方車隊、車型與動力資料",
           "url": "https://www.formula1.com/en/teams/cadillac"
         }
-      ]
+      ],
+      "watch": {
+        "question": "Cadillac 首季，Pérez 與 Bottas 在這場都有可比較的最快圈嗎？",
+        "look_for": "先看名單與有效圈是否齊全；有兩個有效圈後，再比較 MAC-26 的單圈訊號。",
+        "needs": "未出發、退賽、沒有有效圈是不同狀態；目前最快圈匯出檔不能單獨確認所有原因。"
+      }
     }
   },
   "drivers": {

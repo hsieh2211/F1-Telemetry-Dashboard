@@ -31,6 +31,13 @@ def open_analysis(index, code):
     st.rerun()
 
 
+def choose_home_entry(section, index=None):
+    """Apply a quick entry before its dependent widgets are instantiated."""
+    st.session_state["home_section"] = section
+    if index is not None:
+        st.session_state.update(home_event=index, home_session="R")
+
+
 def render_home(root):
     css = (root / "homepage.css").read_text(encoding="utf-8")
     st.html(f"<style>{css}</style>")
@@ -41,13 +48,9 @@ def render_home(root):
         </div>
         <section class="fp-hero" aria-label="Fastlap Pro 2026 賽季介紹">
             <div class="fp-hero-copy">
-                <p class="fp-eyebrow">從認識，到深入</p>
-                <h1 class="fp-title">每一圈，都有值得<br><span class="fp-title-accent">看懂的細節。</span></h1>
-                <p class="fp-description">從你支持的車手，到一圈之間的差距。一起探索 <span class="fp-nowrap">Formula 1。</span></p>
-                <nav class="fp-home-links" aria-label="首頁探索入口">
-                    <a class="fp-primary-link" href="#season-races">開始探索 2026 ↓</a>
-                    <span class="fp-entry-hint">案例與分析 · 賽程與賽道 · 賽季知識</span>
-                </nav>
+                <p class="fp-eyebrow">讓更多人在台灣，一起看懂 F1</p>
+                <h1 class="fp-title">2026 F1，<br><span class="fp-title-accent">從這一站看懂。</span></h1>
+                <p class="fp-description">台灣時間賽程、繁中觀賽重點，與真實單圈資料帶讀。</p>
             </div>
             <div class="fp-year" aria-hidden="true">20<br>26</div>
         </section>
@@ -66,17 +69,28 @@ def render_home(root):
         guides = load_guides(root)
     except (OSError, ValueError, TypeError):
         guides = {}
-    st.header("2026 賽事與分析", anchor="season-races")
-    st.caption("先選一站，再看一圈。分析範圍為各車手最快圈，並非整場逐圈資料。")
-    render_next_race(events, guides)
     featured = next((i for i, e in enumerate(events) if e["event"] == "United States Grand Prix"), 0)
+    upcoming = render_next_race(events, guides)
+    next_entry, beginner_entry, case_entry = st.columns(3)
+    if upcoming:
+        next_entry.button("下一站賽程", key="home_next", use_container_width=True,
+                          on_click=choose_home_entry, args=("賽程與賽道", events.index(upcoming)))
+    else:
+        next_entry.button("完整賽曆", key="home_calendar", use_container_width=True,
+                          on_click=choose_home_entry, args=("賽程與賽道",))
+    beginner_entry.button("新手從這裡開始", key="home_beginner", use_container_width=True,
+                          on_click=choose_home_entry, args=("2026 賽季知識",))
+    case_entry.button("看真實案例", key="home_case", use_container_width=True,
+                      on_click=choose_home_entry, args=("案例與分析", featured))
+    st.header("2026 賽事與分析", anchor="season-races")
+    st.caption("下方為你選擇的分站；與上方下一站提示分開。分析使用個人最快圈。")
     col1, col2 = st.columns([2, 1])
     index = col1.selectbox("選擇 2026 分站", range(len(events)), index=featured,
                            format_func=lambda i: (guides.get("events", {}).get(events[i]["event"], {}).get("title", events[i]["event"]) + " · " + events[i]["event"]), key="home_event")
     event = events[index]
     codes = [c for c in SESSION_NAMES if c in event["sessions"]]
     code = col2.selectbox("場次", codes, format_func=SESSION_NAMES.get, key="home_session")
-    case_tab, guide_tab, season_tab = st.tabs(["案例與分析", "賽程與賽道", "2026 賽季知識"])
+    case_tab, guide_tab, season_tab = st.tabs(["案例與分析", "賽程與賽道", "2026 賽季知識"], key="home_section", on_change="rerun")
     with case_tab:
         path = existing_path(root, year, event["event"], code)
         case = None
@@ -95,7 +109,7 @@ def render_home(root):
             available = [c for c, d in drivers.items() if d["available"]]
             st.success(f"已讀取並驗證：{len(drivers)} 位車手名單，{len(available)} 位可比較最快圈。")
             left, right = st.columns(2)
-            if left.button("直接分析 →", type="primary", use_container_width=True):
+            if left.button("直接分析 →", key="home_analysis", type="primary", use_container_width=True):
                 open_analysis(index, code)
             right.markdown('[帶我看懂：閱讀下方真實資料範例 ↓](#real-example)')
             with st.expander("資料來源、匯出時間與缺漏"):
@@ -122,6 +136,7 @@ def render_home(root):
         render_race_guide(event, code, guides, catalogue)
     with season_tab:
         st.header("認識 2026 賽場")
+        beginner_section()
         render_profiles(root, year, drivers if case else {})
         st.caption("以下為所選場次的原始名單快照；不因本季介紹更新而覆蓋。")
         if case:
@@ -141,7 +156,6 @@ def render_home(root):
                 st.caption("人物與車款入門介紹見本分頁上方；完整規章、每站升級套件與性能分析不包含在這份摘要。")
             except (OSError, ValueError, KeyError, TypeError):
                 st.info("此賽季規則內容暫時無法讀取；不以其他年份內容替代。")
-        beginner_section()
     st.divider()
     st.write("讓更多人在台灣，一起看懂 F1。")
     st.caption("獨立車迷專題，與 Formula 1 官方無隸屬關係。資料依賽季保存；目前首頁聚焦 2026。")
@@ -285,6 +299,8 @@ def render_walkthrough(phase, year, event, code, ref, comp, a, b):
         if notes:
             st.write("解讀時必須保留的條件：" + "；".join(notes))
         st.write("可以說：這兩個最快圈的用時與取樣訊號有何差異。還不能說：較快者整場更強、賽車一定更好，或某個進站策略一定有效。")
+        st.markdown("**這次學到**：先核對比較條件，再描述差異；單次成績與整場表現是兩個不同問題。")
+        st.markdown("**接著試試**：換成同隊兩位車手，重看『2｜證據』。同隊仍可能用不同胎種與胎齡；如果條件不近，就保留疑問。")
         st.caption(f"本例依 {year} · {event} · {SESSION_NAMES[code]} 的所選兩車資料即時生成；不是官方賽後戰報或完整逐圈分析。")
 
 

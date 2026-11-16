@@ -34,13 +34,26 @@ def load_guides(root):
     return data
 
 
-def render_next_race(events, guides):
-    event = next_race(events)
+def render_next_race(events, guides, now=None):
+    event = next_race(events, now)
     if event:
-        title = guides.get("events", {}).get(event["event"], {}).get("title", event["event"])
-        st.caption(f"接下來的正賽｜{title} · {start_label(event['sessions']['R']['start_utc'])}（台灣時間）")
+        guide = guides.get("events", {}).get(event["event"], {})
+        title = guide.get("title", event["event"])
+        with st.container(border=True):
+            st.caption("下一站｜台灣時間 Asia/Taipei")
+            st.subheader(title, anchor="next-weekend")
+            st.markdown(f"**正賽 {start_label(event['sessions']['R']['start_utc'])}**")
+            for session in ("Q", "S"):
+                if session in event["sessions"]:
+                    st.caption(f"{SESSION_NAMES[session]} {start_label(event['sessions'][session]['start_utc'])}")
+            for point in guide.get("watch", []):
+                st.write(f"• {point}")
+            if guide.get("source"):
+                st.markdown(f"[官方本站賽程]({guide['source']})")
+            st.caption(f"預定開始時間，日期已換算跨日；賽程核對：{guides.get('schedule_checked_on', guides.get('checked_on', '未提供'))}。觀賽重點為本站整理。")
     else:
-        st.caption("本地賽程中已無尚未到達預定開始時間的正賽。")
+        st.info("本地賽程中已無尚未到達預定開始時間的正賽；仍可查看完整賽曆與已保存的案例。")
+    return event
 
 
 def render_race_guide(event, code, guides, catalogue, now=None):
@@ -69,11 +82,11 @@ def render_race_guide(event, code, guides, catalogue, now=None):
         if depth == "第一次看":
             st.write(f"**先找畫面**： {guide['watch'][0]}")
             st.write("**再看動作**： 跟著一台車看完『減速 → 轉彎 → 加速』。出彎就是車子離開彎道、逐步加速的階段；別急著一次追全場。")
-            st.write("**最後問一句**： 這個彎出口加速較順，下一段是否仍占優？下方有資料時，可放大一段距離，對照速度、油門與煞車。")
+            st.write("**最後問一句**： 這個彎出口加速較順，下一段是否仍占優？切到『案例與分析』，有離線資料的場次可對照速度、油門與煞車。")
         elif depth == "常看比賽":
             for i, point in enumerate(guide["watch"], 1):
                 st.write(f"{i}. {point}")
-            st.write("**驗證攻防**： 先分清是排位單圈還是正賽跟車，再看前後車距、胎種、胎齡與進站前後位置。下方最快圈只能提供單圈線索，不能驗證整場策略。")
+            st.write("**驗證攻防**： 先分清是排位單圈還是正賽跟車，再看前後車距、胎種、胎齡與進站前後位置。『案例與分析』的最快圈只能提供單圈線索，不能驗證整場策略。")
         else:
             st.write(f"**待驗證問題**： {guide['watch'][1]}")
             st.write("**需要的證據**： 同場逐圈時間、車距、輪胎使用段、進站與賽道狀態；判斷能量或空力模式還需要對應訊號。")
@@ -90,5 +103,5 @@ def render_race_guide(event, code, guides, catalogue, now=None):
         if guide:
             st.markdown(f"[F1 官方本站賽程與賽道介紹]({guide['source']})")
         st.markdown("[F1 官方完整賽曆](https://www.formula1.com/en/racing/2026)")
-        st.caption(f"官方資料核對：{guides.get('checked_on', '未提供')}。賽程為本地保存快照，可能調整；觀賽前請再確認官方本站頁面。")
+        st.caption(f"賽道介紹核對：{guides.get('checked_on', '未提供')}；賽程核對：{guides.get('schedule_checked_on', guides.get('checked_on', '未提供'))}。賽程為本地保存快照，可能調整；觀賽前請再確認官方本站頁面。")
 

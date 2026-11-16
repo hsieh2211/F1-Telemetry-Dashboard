@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "updated_at": "2026-11-14T12:40:00Z",
+  "updated_at": "2026-11-16",
   "source": "https://www.formula1.com/en/racing/2026",
   "events": [
     {
@@ -298,5 +298,5 @@
       }
     }
   ],
-  "verification_note": "R、Q、S 開始時間已於 2026-11-14 對照各站 F1 官方頁；以 UTC 保存。"
+  "verification_note": "2026-11-16 重新對照 23 站 F1 官方頁，Q/R/S 共 52 個預定開始時間一致；以 UTC 保存。核對範圍與來源見 source_checks_2026.json。"
 }

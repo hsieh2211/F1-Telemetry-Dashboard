@@ -56,7 +56,7 @@ class RaceGuideTests(unittest.TestCase):
             self.assertTrue(any("STR：胎齡未提供" in x.value for x in app.markdown))
             app.selectbox(key="home_session").set_value("Q").run()
             self.assertTrue(any("22 位可比較" in x.value for x in app.success))
-            app.button[0].click().run()
+            app.button(key="home_analysis").click().run()
             self.assertFalse(app.exception)
             self.assertEqual(app.selectbox(key="session_code").value, "Q")
             self.assertEqual(app.selectbox(key="event_index").value, 19)

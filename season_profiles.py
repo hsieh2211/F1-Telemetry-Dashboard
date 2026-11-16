@@ -14,6 +14,9 @@ def load_profiles(root, year):
             raise ValueError("車隊或車款介紹不完整")
         if any(code not in drivers or key not in drivers[code]["teams"] for code in team["driver_codes"]):
             raise ValueError("車隊與車手關聯不一致")
+        watch = team.get("watch", {})
+        if not all(watch.get(field) for field in ("question", "look_for", "needs")):
+            raise ValueError("車隊觀賽問題或證據範圍不完整")
     for code, driver in drivers.items():
         if not all(driver.get(field) for field in ("name", "name_zh", "nationality", "number", "teams", "intro", "sources")):
             raise ValueError("車手介紹不完整")
@@ -63,8 +66,11 @@ def render_profiles(root, year, snapshot):
             entered = [c for c, d in snapshot.items() if d.get("team") == team["name"]]
             st.info("所選場次匯出名單中的本隊車手：" + ("、".join(entered) if entered else "無可核對的車隊欄位；請查看下方場次快照。"))
         st.caption("車型是當季底盤名稱，不代表全年使用完全相同的零件。相同動力單元供應商也不代表相同底盤或性能。")
-        with st.expander("觀賽時，可以怎麼認識這支車隊？"):
-            st.write("先在同一場次找到隊友，再核對圈次、胎種與胎齡後比較。若涉及代打或換隊，先看該場實際名單；不要把不同車隊時期的成績混成同一組隊友比較。")
+        st.markdown(f"**這隊怎麼看｜{team['watch']['question']}**")
+        st.write(team['watch']['look_for'])
+        st.caption("本站觀賽提問，依上方當季背景整理；不是已驗證的性能結論。")
+        with st.expander("想深入？先確認需要哪些證據"):
+            st.write(team['watch']['needs'])
             peers = [v["name"] for k, v in teams.items() if k != key and v["power_unit"] == team["power_unit"]]
             st.write("本季使用同一動力單元供應商的其他車隊：" + ("、".join(peers) if peers else "本介紹中沒有其他車隊。"))
         show_sources(team["sources"], data["checked_on"])
@@ -75,6 +81,10 @@ def render_profiles(root, year, snapshot):
         st.caption(f"{driver['nationality']}｜{year} 車號 {driver['number']}｜代碼 {code}")
         st.write(driver["intro"])
         st.write(f"{year} 所屬／曾出賽車隊：" + "、".join(teams[k]["name"] for k in driver["teams"]))
+        st.markdown("**從這位車手開始看比賽**")
+        for key in driver["teams"]:
+            st.write(f"{teams[key]['name_zh']}｜{teams[key]['watch']['question']}")
+        st.caption("先確認他在所選場次的實際車隊，再使用該隊的觀賽問題。")
         if code in snapshot:
             st.info(f"所選場次有 {code} 的名單紀錄；匯出車隊：{known(snapshot[code].get('team'))}。有名單不等於有有效最快圈。")
         elif snapshot:
