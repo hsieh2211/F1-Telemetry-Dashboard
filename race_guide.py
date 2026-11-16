@@ -1,5 +1,4 @@
 """Offline race-weekend guide; times are stored in UTC and displayed in Taipei."""
-import json
 from datetime import datetime, timezone
 from html import escape
 from zoneinfo import ZoneInfo
@@ -7,6 +6,7 @@ from zoneinfo import ZoneInfo
 import streamlit as st
 
 from race_data import SESSION_NAMES, parse_utc
+from season_content import load_season_content
 
 TAIPEI = ZoneInfo("Asia/Taipei")
 WEEKDAYS = "一二三四五六日"
@@ -28,7 +28,7 @@ def next_race(events, now=None):
 
 
 def load_guides(root):
-    data = json.loads((root / "data" / "race_guides_2026.json").read_text(encoding="utf-8"))
+    data = load_season_content(root, 2026, "race_guides")
     if data.get("year") != 2026 or not isinstance(data.get("events"), dict):
         raise ValueError("賽事導覽格式無效")
     return data
@@ -65,8 +65,19 @@ def render_race_guide(event, code, guides, catalogue, now=None):
     st.caption("時間已過不代表已完賽；可否分析，以這個場次的離線資料驗證結果為準。衝刺賽與正賽排位是不同場次。")
     if guide:
         st.markdown("**觀賽先看這兩件事**")
-        for i, point in enumerate(guide["watch"], 1):
-            st.write(f"{i}. {point}")
+        depth = st.radio("你想怎麼看這一站？", ["第一次看", "常看比賽", "深入查核"], horizontal=True, key="guide_depth")
+        if depth == "第一次看":
+            st.write(f"**先找畫面**： {guide['watch'][0]}")
+            st.write("**再看動作**： 跟著一台車看完『減速 → 轉彎 → 加速』。出彎就是車子離開彎道、逐步加速的階段；別急著一次追全場。")
+            st.write("**最後問一句**： 這個彎出口加速較順，下一段是否仍占優？下方有資料時，可放大一段距離，對照速度、油門與煞車。")
+        elif depth == "常看比賽":
+            for i, point in enumerate(guide["watch"], 1):
+                st.write(f"{i}. {point}")
+            st.write("**驗證攻防**： 先分清是排位單圈還是正賽跟車，再看前後車距、胎種、胎齡與進站前後位置。下方最快圈只能提供單圈線索，不能驗證整場策略。")
+        else:
+            st.write(f"**待驗證問題**： {guide['watch'][1]}")
+            st.write("**需要的證據**： 同場逐圈時間、車距、輪胎使用段、進站與賽道狀態；判斷能量或空力模式還需要對應訊號。")
+            st.write("**目前能查到**： 個人最快圈、匯出圈次與輪胎欄位，以及速度、油門、煞車取樣。尚未接入完整逐圈策略資料，不生成輪胎衰退率或進站收益結論。")
         st.caption("觀賽重點由本站依賽道特性整理；不是本場結果或策略預測。")
     with st.expander("完整賽曆與資料依據"):
         rows = []

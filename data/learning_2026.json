@@ -1,0 +1,31 @@
+{
+  "year": 2026,
+  "checked_on": "2026-11-16",
+  "rules": [
+    {
+      "title": "主動空力：直線與彎道有不同需求",
+      "explanation": "2026 前後翼可調整，Straight Mode 降低直線阻力，Corner Mode 提供過彎所需下壓力。使用區域與限制依當站安排，並非每站都能開啟。",
+      "observe": "看轉播時先分清空力模式與超車模式。2026 摩納哥站停用主動空力，不能假設所有賽道都相同。"
+    },
+    {
+      "title": "Overtake Mode：超車輔助靠額外電能",
+      "explanation": "符合偵測點與車距條件的後車，可獲得額外電能回收與部署能力。它取代舊式 DRS 的超車輔助角色，與主動空力不同。",
+      "observe": "看到追近，不急著歸因尾翼開啟；還要核對可用模式、電能與車距。本站匯出檔沒有這些模式訊號。"
+    },
+    {
+      "title": "Boost 與 Recharge：速度背後也有能量管理",
+      "explanation": "Boost 用於部署回收的能量，可攻擊也可防守；Recharge 則補充電池能量。2026 動力單元更重視電力，MGU-H 移除，MGU-K 電力上限提高至 350 kW。",
+      "observe": "提前收油可能涉及能量管理，也可能有其他原因；只靠速度與油門曲線無法確認原因。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "F1 官方｜2026 術語與動力規則入門",
+      "url": "https://corp.formula1.com/f1-2026-regulations-terminology-update/"
+    },
+    {
+      "title": "F1 官方｜2026 摩納哥主動空力限制說明",
+      "url": "https://www.formula1.com/en/latest/article/explained-why-active-aero-will-not-be-used-at-the-monaco-grand-prix.4nLtpjM9ZTUbPBQLmeAbj4.4nLtpjM9ZTUbPBQLmeAbj4"
+    }
+  ]
+}

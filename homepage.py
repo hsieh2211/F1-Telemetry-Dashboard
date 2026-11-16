@@ -8,6 +8,7 @@ import streamlit as st
 
 from race_data import read_catalogue, read_payload, existing_path, SESSION_NAMES
 from race_guide import load_guides, render_next_race, render_race_guide
+from season_content import load_season_content, comparison_flags, window_samples
 
 
 def taipei_time(value):
@@ -123,7 +124,18 @@ def render_home(root):
         with st.expander("車手與車隊：查看本場參賽名單"):
             st.dataframe([{"車手": f"{c} · {d['name']}", "車隊": d["team"]} for c, d in drivers.items()], hide_index=True, use_container_width=True)
     with st.expander("2026 賽車與規則"):
-        st.info("當季規則專頁尚待核對官方文件後製作。目前只提供下方通用觀賽概念，不以舊年份規則代替 2026 規則。")
+        try:
+            learning = load_season_content(root, year, "learning")
+            st.caption(f"適用賽季：{year}｜來源核對：{learning['checked_on']}。以下是觀賽入門重點，完整規定及本站限制以 FIA 文件與當站公告為準。")
+            for item in learning["rules"]:
+                st.markdown(f"**{item['title']}**")
+                st.write(item["explanation"])
+                st.caption(item["observe"])
+            for source in learning["sources"]:
+                st.markdown(f"[{source['title']}]({source['url']})")
+            st.caption("車手與車隊名單依所選場次快照顯示；替補與轉隊不回寫其他場次。本站尚未製作全部 2026 車款介紹。")
+        except (OSError, ValueError, KeyError, TypeError):
+            st.info("此賽季規則內容暫時無法讀取；不以其他年份內容替代。")
     beginner_section()
     st.divider()
     st.write("讓更多人在台灣，一起看懂 F1。")
@@ -143,12 +155,21 @@ def render_case(year, event, code, drivers, available):
     d1, d2 = drivers[ref], drivers[comp]
     a.metric(f"{ref} 個人最快圈", f"{d1['lap_seconds']:.3f} 秒")
     b.metric(f"{comp} 個人最快圈", f"{d2['lap_seconds']:.3f} 秒")
+    st.caption("上方為整圈用時；放大圖表不會把它改成區段用時。")
+    st.markdown("**讀圖三步：找減速 → 對照動作 → 檢查比較條件。**")
+    st.caption("橫軸是沿著各自這一圈累積的距離，縱軸是速度。曲線較高，只代表該取樣位置速度較高。")
     # Keep every offline sample; browser rendering preserves readable labels
     # and a fixed plotting height when the available width changes.
     samples = pd.concat([
-        d["telemetry"][["Distance", "Speed"]].assign(Driver=c)
+        d["telemetry"][["Distance", "Speed", "Throttle", "Brake"]].assign(Driver=c)
         for c, d in ((ref, d1), (comp, d2))
     ], ignore_index=True)
+    window = st.selectbox("放大閱讀範圍", ["整圈", "前 1/3", "中 1/3", "後 1/3"], key="case_window")
+    samples = window_samples(samples, window)
+    st.caption("三等分按整圈距離劃分，不是官方計時段，也未對應精確彎號。兩圈未以共同 GPS 位置對齊，不能據此精算煞車點差幾公尺。")
+    if samples.empty or samples.groupby("Driver").size().reindex([ref, comp], fill_value=0).min() < 2:
+        st.info("此距離區段沒有足夠的兩車取樣，請改選其他範圍。")
+        return
     # Set finite domains from the actual samples so initial rendering does not
     # need to infer extents before Streamlit supplies the Arrow dataset.
     distance_domain = [float(samples["Distance"].min()), float(samples["Distance"].max())]
@@ -183,6 +204,23 @@ def render_case(year, event, code, drivers, available):
             "view": {"stroke": None},
         },
     }, width="stretch", key="home_speed_chart")
+    with st.expander("對照駕駛動作：油門與煞車"):
+        st.write("先找速度下降的位置，再對照煞車是否為 1、油門是否下降。煞車 1 只表示訊號啟用，不是踩踏力道；油門 100% 也不代表電力部署相同。")
+        for channel, title, domain in (("Throttle", "油門（%）", [0, 100]), ("Brake", "煞車（0／1）", [0, 1])):
+            signal = samples.copy()
+            signal[channel] = signal[channel].astype(float)
+            st.vega_lite_chart(signal, {
+                "height": 150,
+                "mark": {"type": "line", "interpolate": "step-after" if channel == "Brake" else "linear", "clip": True},
+                "encoding": {
+                    "x": {"field": "Distance", "type": "quantitative", "title": "距離（m）", "scale": {"domain": distance_domain, "nice": False}, "axis": {"tickCount": 4}},
+                    "y": {"field": channel, "type": "quantitative", "title": title, "scale": {"domain": domain}, "axis": {"tickCount": 2 if channel == "Brake" else 3}},
+                    "color": {"field": "Driver", "type": "nominal", "title": None, "scale": {"domain": [ref, comp], "range": ["#ff6558", "#f1f0ec"]}},
+                    "strokeDash": {"field": "Driver", "type": "nominal", "title": None},
+                    "tooltip": [{"field": "Driver"}, {"field": "Distance", "format": ".0f"}, {"field": channel}],
+                },
+            }, width="stretch", key=f"home_{channel}_chart")
+        st.caption("曲線連線用於閱讀離散取樣；訊號切換發生在兩個樣本之間的確切位置未知。此檔未含電池荷電狀態、Overtake Mode 或主動空力模式訊號。")
     depth = st.radio("閱讀深度", ["先看懂", "看判讀", "查方法"], horizontal=True, key="case_depth")
     if depth == "先看懂":
         gap = abs(d1["lap_seconds"] - d2["lap_seconds"])
@@ -195,6 +233,12 @@ def render_case(year, event, code, drivers, available):
     elif depth == "看判讀":
         st.dataframe([{"車手": c, "最快圈圈次": d["lap_number"], "胎種": d["compound"], "胎齡（圈）": d["tyre_life"]} for c, d in ((ref, d1), (comp, d2))], hide_index=True, use_container_width=True)
         st.write("圈次、胎種與胎齡可能不同。油量、交通與當時賽道狀況未在此資料中提供，因此不能直接歸因為車手技巧或賽車性能。")
+        notes = comparison_flags(d1, d2)
+        for note in notes:
+            st.warning(note)
+        if not notes:
+            st.info("這三個欄位相同，仍不能證明油量、交通、天候或能量部署相同。")
+        st.write("**可以下的結論**： 這兩個個人最快圈各有什麼用時與取樣訊號。**還不能下的結論**： 誰整場更快、哪台車一定更好，或一次進站能賺幾秒。")
     else:
         st.write(f"取樣點數：{ref} {len(d1['telemetry'])} 點；{comp} {len(d2['telemetry'])} 點。")
         st.write("來源為 FastF1 匯出的個人最快圈。此圖直接繪製各圈自己的 Distance 與 Speed，未做共同 GPS 位置對齊；取樣與各圈積分距離差異會影響比較。")
