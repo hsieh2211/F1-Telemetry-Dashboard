@@ -214,8 +214,8 @@ def render_case(year, event, code, drivers, available):
                 "mark": {"type": "line", "interpolate": "step-after" if channel == "Brake" else "linear", "clip": True},
                 "encoding": {
                     "x": {"field": "Distance", "type": "quantitative", "title": "距離（m）", "scale": {"domain": distance_domain, "nice": False}, "axis": {"tickCount": 4}},
-                    "y": {"field": channel, "type": "quantitative", "title": title, "scale": {"domain": domain}, "axis": {"tickCount": 2 if channel == "Brake" else 3}},
-                    "color": {"field": "Driver", "type": "nominal", "title": None, "scale": {"domain": [ref, comp], "range": ["#ff6558", "#f1f0ec"]}},
+                    "y": {"field": channel, "type": "quantitative", "title": title, "scale": {"domain": domain}, "axis": {"values": [0, 1]} if channel == "Brake" else {"tickCount": 3}},
+                    "color": {"field": "Driver", "type": "nominal", "title": None, "scale": {"domain": [ref, comp], "range": ["#ff6558", "#f1f0ec"]}, "legend": {"orient": "top"}},
                     "strokeDash": {"field": "Driver", "type": "nominal", "title": None},
                     "tooltip": [{"field": "Driver"}, {"field": "Distance", "format": ".0f"}, {"field": channel}],
                 },
