@@ -9,6 +9,7 @@ import streamlit as st
 from race_data import read_catalogue, read_payload, existing_path, SESSION_NAMES
 from race_guide import load_guides, render_next_race, render_race_guide
 from season_content import load_season_content, comparison_flags, window_samples
+from season_profiles import render_profiles, snapshot_rows
 
 
 def taipei_time(value):
@@ -121,10 +122,12 @@ def render_home(root):
         render_race_guide(event, code, guides, catalogue)
     with season_tab:
         st.header("認識 2026 賽場")
-        st.caption("以下名單來自所選場次的離線資料，是該場參賽快照；不作為全季固定陣容或名次。")
+        render_profiles(root, year, drivers if case else {})
+        st.caption("以下為所選場次的原始名單快照；不因本季介紹更新而覆蓋。")
         if case:
             with st.expander("車手與車隊：查看本場參賽名單"):
-                st.dataframe([{"車手": f"{c} · {d['name']}", "車隊": d["team"]} for c, d in drivers.items()], hide_index=True, use_container_width=True)
+                st.dataframe(snapshot_rows(drivers), hide_index=True, use_container_width=True)
+                st.caption("未提供代表匯出欄位缺漏；不以官方介紹靜默補寫原始紀錄。")
         with st.expander("2026 賽車與規則"):
             try:
                 learning = load_season_content(root, year, "learning")
@@ -135,7 +138,7 @@ def render_home(root):
                     st.caption(item["observe"])
                 for source in learning["sources"]:
                     st.markdown(f"[{source['title']}]({source['url']})")
-                st.caption("車手與車隊名單依所選場次快照顯示；替補與轉隊不回寫其他場次。本站尚未製作全部 2026 車款介紹。")
+                st.caption("人物與車款入門介紹見本分頁上方；完整規章、每站升級套件與性能分析不包含在這份摘要。")
             except (OSError, ValueError, KeyError, TypeError):
                 st.info("此賽季規則內容暫時無法讀取；不以其他年份內容替代。")
         beginner_section()

@@ -3,7 +3,7 @@ import json
 
 
 def load_season_content(root, year, resource):
-    if not isinstance(year, int) or resource not in {"learning", "race_guides"}:
+    if not isinstance(year, int) or resource not in {"learning", "race_guides", "profiles"}:
         raise ValueError("賽季或內容類型無效")
     data = json.loads((root / "data" / f"{resource}_{year}.json").read_text(encoding="utf-8"))
     if data.get("year") != year:
