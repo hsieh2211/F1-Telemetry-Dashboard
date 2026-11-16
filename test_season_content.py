@@ -66,6 +66,23 @@ class SeasonContentTests(unittest.TestCase):
             self.assertFalse(app.exception)
             self.assertTrue(any("沒有足夠的兩車取樣" in x.value for x in app.info))
 
+    def test_walkthrough_follows_real_pair_and_preserves_missing_conditions(self):
+        with patch("fastf1.get_session", side_effect=AssertionError("offline only")):
+            app = AppTest.from_file(str(ROOT / "demo.py"), default_timeout=30).run()
+            self.assertEqual(app.radio(key="walkthrough_step").value, "1｜問題")
+            for phase in ("2｜證據", "3｜觀察", "4｜結論"):
+                app.radio(key="walkthrough_step").set_value(phase).run()
+                self.assertFalse(app.exception)
+            self.assertTrue(any("LEC" in x.value and "1.110" in x.value for x in app.success))
+            app.selectbox(key="home_event").set_value(19).run()
+            app.selectbox(key="case_a").set_value("STR").run()
+            app.radio(key="walkthrough_step").set_value("2｜證據").run()
+            self.assertTrue(any("胎齡缺資料" in x.value for x in app.warning))
+            app.radio(key="walkthrough_step").set_value("4｜結論").run()
+            self.assertTrue(any("LEC" in x.value and "3.260" in x.value for x in app.success))
+            self.assertTrue(any("胎齡缺資料" in x.value for x in app.markdown))
+            self.assertFalse(app.exception)
+
 
 if __name__ == "__main__":
     unittest.main()

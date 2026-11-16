@@ -20,6 +20,7 @@
 .fp-home-links .fp-primary-link {background:#ff6558;color:#101114;border-radius:4px;padding:11px 16px;font-weight:600;}
 .fp-home-links a:hover {text-decoration:underline;}
 .fp-home-links a:focus-visible {outline:2px solid #ff6558;outline-offset:4px;}
+.fp-entry-hint {font-size:12px;line-height:1.8;color:#b7b9c1;}
 .fp-session-times {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;list-style:none;padding:0;margin:12px 0 8px;}
 .fp-session-times li {box-sizing:border-box;min-width:0;border:1px solid #34363c;border-radius:8px;padding:16px;background:#15171c;}
 .fp-session-times li.fp-session-current {border-color:#ff6558;box-shadow:inset 3px 0 #ff6558;}
