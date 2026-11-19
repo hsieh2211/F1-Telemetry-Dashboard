@@ -59,6 +59,17 @@ class HomepageTests(unittest.TestCase):
         self.assertEqual(taipei_time(None), "未提供")
         self.assertEqual(taipei_time("broken"), "時間格式無效")
 
+    def test_glossary_is_on_home_not_in_analysis(self):
+        app = self.app().run()
+        app.text_input(key="glossary_search").set_value("Brake").run()
+        self.assertTrue(any("這不是煞車壓力" in x.value for x in app.markdown))
+        app.button(key="home_analysis").click().run()
+        self.assertEqual(len(app.tabs), 2)
+        self.assertFalse(any("百科" in x.label for x in app.tabs))
+        app.button[0].click().run()
+        self.assertTrue(any("數據名詞與讀圖說明" in x.value for x in app.subheader))
+        self.assertFalse(app.exception)
+
     def test_quick_entries_change_destination_and_selected_race(self):
         events = read_catalogue(ROOT / "data/schedule_2026.json")["events"]
         with patch("race_guide.next_race", return_value=events[20]), patch("fastf1.get_session", side_effect=AssertionError("offline only")):

@@ -141,6 +141,7 @@ def render_home(root):
     with season_tab:
         st.header("認識 2026 賽場")
         beginner_section()
+        render_glossary()
         render_profiles(root, year, drivers if case else {})
         st.caption("以下為所選場次的原始名單快照；不因本季介紹更新而覆蓋。")
         if case:
@@ -321,3 +322,25 @@ def beginner_section():
         st.write("進站可更換輪胎，但會付出時間；何時換胎需衡量輪胎狀況、與對手的差距及場上情況。")
     with st.expander("③ 最快圈、胎齡與遙測是什麼？"):
         st.write("最快圈：指定範圍內用時最短的一圈。胎齡：該套輪胎累積使用圈數，可能包含先前場次。遙測：速度、油門與煞車等行駛訊號。")
+
+
+def render_glossary():
+    st.subheader("數據名詞與讀圖說明", anchor="data-glossary")
+    st.caption("先在這裡認識名詞，再進入數據比對。2026 模式與規則的官方來源見本分頁的『2026 賽車與規則』。")
+    query = st.text_input("搜尋數據名詞", placeholder="例如：時間差、輪胎、煞車", key="glossary_search").strip().casefold()
+    entries = [
+        ("Delta Time｜時間差", "比較兩個單圈在行駛進度上的累積用時差。本工具以各圈起終點正規化後近似對齊，再插值比較；不是共同 GPS 位置的精確對齊，也不是正賽兩車的即時車距。"),
+        ("Speed｜速度", "曲線高低表示取樣位置的車速。速度差可能與輪胎、油量、走線、交通、能量部署或設定有關，不能單靠尾速判斷引擎強弱，也不能以彎中速度直接量出下壓力。"),
+        ("Throttle｜油門", "0～100% 表示油門訊號。油門全開不等於電力部署相同；目前匯出沒有電池電量或超車模式訊號。"),
+        ("Brake｜煞車", "0 表示未啟用，1 表示啟用。這不是煞車壓力；訊號跳起不能解讀為重踩煞車，也不能單靠這個訊號評斷車手的侵略性。"),
+        ("Compound｜輪胎配方", "SOFT（軟）、MEDIUM（中性）、HARD（硬）是本站乾地胎的相對分類；另有半雨胎與全雨胎。最快圈比較要核對胎種與胎齡，不能預設軟胎在所有情況都較快。"),
+        ("Tyre Life｜胎齡", "這套輪胎已使用的圈數，不是車手本場跑過的總圈數。缺資料時保留未知，不把它視為新胎。"),
+        ("Tyre Degradation｜輪胎衰退", "輪胎性能隨使用與狀況改變。要判斷衰退，需要連續圈速、同一套輪胎的使用段、交通與賽道狀態；一個最快圈或單次速度下降不足以證明輪胎衰退。"),
+        ("Pit Stop／Undercut｜進站與提前換胎", "提前換胎可能利用新胎表現爭取位置，但也受暖胎、交通與進站損失影響。是否成功要看進站前後的實際位置及逐圈資料；本站最快圈不能驗證這項策略。"),
+    ]
+    matched = [(title, text) for title, text in entries if not query or query in (title + text).casefold()]
+    if not matched:
+        st.info("沒有找到這個名詞，請試試中文名稱或英文名稱。")
+    for title, text in matched:
+        with st.expander(title):
+            st.write(text)
