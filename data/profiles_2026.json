@@ -1,0 +1,695 @@
+{
+  "year": 2026,
+  "checked_on": "2026-11-16",
+  "scope": "2026 賽季人物與賽車入門；含季中代打，非即時出賽名單或性能排名。",
+  "teams": {
+    "mclaren": {
+      "name": "McLaren",
+      "name_zh": "麥拉倫",
+      "car": "MCL40",
+      "power_unit": "Mercedes",
+      "base": "英國沃金",
+      "intro": "1966 年以 McLaren 名義投入 F1 的英國車隊。2026 使用 Mercedes 動力單元，Norris 與 Piastri 延續合作。",
+      "driver_codes": [
+        "NOR",
+        "PIA"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/mclaren"
+        }
+      ],
+      "watch": {
+        "question": "同一台 MCL40，Norris 與 Piastri 的時間差出現在哪一段？",
+        "look_for": "先比較同場排位、同胎種的兩個有效圈，分別看直線與彎道附近的速度變化。",
+        "needs": "要談誰整場較穩，還需要連續圈速、交通與輪胎使用段。"
+      }
+    },
+    "mercedes": {
+      "name": "Mercedes",
+      "name_zh": "梅賽德斯",
+      "car": "W17",
+      "power_unit": "Mercedes",
+      "base": "英國布拉克利",
+      "intro": "同時參與底盤與動力單元研發的廠隊。2026 由 Russell 與 Antonelli 駕駛 W17；也向其他車隊供應動力單元。",
+      "driver_codes": [
+        "RUS",
+        "ANT"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/mercedes"
+        }
+      ],
+      "watch": {
+        "question": "Russell 與 Antonelli 駕駛 W17，兩個最快圈的條件接近嗎？",
+        "look_for": "先看圈次、胎種與胎齡，再找速度、油門與煞車同時變化的區段。",
+        "needs": "其他車隊也用 Mercedes 動力；跨隊差距不能直接算成引擎或某位車手的優勢。"
+      }
+    },
+    "red-bull-racing": {
+      "name": "Red Bull Racing",
+      "name_zh": "紅牛車隊",
+      "car": "RB22",
+      "power_unit": "Red Bull Ford",
+      "base": "英國米爾頓凱恩斯",
+      "intro": "2026 使用 Red Bull Ford 動力，開季由 Verstappen 搭配從 Racing Bulls 升上的 Hadjar。Lawson 曾於本季代打；兩支紅牛體系車隊仍是不同參賽車隊。",
+      "driver_codes": [
+        "VER",
+        "HAD",
+        "LAW"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/red-bull-racing"
+        },
+        {
+          "title": "2026 季中代打公告",
+          "url": "https://www.formula1.com/en/latest/article/red-bull-confirm-hadjar-to-miss-dutch-grand-prix-as-lawson-steps-up-and-tsunoda-returns.3D3k7oc9dUwwEBZC7upjR1.3D3k7oc9dUwwEBZC7upjR1"
+        }
+      ],
+      "watch": {
+        "question": "這一站 Verstappen 的隊友是 Hadjar，還是代打的 Lawson？",
+        "look_for": "先核對本站匯出名單，再比較兩位實際駕駛 RB22 的車手。",
+        "needs": "跨場比較 Hadjar 與 Lawson，需要另外控制賽道、天候與賽車版本；不能把兩人紀錄合成一位隊友。"
+      }
+    },
+    "ferrari": {
+      "name": "Ferrari",
+      "name_zh": "法拉利",
+      "car": "SF-26",
+      "power_unit": "Ferrari",
+      "base": "義大利馬拉內羅",
+      "intro": "1950 年即參與 F1 世界錦標賽的義大利車隊，自行研發賽車與動力單元。2026 延續 Leclerc、Hamilton 的搭檔。",
+      "driver_codes": [
+        "LEC",
+        "HAM"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/ferrari"
+        }
+      ],
+      "watch": {
+        "question": "Leclerc 與 Hamilton 的 SF-26，在進彎與出彎各呈現什麼差異？",
+        "look_for": "選一段距離，同時看速度下降、煞車切換與油門恢復，而非只看整圈秒數。",
+        "needs": "目前沒有共同 GPS 對齊或車載影像佐證，不能據此斷言誰晚煞幾公尺；過往冠軍也不是本圈證據。"
+      }
+    },
+    "williams": {
+      "name": "Williams",
+      "name_zh": "威廉斯",
+      "car": "FW48",
+      "power_unit": "Mercedes",
+      "base": "英國格羅夫",
+      "intro": "以英國格羅夫為基地，2026 的 FW48 使用 Mercedes 動力單元。Albon 與 Sainz 是本季的正選組合。",
+      "driver_codes": [
+        "ALB",
+        "SAI"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/williams"
+        }
+      ],
+      "watch": {
+        "question": "Albon 與 Sainz 的 FW48，差距集中在直線還是轉彎區段？",
+        "look_for": "先找同場、同胎種的最快圈，再描述差異出現的位置；不要預先替兩人貼風格標籤。",
+        "needs": "即使同用 Mercedes 動力，FW48 與 W17 仍是不同賽車；要解釋成因還需設定、油量與能量訊號。"
+      }
+    },
+    "racing-bulls": {
+      "name": "Racing Bulls",
+      "name_zh": "Racing Bulls",
+      "car": "VCARB 03",
+      "power_unit": "Red Bull Ford",
+      "base": "義大利法恩扎",
+      "intro": "以義大利法恩扎為基地的獨立參賽車隊，承接 Toro Rosso、AlphaTauri 等隊名的沿革。2026 開季由 Lawson、Lindblad 搭檔，角田裕毅曾代打。",
+      "driver_codes": [
+        "LAW",
+        "LIN",
+        "TSU"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/racing-bulls"
+        },
+        {
+          "title": "2026 季中代打公告",
+          "url": "https://www.formula1.com/en/latest/article/red-bull-confirm-hadjar-to-miss-dutch-grand-prix-as-lawson-steps-up-and-tsunoda-returns.3D3k7oc9dUwwEBZC7upjR1.3D3k7oc9dUwwEBZC7upjR1"
+        }
+      ],
+      "watch": {
+        "question": "Lindblad 在這站的隊友是 Lawson 還是 Tsunoda？",
+        "look_for": "先從本站名單找出 VCARB 03 的實際組合，再看同場比較條件。",
+        "needs": "Red Bull Racing 與 Racing Bulls 不是同一參賽車隊；換隊前後的圈速不能直接當同車測試。"
+      }
+    },
+    "aston-martin": {
+      "name": "Aston Martin",
+      "name_zh": "奧斯頓馬丁",
+      "car": "AMR26",
+      "power_unit": "Honda",
+      "base": "英國銀石",
+      "intro": "2026 的 AMR26 使用 Honda 動力單元，車隊位於英國銀石。Alonso 與 Stroll 是本季的正選組合。",
+      "driver_codes": [
+        "ALO",
+        "STR"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/aston-martin"
+        }
+      ],
+      "watch": {
+        "question": "Alonso 與 Stroll 的 AMR26，出彎加速差異能延續到直線嗎？",
+        "look_for": "看油門恢復後速度曲線如何變化，並先核對胎種與胎齡。",
+        "needs": "2026 使用 Honda 動力是背景；沒有部署訊號，不能把某段加速差直接歸因於 Honda。"
+      }
+    },
+    "haas": {
+      "name": "Haas F1 Team",
+      "name_zh": "哈斯",
+      "car": "VF-26",
+      "power_unit": "Ferrari",
+      "base": "美國坎納波利斯",
+      "intro": "2016 年首度參賽的美國車隊，2026 使用 Ferrari 動力。開季由 Bearman、Ocon 搭檔；季中另有 Hirakawa、Câmara 出賽，不能把開季名單當成全年固定陣容。",
+      "driver_codes": [
+        "BEA",
+        "OCO",
+        "HIR",
+        "CAM"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/haas"
+        },
+        {
+          "title": "2026 年 11 月 4 日車隊席次公告",
+          "url": "https://www.haasf1team.com/news/team-statement-driver-update-0"
+        }
+      ],
+      "watch": {
+        "question": "這份 VF-26 紀錄，是哪一位車手實際跑出的？",
+        "look_for": "墨西哥與巴西有不同代打／更替；先看本站名單，再與 Bearman 比較。缺姓名或車隊時保留未提供。",
+        "needs": "Ocon、Hirakawa 與 Câmara 的資料屬於不同出賽情境；缺有效最快圈也不等於未參賽。"
+      }
+    },
+    "audi": {
+      "name": "Audi",
+      "name_zh": "奧迪",
+      "car": "R26",
+      "power_unit": "Audi",
+      "base": "瑞士欣維爾",
+      "intro": "Sauber 轉為 Audi 廠隊的首個賽季，2026 車款名為 R26，搭載 Audi 動力單元。由 Hülkenberg 與 Bortoleto 組成經驗與新生代的搭檔。",
+      "driver_codes": [
+        "HUL",
+        "BOR"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/audi"
+        }
+      ],
+      "watch": {
+        "question": "Audi 首季的 R26，Hülkenberg 與 Bortoleto 各在哪段較快？",
+        "look_for": "先從同場的兩圈找差異，再檢查輪胎條件；把本季 Audi 與舊賽季 Sauber 紀錄分開。",
+        "needs": "換了底盤與動力規則，不能用跨年單圈秒數直接衡量 Audi 的進步幅度。"
+      }
+    },
+    "alpine": {
+      "name": "Alpine",
+      "name_zh": "阿爾卑",
+      "car": "A526",
+      "power_unit": "Mercedes",
+      "base": "英國恩斯通",
+      "intro": "承接 Renault 車隊沿革，2026 改用 Mercedes 動力單元。A526 由 Gasly 與 Colapinto 駕駛；車隊名稱與引擎供應商名稱不同。",
+      "driver_codes": [
+        "GAS",
+        "COL"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/alpine"
+        }
+      ],
+      "watch": {
+        "question": "使用 Mercedes 動力的 A526，Gasly 與 Colapinto 的差異在哪？",
+        "look_for": "在同場比較直線與減速區段，先核對胎種與胎齡，不先把直線差歸因於換引擎。",
+        "needs": "要比較改用 Mercedes 前後的效果，需要處理跨年規則、賽車、天氣與輪胎差異。"
+      }
+    },
+    "cadillac": {
+      "name": "Cadillac",
+      "name_zh": "凱迪拉克",
+      "car": "MAC-26",
+      "power_unit": "Ferrari",
+      "base": "英國銀石",
+      "intro": "2026 加入 F1 的第 11 支車隊，初期使用 Ferrari 動力單元。MAC-26 由重返賽場的 Pérez 與 Bottas 駕駛。",
+      "driver_codes": [
+        "PER",
+        "BOT"
+      ],
+      "sources": [
+        {
+          "title": "F1 官方車隊、車型與動力資料",
+          "url": "https://www.formula1.com/en/teams/cadillac"
+        }
+      ],
+      "watch": {
+        "question": "Cadillac 首季，Pérez 與 Bottas 在這場都有可比較的最快圈嗎？",
+        "look_for": "先看名單與有效圈是否齊全；有兩個有效圈後，再比較 MAC-26 的單圈訊號。",
+        "needs": "未出發、退賽、沒有有效圈是不同狀態；目前最快圈匯出檔不能單獨確認所有原因。"
+      }
+    }
+  },
+  "drivers": {
+    "NOR": {
+      "name": "Lando Norris",
+      "name_zh": "蘭多・諾里斯",
+      "nationality": "英國",
+      "number": 1,
+      "teams": [
+        "mclaren"
+      ],
+      "intro": "2019 年隨 McLaren 開始 F1 生涯，並以 2025 年世界冠軍身分進入 2026 賽季。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/lando-norris"
+        }
+      ]
+    },
+    "PIA": {
+      "name": "Oscar Piastri",
+      "name_zh": "奧斯卡・皮亞斯特里",
+      "nationality": "澳洲",
+      "number": 81,
+      "teams": [
+        "mclaren"
+      ],
+      "intro": "升上 F1 前連續贏得 Formula Renault、F3 與 F2 冠軍。2026 繼續效力 McLaren。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/oscar-piastri"
+        }
+      ]
+    },
+    "RUS": {
+      "name": "George Russell",
+      "name_zh": "喬治・羅素",
+      "nationality": "英國",
+      "number": 63,
+      "teams": [
+        "mercedes"
+      ],
+      "intro": "曾獲 GP3 與 F2 冠軍，並在 2022 年取得首場 F1 勝利。2026 與 Antonelli 共同駕駛 Mercedes。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/george-russell"
+        }
+      ]
+    },
+    "ANT": {
+      "name": "Kimi Antonelli",
+      "name_zh": "基米・安東內利",
+      "nationality": "義大利",
+      "number": 12,
+      "teams": [
+        "mercedes"
+      ],
+      "intro": "來自 Mercedes 青年車手體系，青年賽事曾跨過 F3 直接挑戰 F2。2026 延續在 Mercedes 的 F1 生涯。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/kimi-antonelli"
+        }
+      ]
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "name_zh": "馬克斯・維斯塔潘",
+      "nationality": "荷蘭",
+      "number": 3,
+      "teams": [
+        "red-bull-racing"
+      ],
+      "intro": "17 歲即參加 F1，2016 年首次代表 Red Bull 出賽便奪冠；2021 至 2024 年連續取得世界冠軍。2026 駕駛 RB22。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/max-verstappen"
+        }
+      ]
+    },
+    "HAD": {
+      "name": "Isack Hadjar",
+      "name_zh": "伊薩克・哈賈爾",
+      "nationality": "法國",
+      "number": 6,
+      "teams": [
+        "red-bull-racing"
+      ],
+      "intro": "2025 年由 Racing Bulls 開啟 F1 正選生涯，2026 升上 Red Bull Racing，搭檔 Verstappen。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/isack-hadjar"
+        }
+      ]
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "name_zh": "夏爾・勒克萊爾",
+      "nationality": "摩納哥",
+      "number": 16,
+      "teams": [
+        "ferrari"
+      ],
+      "intro": "曾獲 GP3、F2 冠軍，2018 年升上 F1，2019 年加入 Ferrari。2026 繼續與 Hamilton 搭檔。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/charles-leclerc"
+        }
+      ]
+    },
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "name_zh": "路易斯・漢米爾頓",
+      "nationality": "英國",
+      "number": 44,
+      "teams": [
+        "ferrari"
+      ],
+      "intro": "2007 年開始 F1 生涯，曾取得七次世界冠軍。2026 效力 Ferrari；過往冠軍經歷是背景，不等於本季表現結論。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/lewis-hamilton"
+        }
+      ]
+    },
+    "ALB": {
+      "name": "Alexander Albon",
+      "name_zh": "亞歷山大・阿爾本",
+      "nationality": "泰國",
+      "number": 23,
+      "teams": [
+        "williams"
+      ],
+      "intro": "出生於倫敦、以泰國籍參賽，2019 年升上 F1。2026 與 Sainz 搭檔，駕駛 Williams FW48。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/alexander-albon"
+        }
+      ]
+    },
+    "SAI": {
+      "name": "Carlos Sainz",
+      "name_zh": "卡洛斯・塞恩斯",
+      "nationality": "西班牙",
+      "number": 55,
+      "teams": [
+        "williams"
+      ],
+      "intro": "2015 年從 Toro Rosso 開始 F1 生涯，之後曾效力 McLaren 與 Ferrari 等車隊。2026 效力 Williams。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/carlos-sainz"
+        }
+      ]
+    },
+    "LAW": {
+      "name": "Liam Lawson",
+      "name_zh": "利亞姆・羅森",
+      "nationality": "紐西蘭",
+      "number": 30,
+      "teams": [
+        "racing-bulls",
+        "red-bull-racing"
+      ],
+      "intro": "2023 年以代打身分首次參加 F1。2026 以 Racing Bulls 正選展開賽季，並曾因 Hadjar 缺席而代打 Red Bull Racing。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/liam-lawson"
+        },
+        {
+          "title": "2026 當季出賽／席次變動依據",
+          "url": "https://www.formula1.com/en/latest/article/red-bull-confirm-hadjar-to-miss-dutch-grand-prix-as-lawson-steps-up-and-tsunoda-returns.3D3k7oc9dUwwEBZC7upjR1.3D3k7oc9dUwwEBZC7upjR1"
+        }
+      ]
+    },
+    "LIN": {
+      "name": "Arvid Lindblad",
+      "name_zh": "阿維德・林德布拉德",
+      "nationality": "英國",
+      "number": 41,
+      "teams": [
+        "racing-bulls"
+      ],
+      "intro": "Red Bull 青年車手體系出身，青年賽事曾刷新 F3、F2 最年輕分站勝利紀錄。2026 首度成為 F1 開季正選，效力 Racing Bulls。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/arvid-lindblad"
+        }
+      ]
+    },
+    "ALO": {
+      "name": "Fernando Alonso",
+      "name_zh": "費南多・阿隆索",
+      "nationality": "西班牙",
+      "number": 14,
+      "teams": [
+        "aston-martin"
+      ],
+      "intro": "兩屆 F1 世界冠軍，離開 F1 期間也曾贏得利曼 24 小時賽。2026 效力 Aston Martin。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/fernando-alonso"
+        }
+      ]
+    },
+    "STR": {
+      "name": "Lance Stroll",
+      "name_zh": "蘭斯・斯托爾",
+      "nationality": "加拿大",
+      "number": 18,
+      "teams": [
+        "aston-martin"
+      ],
+      "intro": "2017 年從 Williams 開始 F1 生涯，首季便在巴庫登上頒獎台。2026 與 Alonso 共同駕駛 Aston Martin。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/lance-stroll"
+        }
+      ]
+    },
+    "BEA": {
+      "name": "Oliver Bearman",
+      "name_zh": "奧利佛・貝爾曼",
+      "nationality": "英國",
+      "number": 87,
+      "teams": [
+        "haas"
+      ],
+      "intro": "2024 年在沙烏地阿拉伯站代替 Sainz，首次代表 Ferrari 參加 F1 正賽。2026 是 Haas 正選車手。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/oliver-bearman"
+        }
+      ]
+    },
+    "OCO": {
+      "name": "Esteban Ocon",
+      "name_zh": "埃斯特班・奧康",
+      "nationality": "法國",
+      "number": 31,
+      "teams": [
+        "haas"
+      ],
+      "intro": "曾獲歐洲 F3、GP3 冠軍，並於 2021 年拿下首場 F1 勝利。2026 前期效力 Haas；車隊已確認他不再代表 Haas 出賽本季剩餘場次。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/esteban-ocon"
+        },
+        {
+          "title": "2026 當季出賽／席次變動依據",
+          "url": "https://www.haasf1team.com/news/team-statement-driver-update-0"
+        }
+      ]
+    },
+    "HUL": {
+      "name": "Nico Hülkenberg",
+      "name_zh": "尼可・霍肯伯格",
+      "nationality": "德國",
+      "number": 27,
+      "teams": [
+        "audi"
+      ],
+      "intro": "2010 年開始 F1 生涯，該年在巴西取得桿位；2015 年另曾代表 Porsche 贏得利曼 24 小時賽。2026 效力 Audi。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/nico-hulkenberg"
+        }
+      ]
+    },
+    "BOR": {
+      "name": "Gabriel Bortoleto",
+      "name_zh": "加布里埃爾・博托萊托",
+      "nationality": "巴西",
+      "number": 5,
+      "teams": [
+        "audi"
+      ],
+      "intro": "連續贏得 2023 年 F3 與 2024 年 F2 冠軍後升上 F1。2026 搭檔 Hülkenberg，駕駛 Audi R26。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/gabriel-bortoleto"
+        }
+      ]
+    },
+    "GAS": {
+      "name": "Pierre Gasly",
+      "name_zh": "皮耶・蓋斯利",
+      "nationality": "法國",
+      "number": 10,
+      "teams": [
+        "alpine"
+      ],
+      "intro": "2017 年在馬來西亞站首次參加 F1，曾效力 Toro Rosso 與 Red Bull 等車隊。2026 駕駛 Alpine A526。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/pierre-gasly"
+        }
+      ]
+    },
+    "COL": {
+      "name": "Franco Colapinto",
+      "name_zh": "佛朗哥・科拉平托",
+      "nationality": "阿根廷",
+      "number": 43,
+      "teams": [
+        "alpine"
+      ],
+      "intro": "2024 年季中從 Williams 車手學院升上 F1 正選；之後又在季中加入 Alpine 正選陣容。2026 搭檔 Gasly。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/franco-colapinto"
+        }
+      ]
+    },
+    "PER": {
+      "name": "Sergio Pérez",
+      "name_zh": "塞吉歐・培瑞茲",
+      "nationality": "墨西哥",
+      "number": 11,
+      "teams": [
+        "cadillac"
+      ],
+      "intro": "曾在 Racing Point 與 Red Bull 取得分站勝利。2026 在休賽一年後重返正選，與 Bottas 一起協助新加入的 Cadillac。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/sergio-perez"
+        }
+      ]
+    },
+    "BOT": {
+      "name": "Valtteri Bottas",
+      "name_zh": "瓦爾特里・博塔斯",
+      "nationality": "芬蘭",
+      "number": 77,
+      "teams": [
+        "cadillac"
+      ],
+      "intro": "2013 年從 Williams 開始 F1 生涯，之後在 Mercedes 取得桿位與分站勝利。2026 重返正選，效力 Cadillac。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/valtteri-bottas"
+        }
+      ]
+    },
+    "HIR": {
+      "name": "Ryō Hirakawa",
+      "name_zh": "平川亮",
+      "nationality": "日本",
+      "number": 50,
+      "teams": [
+        "haas"
+      ],
+      "intro": "具有 Super GT、WEC 與利曼賽事經驗的 Haas 後備車手。2026 墨西哥站代替 Ocon，完成 F1 正賽初登場。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.haasf1team.com/season/team/ryo-hirakawa"
+        },
+        {
+          "title": "2026 當季出賽／席次變動依據",
+          "url": "https://www.formula1.com/en/latest/article/hirakawa-to-replace-ocon-at-haas-for-remainder-of-mexico-city-grand-prix-weekend.2cl5jN0g3rZ2pIYQvc00xM"
+        }
+      ]
+    },
+    "CAM": {
+      "name": "Rafael Câmara",
+      "name_zh": "拉斐爾・卡馬拉",
+      "nationality": "巴西",
+      "number": 51,
+      "teams": [
+        "haas"
+      ],
+      "intro": "Ferrari 車手學院成員，曾贏得歐洲區域方程式與 F3 冠軍。2026 在家鄉巴西站首次參加 F1 正賽，代表 Haas 出賽。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/drivers/rafael-camara"
+        },
+        {
+          "title": "2026 當季出賽／席次變動依據",
+          "url": "https://www.haasf1team.com/news/team-statement-driver-update-0"
+        }
+      ]
+    },
+    "TSU": {
+      "name": "Yuki Tsunoda",
+      "name_zh": "角田裕毅",
+      "nationality": "日本",
+      "number": 22,
+      "teams": [
+        "racing-bulls"
+      ],
+      "intro": "2026 擔任 Red Bull 體系後備車手，並曾代替 Lawson 代表 Racing Bulls 出賽。官方本季紀錄包含荷蘭、義大利與西班牙三站。",
+      "sources": [
+        {
+          "title": "官方車手介紹或本季紀錄",
+          "url": "https://www.formula1.com/en/results/2026/drivers/YUKTSU01/yuki-tsunoda"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,423 @@
+{
+  "year": 2026,
+  "checked_on": "2026-11-16",
+  "scope": "對照官方頁面的 Q/R/S 預定開始時間、車型、動力單元、基地、車號與季中更替依據。這不是逐圈有效性、判罰或完整技術規章的驗證。",
+  "schedule_display_timezone": "Asia/Taipei",
+  "schedule_storage_timezone": "UTC",
+  "schedule": [
+    {
+      "event": "Australian Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/australia",
+      "start_utc": {
+        "Q": "2026-03-07T05:00:00.000Z",
+        "R": "2026-03-08T04:00:00.000Z"
+      }
+    },
+    {
+      "event": "Chinese Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/china",
+      "start_utc": {
+        "S": "2026-03-14T03:00:00.000Z",
+        "Q": "2026-03-14T07:00:00.000Z",
+        "R": "2026-03-15T07:00:00.000Z"
+      }
+    },
+    {
+      "event": "Japanese Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/japan",
+      "start_utc": {
+        "Q": "2026-03-28T06:00:00.000Z",
+        "R": "2026-03-29T05:00:00.000Z"
+      }
+    },
+    {
+      "event": "Miami Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/miami",
+      "start_utc": {
+        "S": "2026-05-02T16:00:00.000Z",
+        "Q": "2026-05-02T20:00:00.000Z",
+        "R": "2026-05-03T17:00:00.000Z"
+      }
+    },
+    {
+      "event": "Canadian Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/canada",
+      "start_utc": {
+        "S": "2026-05-23T16:00:00.000Z",
+        "Q": "2026-05-23T20:00:00.000Z",
+        "R": "2026-05-24T20:00:00.000Z"
+      }
+    },
+    {
+      "event": "Monaco Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/monaco",
+      "start_utc": {
+        "Q": "2026-06-06T14:00:00.000Z",
+        "R": "2026-06-07T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "Barcelona Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/barcelona-catalunya",
+      "start_utc": {
+        "Q": "2026-06-13T14:00:00.000Z",
+        "R": "2026-06-14T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "Austrian Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/austria",
+      "start_utc": {
+        "Q": "2026-06-27T14:00:00.000Z",
+        "R": "2026-06-28T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "British Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/great-britain",
+      "start_utc": {
+        "S": "2026-07-04T11:00:00.000Z",
+        "Q": "2026-07-04T15:00:00.000Z",
+        "R": "2026-07-05T14:00:00.000Z"
+      }
+    },
+    {
+      "event": "Belgian Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/belgium",
+      "start_utc": {
+        "Q": "2026-07-18T14:00:00.000Z",
+        "R": "2026-07-19T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "Hungarian Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/hungary",
+      "start_utc": {
+        "Q": "2026-07-25T14:00:00.000Z",
+        "R": "2026-07-26T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "Dutch Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/netherlands",
+      "start_utc": {
+        "S": "2026-08-22T10:00:00.000Z",
+        "Q": "2026-08-22T14:00:00.000Z",
+        "R": "2026-08-23T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "Italian Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/italy",
+      "start_utc": {
+        "Q": "2026-09-05T14:00:00.000Z",
+        "R": "2026-09-06T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "Spanish Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/spain",
+      "start_utc": {
+        "Q": "2026-09-12T14:00:00.000Z",
+        "R": "2026-09-13T13:00:00.000Z"
+      }
+    },
+    {
+      "event": "Azerbaijan Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/azerbaijan",
+      "start_utc": {
+        "Q": "2026-09-25T12:00:00.000Z",
+        "R": "2026-09-26T11:00:00.000Z"
+      }
+    },
+    {
+      "event": "Bahrain Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/bahrain",
+      "start_utc": {
+        "Q": "2026-10-03T08:00:00.000Z",
+        "R": "2026-10-04T07:00:00.000Z"
+      }
+    },
+    {
+      "event": "Singapore Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/singapore",
+      "start_utc": {
+        "S": "2026-10-10T09:00:00.000Z",
+        "Q": "2026-10-10T13:00:00.000Z",
+        "R": "2026-10-11T12:00:00.000Z"
+      }
+    },
+    {
+      "event": "United States Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/united-states",
+      "start_utc": {
+        "Q": "2026-10-24T21:00:00.000Z",
+        "R": "2026-10-25T20:00:00.000Z"
+      }
+    },
+    {
+      "event": "Mexico City Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/mexico",
+      "start_utc": {
+        "Q": "2026-10-31T21:00:00.000Z",
+        "R": "2026-11-01T20:00:00.000Z"
+      }
+    },
+    {
+      "event": "São Paulo Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/brazil",
+      "start_utc": {
+        "Q": "2026-11-07T18:00:00.000Z",
+        "R": "2026-11-08T17:00:00.000Z"
+      }
+    },
+    {
+      "event": "Las Vegas Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/las-vegas",
+      "start_utc": {
+        "Q": "2026-11-21T04:00:00.000Z",
+        "R": "2026-11-22T04:00:00.000Z"
+      }
+    },
+    {
+      "event": "Qatar Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/qatar",
+      "start_utc": {
+        "Q": "2026-11-28T18:00:00.000Z",
+        "R": "2026-11-29T16:00:00.000Z"
+      }
+    },
+    {
+      "event": "Abu Dhabi Grand Prix",
+      "source": "https://www.formula1.com/en/racing/2026/united-arab-emirates",
+      "start_utc": {
+        "Q": "2026-12-05T14:00:00.000Z",
+        "R": "2026-12-06T13:00:00.000Z"
+      }
+    }
+  ],
+  "teams": [
+    {
+      "id": "mclaren",
+      "car": "MCL40",
+      "power_unit": "Mercedes",
+      "base": "英國沃金",
+      "source": "https://www.formula1.com/en/teams/mclaren"
+    },
+    {
+      "id": "mercedes",
+      "car": "W17",
+      "power_unit": "Mercedes",
+      "base": "英國布拉克利",
+      "source": "https://www.formula1.com/en/teams/mercedes"
+    },
+    {
+      "id": "red-bull-racing",
+      "car": "RB22",
+      "power_unit": "Red Bull Ford",
+      "base": "英國米爾頓凱恩斯",
+      "source": "https://www.formula1.com/en/teams/red-bull-racing"
+    },
+    {
+      "id": "ferrari",
+      "car": "SF-26",
+      "power_unit": "Ferrari",
+      "base": "義大利馬拉內羅",
+      "source": "https://www.formula1.com/en/teams/ferrari"
+    },
+    {
+      "id": "williams",
+      "car": "FW48",
+      "power_unit": "Mercedes",
+      "base": "英國格羅夫",
+      "source": "https://www.formula1.com/en/teams/williams"
+    },
+    {
+      "id": "racing-bulls",
+      "car": "VCARB 03",
+      "power_unit": "Red Bull Ford",
+      "base": "義大利法恩扎",
+      "source": "https://www.formula1.com/en/teams/racing-bulls"
+    },
+    {
+      "id": "aston-martin",
+      "car": "AMR26",
+      "power_unit": "Honda",
+      "base": "英國銀石",
+      "source": "https://www.formula1.com/en/teams/aston-martin"
+    },
+    {
+      "id": "haas",
+      "car": "VF-26",
+      "power_unit": "Ferrari",
+      "base": "美國坎納波利斯",
+      "source": "https://www.formula1.com/en/teams/haas"
+    },
+    {
+      "id": "audi",
+      "car": "R26",
+      "power_unit": "Audi",
+      "base": "瑞士欣維爾",
+      "source": "https://www.formula1.com/en/teams/audi"
+    },
+    {
+      "id": "alpine",
+      "car": "A526",
+      "power_unit": "Mercedes",
+      "base": "英國恩斯通",
+      "source": "https://www.formula1.com/en/teams/alpine"
+    },
+    {
+      "id": "cadillac",
+      "car": "MAC-26",
+      "power_unit": "Ferrari",
+      "base": "英國銀石",
+      "source": "https://www.formula1.com/en/teams/cadillac"
+    }
+  ],
+  "driver_numbers": [
+    {
+      "code": "NOR",
+      "number": 1,
+      "source": "https://www.formula1.com/en/drivers/lando-norris"
+    },
+    {
+      "code": "PIA",
+      "number": 81,
+      "source": "https://www.formula1.com/en/drivers/oscar-piastri"
+    },
+    {
+      "code": "RUS",
+      "number": 63,
+      "source": "https://www.formula1.com/en/drivers/george-russell"
+    },
+    {
+      "code": "ANT",
+      "number": 12,
+      "source": "https://www.formula1.com/en/drivers/kimi-antonelli"
+    },
+    {
+      "code": "VER",
+      "number": 3,
+      "source": "https://www.formula1.com/en/drivers/max-verstappen"
+    },
+    {
+      "code": "HAD",
+      "number": 6,
+      "source": "https://www.formula1.com/en/drivers/isack-hadjar"
+    },
+    {
+      "code": "LEC",
+      "number": 16,
+      "source": "https://www.formula1.com/en/drivers/charles-leclerc"
+    },
+    {
+      "code": "HAM",
+      "number": 44,
+      "source": "https://www.formula1.com/en/drivers/lewis-hamilton"
+    },
+    {
+      "code": "ALB",
+      "number": 23,
+      "source": "https://www.formula1.com/en/drivers/alexander-albon"
+    },
+    {
+      "code": "SAI",
+      "number": 55,
+      "source": "https://www.formula1.com/en/drivers/carlos-sainz"
+    },
+    {
+      "code": "LAW",
+      "number": 30,
+      "source": "https://www.formula1.com/en/drivers/liam-lawson"
+    },
+    {
+      "code": "LIN",
+      "number": 41,
+      "source": "https://www.formula1.com/en/drivers/arvid-lindblad"
+    },
+    {
+      "code": "ALO",
+      "number": 14,
+      "source": "https://www.formula1.com/en/drivers/fernando-alonso"
+    },
+    {
+      "code": "STR",
+      "number": 18,
+      "source": "https://www.formula1.com/en/drivers/lance-stroll"
+    },
+    {
+      "code": "BEA",
+      "number": 87,
+      "source": "https://www.formula1.com/en/drivers/oliver-bearman"
+    },
+    {
+      "code": "OCO",
+      "number": 31,
+      "source": "https://www.formula1.com/en/drivers/esteban-ocon"
+    },
+    {
+      "code": "HUL",
+      "number": 27,
+      "source": "https://www.formula1.com/en/drivers/nico-hulkenberg"
+    },
+    {
+      "code": "BOR",
+      "number": 5,
+      "source": "https://www.formula1.com/en/drivers/gabriel-bortoleto"
+    },
+    {
+      "code": "GAS",
+      "number": 10,
+      "source": "https://www.formula1.com/en/drivers/pierre-gasly"
+    },
+    {
+      "code": "COL",
+      "number": 43,
+      "source": "https://www.formula1.com/en/drivers/franco-colapinto"
+    },
+    {
+      "code": "PER",
+      "number": 11,
+      "source": "https://www.formula1.com/en/drivers/sergio-perez"
+    },
+    {
+      "code": "BOT",
+      "number": 77,
+      "source": "https://www.formula1.com/en/drivers/valtteri-bottas"
+    },
+    {
+      "code": "CAM",
+      "number": 51,
+      "source": "https://www.formula1.com/en/drivers/rafael-camara"
+    },
+    {
+      "code": "HIR",
+      "number": 50,
+      "source": "https://www.formula1.com/en/results/2026/races/1298/mexico/qualifying"
+    },
+    {
+      "code": "TSU",
+      "number": 22,
+      "source": "https://www.formula1.com/en/results/2026/races/1292/netherlands/race-result"
+    }
+  ],
+  "changes": [
+    {
+      "topic": "Lawson／Tsunoda 代打",
+      "source": "https://www.formula1.com/en/latest/article/red-bull-confirm-hadjar-to-miss-dutch-grand-prix-as-lawson-steps-up-and-tsunoda-returns.3D3k7oc9dUwwEBZC7upjR1.3D3k7oc9dUwwEBZC7upjR1"
+    },
+    {
+      "topic": "Haas Ocon／Câmara 更替",
+      "source": "https://www.haasf1team.com/news/team-statement-driver-update-0"
+    },
+    {
+      "topic": "Hirakawa 墨西哥出賽與車號",
+      "source": "https://www.formula1.com/en/results/2026/races/1298/mexico/qualifying"
+    }
+  ],
+  "rules_sources": [
+    "https://corp.formula1.com/f1-2026-regulations-terminology-update/",
+    "https://www.formula1.com/en/latest/article/explained-why-active-aero-will-not-be-used-at-the-monaco-grand-prix.4nLtpjM9ZTUbPBQLmeAbj4.4nLtpjM9ZTUbPBQLmeAbj4"
+  ]
+}

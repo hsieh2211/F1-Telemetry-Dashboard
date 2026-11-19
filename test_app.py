@@ -104,7 +104,7 @@ class AppTests(unittest.TestCase):
             self.assertTrue(any('尚未開賽' in i.value for i in app.info))
             self.assertEqual(len(app.selectbox), 2)
         missing_app = analysis_app()
-        with patch('race_data.Path.is_file', return_value=False), patch(
+        with patch('race_data.existing_path', return_value=ROOT / 'not-exported-test.json'), patch(
                 'race_data.session_state', return_value=('missing', '資料尚未收錄')):
             missing_app.run()
             missing_app.selectbox[0].set_value(1).run()

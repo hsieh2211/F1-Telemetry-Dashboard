@@ -1,7 +1,7 @@
 {
   "year": 2026,
-  "updated_at": "2026-09-17T00:00:00Z",
-  "source": "https://github.com/theOehrly/f1schedule/blob/master/schedule_2026.json",
+  "updated_at": "2026-11-16",
+  "source": "https://www.formula1.com/en/racing/2026",
   "events": [
     {
       "round": 1,
@@ -117,6 +117,9 @@
         },
         "Q": {
           "start_utc": "2026-07-04T15:00:00.000Z"
+        },
+        "S": {
+          "start_utc": "2026-07-04T11:00:00.000Z"
         }
       }
     },
@@ -295,5 +298,5 @@
       }
     }
   ],
-  "source_blob": "5137e317936f1e3f129e932110027b3fe3d1b003"
+  "verification_note": "2026-11-16 重新對照 23 站 F1 官方頁，Q/R/S 共 52 個預定開始時間一致；以 UTC 保存。核對範圍與來源見 source_checks_2026.json。"
 }

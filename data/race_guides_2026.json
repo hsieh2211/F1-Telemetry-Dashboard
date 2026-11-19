@@ -1,0 +1,238 @@
+{
+  "year": 2026,
+  "checked_on": "2026-11-14",
+  "editorial_note": "賽道特色依 F1 官方分站介紹摘要；觀賽重點由本站依賽道特性整理，並非本場結果或策略預測。",
+  "events": {
+    "Australian Grand Prix": {
+      "title": "澳洲站",
+      "venue": "墨爾本 · Albert Park",
+      "source": "https://www.formula1.com/en/racing/2026/australia",
+      "feature": "高速公園賽道，週末初期抓地力較低，隨行駛逐步改善。",
+      "watch": [
+        "看連續彎之間能否維持流暢節奏。",
+        "觀察同一彎的速度差，是否也伴隨進彎路線或出彎加速差異。"
+      ]
+    },
+    "Chinese Grand Prix": {
+      "title": "中國站",
+      "venue": "上海 · Shanghai International Circuit",
+      "source": "https://www.formula1.com/en/racing/2026/china",
+      "feature": "起始彎逐漸收緊，搭配高速彎與長直線。",
+      "watch": [
+        "看第 1、2 彎如何控制速度與走線。",
+        "留意長直線前的出彎：較好的出口能否延續到直線末端？"
+      ]
+    },
+    "Japanese Grand Prix": {
+      "title": "日本站",
+      "venue": "鈴鹿 · Suzuka",
+      "source": "https://www.formula1.com/en/racing/2026/japan",
+      "feature": "高速連續 S 彎、Degner 與 130R，考驗整圈節奏。",
+      "watch": [
+        "看連續 S 彎如何銜接，而非只盯單一彎的速度。",
+        "前一彎的路線，是否影響下一彎的位置與加速？"
+      ]
+    },
+    "Miami Grand Prix": {
+      "title": "邁阿密站",
+      "venue": "邁阿密 · Miami International Autodrome",
+      "source": "https://www.formula1.com/en/racing/2026/miami",
+      "feature": "長直線穿插慢速區；第 14、15 彎帶有起伏。",
+      "watch": [
+        "看慢速彎出口，誰能較早恢復加速。",
+        "比較長直線和慢速區的差距，是否由不同車手占優？"
+      ]
+    },
+    "Canadian Grand Prix": {
+      "title": "加拿大站",
+      "venue": "蒙特婁 · Circuit Gilles-Villeneuve",
+      "source": "https://www.formula1.com/en/racing/2026/canada",
+      "feature": "長直線與重煞車減速彎交替，末段緊鄰冠軍之牆。",
+      "watch": [
+        "留意髮夾彎的煞車與出彎加速。",
+        "看末段減速彎：如何兼顧速度與貼牆的精準度？"
+      ]
+    },
+    "Monaco Grand Prix": {
+      "title": "摩納哥站",
+      "venue": "蒙地卡羅 · Circuit de Monaco",
+      "source": "https://www.formula1.com/en/racing/2026/monaco",
+      "feature": "狹窄街道緊鄰護牆，超車空間有限。",
+      "watch": [
+        "排位時留意車手如何在護牆間累積優勢。",
+        "正賽看車距與進站前後的位置變化，不只看單圈最快。"
+      ]
+    },
+    "Barcelona Grand Prix": {
+      "title": "巴塞隆納站",
+      "venue": "巴塞隆納 · Circuit de Barcelona-Catalunya",
+      "source": "https://www.formula1.com/en/racing/2026/barcelona-catalunya",
+      "feature": "高速與低速彎兼具，第 3 彎可觀察賽車平衡。",
+      "watch": [
+        "看第 3 彎這類長彎，車手能否穩定維持速度。",
+        "比較不同類型彎道，誰在高速區、誰在慢速區較有優勢？"
+      ]
+    },
+    "Austrian Grand Prix": {
+      "title": "奧地利站",
+      "venue": "施皮爾貝格 · Red Bull Ring",
+      "source": "https://www.formula1.com/en/racing/2026/austria",
+      "feature": "短圈結合上坡直線、右彎與下坡高速彎。",
+      "watch": [
+        "看上坡重煞車處的攻防與出彎。",
+        "留意短圈中小失誤如何影響後面的連續彎節奏。"
+      ]
+    },
+    "British Grand Prix": {
+      "title": "英國站",
+      "venue": "銀石 · Silverstone",
+      "source": "https://www.formula1.com/en/racing/2026/great-britain",
+      "feature": "以高速彎著稱，Maggotts、Becketts 與 Abbey 是代表區段。",
+      "watch": [
+        "看連續高速彎中的左右轉向與速度維持。",
+        "比較直線與連續彎的得失，是否呈現不同賽車設定取向？"
+      ]
+    },
+    "Belgian Grand Prix": {
+      "title": "比利時站",
+      "venue": "斯帕 · Spa-Francorchamps",
+      "source": "https://www.formula1.com/en/racing/2026/belgium",
+      "feature": "長直線與高速彎並存，賽道各處天氣可能不同。",
+      "watch": [
+        "看 Eau Rouge 接 Raidillon 上坡後，速度如何延續到直線。",
+        "若畫面顯示局部下雨，留意不同路段的抓地力與換胎判斷。"
+      ]
+    },
+    "Hungarian Grand Prix": {
+      "title": "匈牙利站",
+      "venue": "布達佩斯 · Hungaroring",
+      "source": "https://www.formula1.com/en/racing/2026/hungary",
+      "feature": "直線較短、彎道密集，連續節奏與賽車平衡重要。",
+      "watch": [
+        "看連續彎是否因前一彎失誤而一路損失時間。",
+        "留意跟車距離與進站前後位置，觀察如何創造超越機會。"
+      ]
+    },
+    "Dutch Grand Prix": {
+      "title": "荷蘭站",
+      "venue": "贊德沃特 · Zandvoort",
+      "source": "https://www.formula1.com/en/racing/2026/netherlands",
+      "feature": "賽道隨沙丘起伏，傾斜彎與連續轉向帶來挑戰。",
+      "watch": [
+        "看傾斜彎中車手如何選線。",
+        "觀察彎道出口能否把速度帶入下一段，而非只比較彎心速度。"
+      ]
+    },
+    "Italian Grand Prix": {
+      "title": "義大利站",
+      "venue": "蒙札 · Monza",
+      "source": "https://www.formula1.com/en/racing/2026/italy",
+      "feature": "長直線、高速行駛與重煞車減速彎形成強烈對比。",
+      "watch": [
+        "看直線末端的煞車與減速彎出口。",
+        "比較尾速與彎道得失；尾速較高是否真的換到更快整圈？"
+      ]
+    },
+    "Spanish Grand Prix": {
+      "title": "西班牙站",
+      "venue": "馬德里 · Madring",
+      "source": "https://www.formula1.com/en/racing/2026/spain",
+      "feature": "結合公共道路與永久設施；官方介紹強調多樣彎角與地形起伏。",
+      "watch": [
+        "先認識這條新加入賽曆的賽道配置與彎道類型。",
+        "看不同車手如何適應新場地；不把舊巴塞隆納站經驗直接套用。"
+      ]
+    },
+    "Azerbaijan Grand Prix": {
+      "title": "亞塞拜然站",
+      "venue": "巴庫 · Baku City Circuit",
+      "source": "https://www.formula1.com/en/racing/2026/azerbaijan",
+      "feature": "超長直線與老城狹窄路段並存，考驗設定取捨。",
+      "watch": [
+        "看直線尾端的攻防，以及老城路段如何控制誤差。",
+        "低阻力設定帶來的直線優勢，是否在狹窄彎道付出代價？"
+      ]
+    },
+    "Bahrain Grand Prix": {
+      "title": "巴林站（雪邦）",
+      "venue": "馬來西亞 · Sepang International Circuit",
+      "source": "https://www.formula1.com/en/racing/2026/bahrain",
+      "feature": "2026 本站移至雪邦：寬闊賽道、長直線與多種高速彎；炎熱潮濕。",
+      "watch": [
+        "看第 5、6 彎的連續高速轉向，與末段髮夾彎的出彎。",
+        "若出現熱帶陣雨，觀察換胎時機；本站不是薩基爾賽道。"
+      ]
+    },
+    "Singapore Grand Prix": {
+      "title": "新加坡站",
+      "venue": "新加坡 · Marina Bay Street Circuit",
+      "source": "https://www.formula1.com/en/racing/2026/singapore",
+      "feature": "濱海灣街道較顛簸，潮濕環境與頻繁轉向考驗專注力。",
+      "watch": [
+        "看車手在護牆間如何持續保持精準。",
+        "正賽留意較長時間駕駛後的節奏與失誤，不以單圈判斷全部表現。"
+      ]
+    },
+    "United States Grand Prix": {
+      "title": "美國站",
+      "venue": "奧斯汀 · Circuit of The Americas",
+      "source": "https://www.formula1.com/en/racing/2026/united-states",
+      "feature": "上坡第 1 彎寬闊，後續結合高速連續彎與慢速區。",
+      "watch": [
+        "看第 1 彎不同路線如何影響攻防。",
+        "比較第 3 至 6 彎的連續節奏，與慢速區的出彎差異。"
+      ]
+    },
+    "Mexico City Grand Prix": {
+      "title": "墨西哥站",
+      "venue": "墨西哥城 · Autódromo Hermanos Rodríguez",
+      "source": "https://www.formula1.com/en/racing/2026/mexico",
+      "feature": "海拔超過兩千公尺，路線穿越棒球場看台區。",
+      "watch": [
+        "先認出長直線與體育場慢速區的節奏差異。",
+        "觀察兩種區段的速度與加速；不同環境下的尾速不宜跨站直接比較。"
+      ]
+    },
+    "São Paulo Grand Prix": {
+      "title": "巴西站",
+      "venue": "聖保羅 · Interlagos / Autódromo José Carlos Pace",
+      "source": "https://www.formula1.com/en/racing/2026/brazil",
+      "feature": "Senna S、蜿蜒內場與上坡末段，帶有明顯地形起伏。",
+      "watch": [
+        "看 Senna S 的走線如何影響接下來的加速。",
+        "留意上坡末段的出彎速度，能否延續到終點直線的攻防。"
+      ]
+    },
+    "Las Vegas Grand Prix": {
+      "title": "拉斯維加斯站",
+      "venue": "拉斯維加斯 · Las Vegas Strip Circuit",
+      "source": "https://www.formula1.com/en/racing/2026/las-vegas",
+      "feature": "高速街道賽穿越大道，長直線與慢速彎形成對比。",
+      "watch": [
+        "看長直線末端的煞車攻防。",
+        "直線速度較高的車，進入慢速彎後是否仍能守住優勢？"
+      ]
+    },
+    "Qatar Grand Prix": {
+      "title": "卡達站",
+      "venue": "路薩爾 · Lusail International Circuit",
+      "source": "https://www.formula1.com/en/racing/2026/qatar",
+      "feature": "中高速流暢彎道占多數，主直線通往第 1 彎。",
+      "watch": [
+        "看連續中高速彎如何銜接。",
+        "留意主直線後的第 1 彎攻防，以及前一彎出口帶來的差異。"
+      ]
+    },
+    "Abu Dhabi Grand Prix": {
+      "title": "阿布達比站",
+      "venue": "阿布達比 · Yas Marina Circuit",
+      "source": "https://www.formula1.com/en/racing/2026/united-arab-emirates",
+      "feature": "長直線連接慢速彎，改版後包含傾斜的第 9 彎。",
+      "watch": [
+        "看第 5 彎出口如何影響長直線與第 6 彎攻防。",
+        "比較低速出彎與長直線的得失，避免只憑最高速度判斷整圈。"
+      ]
+    }
+  },
+  "schedule_checked_on": "2026-11-16"
+}
