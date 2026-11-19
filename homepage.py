@@ -9,7 +9,7 @@ import streamlit as st
 from race_data import read_catalogue, read_payload, existing_path, SESSION_NAMES
 from race_guide import load_guides, render_next_race, render_race_guide
 from season_content import load_season_content, comparison_flags, window_samples
-from season_profiles import render_profiles, snapshot_rows
+from season_profiles import load_profiles, render_profiles, snapshot_rows
 
 
 def taipei_time(value):
@@ -130,7 +130,11 @@ def render_home(root):
                     st.write("本場有效車手的圈次、胎種與胎齡皆有值；驗證未跳過車手。")
                 if metadata.get("skipped_drivers"):
                     st.write("匯出端紀錄：", metadata["skipped_drivers"])
-            render_case(year, event["event"], code, drivers, available)
+            try:
+                names = {c: d["name_zh"] for c, d in load_profiles(root, year)["drivers"].items()}
+            except (OSError, ValueError, KeyError, TypeError):
+                names = {}
+            render_case(year, event["event"], code, drivers, available, names)
 
     with guide_tab:
         render_race_guide(event, code, guides, catalogue)
@@ -161,13 +165,18 @@ def render_home(root):
     st.caption("獨立車迷專題，與 Formula 1 官方無隸屬關係。資料依賽季保存；目前首頁聚焦 2026。")
 
 
-def render_case(year, event, code, drivers, available):
+def render_case(year, event, code, drivers, available, names=None):
     st.header("最快圈比較快，代表整場也更快？", anchor="real-example")
     st.write("不一定。先用真實資料觀察一圈，再檢查比較條件。")
     st.caption(f"{year} · {event} · {SESSION_NAMES[code]}｜以下為所選場次真實離線資料。")
     a, b = st.columns(2)
-    ref = a.selectbox("範例基準車手", available, key="case_a")
-    comp = b.selectbox("範例比較車手", available, index=1, key="case_b")
+    names = names or {}
+    def driver_label(c):
+        name = names.get(c) or drivers[c].get("name")
+        return c if name in (None, "", "None", "None None", "未知") else f"{c} · {name}"
+    ref = a.selectbox("範例基準車手", available, format_func=driver_label, key="case_a")
+    comp = b.selectbox("範例比較車手", available, index=1, format_func=driver_label, key="case_b")
+    st.caption("選單姓名供辨識；比較使用所選場次原始資料，歷史名單不會因人物介紹而改寫。")
     if ref == comp:
         st.info("請選擇兩位不同車手，才能觀察差異。")
         return

@@ -19,6 +19,8 @@ class HomepageTests(unittest.TestCase):
             self.assertFalse(app.exception)
             self.assertTrue(any("22 位" in x.value for x in app.success))
             self.assertEqual(len(app.selectbox(key="case_a").options), 22)
+            self.assertIn("ANT · 基米・安東內利", app.selectbox(key="case_a").options)
+            self.assertEqual(app.selectbox(key="case_a").value, "ANT")
             app.radio(key="case_depth").set_value("看判讀").run()
             self.assertTrue(any("油量" in x.value for x in app.markdown))
             app.radio(key="case_depth").set_value("查方法").run()
