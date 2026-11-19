@@ -34,6 +34,10 @@ def open_analysis(index, code):
 def choose_home_entry(section, index=None):
     """Apply a quick entry before its dependent widgets are instantiated."""
     st.session_state["home_section"] = section
+    st.session_state["home_jump"] = {
+        "賽程與賽道": "race-weekend", "2026 賽季知識": "getting-started", "案例與分析": "real-example"
+    }[section]
+    st.session_state["home_jump_id"] = st.session_state.get("home_jump_id", 0) + 1
     if index is not None:
         st.session_state.update(home_event=index, home_session="R")
 
@@ -164,6 +168,26 @@ def render_home(root):
     st.divider()
     st.write("讓更多人在台灣，一起看懂 F1。")
     st.caption("獨立車迷專題，與 Formula 1 官方無隸屬關係。資料依賽季保存；目前首頁聚焦 2026。")
+    jump = st.session_state.pop("home_jump", None)
+    if jump:
+        # Run only after a quick-entry click, once the selected panel is visible.
+        # The revision makes repeat clicks on the same entry execute again.
+        st.html(f'''<script>
+        (() => {{
+            const targetId = {json.dumps(jump)};
+            const revision = {st.session_state["home_jump_id"]};
+            const deadline = performance.now() + 8000;
+            const seek = () => {{
+                const target = document.getElementById(targetId);
+                if (target && target.getClientRects().length && target.getBoundingClientRect().height) {{
+                    requestAnimationFrame(() => target.scrollIntoView({{behavior: 'auto', block: 'start'}}));
+                }} else if (performance.now() < deadline) {{
+                    requestAnimationFrame(seek);
+                }}
+            }};
+            requestAnimationFrame(seek);
+        }})();
+        </script>''', unsafe_allow_javascript=True)
 
 
 def render_case(year, event, code, drivers, available, names=None):

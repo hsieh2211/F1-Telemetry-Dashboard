@@ -58,7 +58,7 @@ def render_next_race(events, guides, now=None):
 
 def render_race_guide(event, code, guides, catalogue, now=None):
     guide = guides.get("events", {}).get(event["event"])
-    st.subheader("這站怎麼看")
+    st.subheader("這站怎麼看", anchor="race-weekend")
     if guide:
         st.markdown(f"**{guide['title']}｜{guide['venue']}**")
         st.write(guide["feature"])
