@@ -27,7 +27,8 @@ def taipei_time(value):
 
 
 def open_analysis(index, code):
-    st.session_state.update(page="analysis", event_index=index, session_code=code)
+    st.session_state.update(page="analysis", event_index=index, session_code=code,
+                            analysis_a=st.session_state.get("case_a"), analysis_b=st.session_state.get("case_b"))
     st.rerun()
 
 

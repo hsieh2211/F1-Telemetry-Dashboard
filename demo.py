@@ -9,7 +9,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.collections as mcoll
-import streamlit.components.v1 as components
+from season_content import comparison_flags
+from season_profiles import load_profiles, known
+from race_guide import start_label
 
 # Keep the UI session list self-contained so Streamlit hot reloads a newly
 # deployed session type even when an older imported race_data module is still
@@ -26,11 +28,16 @@ if st.session_state.get("page", "home") == "home":
     render_home(Path(__file__).resolve().parent)
     st.stop()
 if st.button("← 回到 2026 首頁"):
-    st.session_state["page"] = "home"
+    st.session_state.update(page="home", home_event=st.session_state.get("event_index", 0),
+                            home_session=st.session_state.get("session_code", "R"), home_section="案例與分析")
+    for source, target in (("analysis_a", "case_a"), ("analysis_b", "case_b")):
+        if st.session_state.get(source):
+            st.session_state[target] = st.session_state[source]
     st.rerun()
-st.title("🏁 Fastlap Pro：F1 賽道戰術數據儀表板")
+st.title("🏁 Fastlap Pro：最快圈數據比對")
 st.caption("已保存賽事資料｜正賽／排位賽／衝刺賽最快圈比較；尚未開賽或尚未匯出的場次會顯示提示。")
-tab1, tab2 = st.tabs(["📊 深度戰術分析 (Pro Analysis)", "📋 數據摘要 (Summary)"])
+context_slot = st.container()
+tab1, tab2 = st.tabs(["📊 圈速與遙測比較", "📋 單圈資料摘要"])
 
 
 @st.cache_data(max_entries=4, show_spinner=False)
@@ -58,18 +65,23 @@ def format_lap(seconds):
 
 ready = False
 root = Path(__file__).resolve().parent
-st.sidebar.header("⚙️ 戰術控制中心")
+st.sidebar.header("⚙️ 比較設定")
 try:
     catalogue = read_catalogue(root / "data" / "schedule_2026.json")
     current_year = catalogue["year"]
     events = catalogue["events"]
     now = datetime.now(timezone.utc)
+    try:
+        guide_titles = json.loads((root / "data/race_guides_2026.json").read_text(encoding="utf-8"))["events"]
+        profiles = load_profiles(root, current_year)
+    except (OSError, ValueError, KeyError, TypeError):
+        guide_titles, profiles = {}, {"drivers": {}}
     def event_label(index):
         event = events[index]
         session_codes = [code for code in SESSION_NAMES if code in event["sessions"]]
         available = sum(existing_path(root, current_year, event["event"], code).is_file()
                         for code in session_codes)
-        return f'{event["event"]} ｜已存 {available}/{len(session_codes)} 場'
+        return f'{guide_titles.get(event["event"], {}).get("title", event["event"])} ｜已存 {available}/{len(session_codes)} 場'
     event_index = st.sidebar.selectbox("1. 選擇分站", range(len(events)), format_func=event_label, key="event_index")
     selected = events[event_index]
     selected_event = selected["event"]
@@ -82,19 +94,19 @@ try:
     start = selected["sessions"][selected_type_code]["start_utc"]
     state, message = session_state(start, now)
     st.sidebar.caption(f'賽程更新：{catalogue.get("updated_at", "未知")[:10]}；時間以 UTC 計算。')
-    st.sidebar.caption("資料需先在本機匯出並上傳；網站不會自動下載新場次。")
+    st.sidebar.caption("選擇已保存的場次，即可比較個人最快圈。")
     path = existing_path(root, current_year, selected_event, selected_type_code)
     if state in ("future", "unknown"):
         for tab in (tab1, tab2):
             with tab:
                 st.info(f"{selected_event} · {SESSION_NAMES[selected_type_code]}：{message}")
                 if start:
-                    st.caption(f"預定開賽：{start}（UTC）")
+                    st.caption(f"預定開賽：{start_label(start)}（台灣時間）")
     elif not path.is_file():
         for tab in (tab1, tab2):
             with tab:
                 st.info(message + "。")
-                st.caption("賽程時間不等於完賽證明。若已完賽，請執行批次匯出並上傳 data 資料夾；資料源延遲或取消的場次可能沒有遙測。")
+                st.caption("此場次尚未提供可比較資料，請先選擇其他已保存場次。預定時間已過不代表已確認完賽。")
     else:
         file_info = path.stat()
         current_year, selected_event, selected_type_code, drivers, skipped = load_saved_data(
@@ -113,18 +125,21 @@ except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError) as
 if ready:
     driver_list = list(drivers)
     available_codes = [code for code, info in drivers.items() if info["available"]]
-    driver_map = {
-        code: f"{info['name']} ({info['team']})" + (" — 無有效圈速" if not info["available"] else "")
-        for code, info in drivers.items()
-    }
-    driver1 = st.sidebar.selectbox(
-        "3. 基準車手 (A)", driver_list, index=driver_list.index(available_codes[0]),
-        format_func=lambda code: f"{code} - {driver_map[code]}"
-    )
-    driver2 = st.sidebar.selectbox(
-        "4. 對比車手 (B)", driver_list, index=driver_list.index(available_codes[1]),
-        format_func=lambda code: f"{code} - {driver_map[code]}"
-    )
+    def driver_label(code):
+        info = drivers[code]
+        name = profiles["drivers"].get(code, {}).get("name_zh") or known(info.get("name"))
+        suffix = " — 無有效圈速" if not info["available"] else ""
+        return f"{code} · {name}（{known(info.get('team'))}）{suffix}"
+    if st.session_state.get("analysis_a") not in driver_list:
+        st.session_state["analysis_a"] = available_codes[0]
+    if st.session_state.get("analysis_b") not in driver_list:
+        st.session_state["analysis_b"] = next(
+            code for code in available_codes if code != st.session_state["analysis_a"])
+    driver1 = st.sidebar.selectbox("3. 基準車手 (A)", driver_list, format_func=driver_label, key="analysis_a")
+    driver2 = st.sidebar.selectbox("4. 對比車手 (B)", driver_list, format_func=driver_label, key="analysis_b")
+    with context_slot:
+        st.subheader(f"{current_year} · {guide_titles.get(selected_event, {}).get('title', selected_event)} · {SESSION_NAMES[selected_type_code]}")
+        st.caption("車隊依本場匯出紀錄顯示；比較範圍為個人最快圈，並非整場比賽節奏。")
     st.sidebar.caption(f"完整車手名單 {len(drivers)} 位；其中 {len(available_codes)} 位有可比較的最快圈遙測。")
     unavailable = [code for code in (driver1, driver2) if not drivers[code]["available"]]
     if unavailable:
@@ -133,10 +148,23 @@ if ready:
                 for code in unavailable:
                     st.info(f"{code} — {drivers[code]['name']}：{drivers[code]['reason']}，因此無法繪製最快圈比較。")
         st.stop()
+    if driver1 == driver2:
+        with context_slot:
+            st.info("請選擇兩位不同車手，才能比較差異。")
+        st.stop()
     if skipped:
         st.sidebar.warning("部分車手資料未通過檢查")
         with st.sidebar.expander("查看原因"):
             st.write(skipped)
+    with context_slot:
+        left, right, gap_column = st.columns(3)
+        left.metric(f"A｜{driver1} 最快圈", format_lap(drivers[driver1]["lap_seconds"]))
+        right.metric(f"B｜{driver2} 最快圈", format_lap(drivers[driver2]["lap_seconds"]))
+        gap = drivers[driver2]["lap_seconds"] - drivers[driver1]["lap_seconds"]
+        gap_column.metric("兩個最快圈用時差", f"{abs(gap):.3f} 秒", delta=None)
+        st.caption("依匯出精度兩圈用時相同。" if abs(gap) < .0005 else f"{driver1 if gap > 0 else driver2} 的這個最快圈用時較少；這不是完賽差距。")
+        for note in comparison_flags(drivers[driver1], drivers[driver2]):
+            st.warning(note)
     ref_tel = drivers[driver1]["telemetry"].copy()
     comp_tel = drivers[driver2]["telemetry"].copy()
     delta_time = comparison_delta(ref_tel, comp_tel)
@@ -145,7 +173,7 @@ if ready:
         try:
             plt.style.use('dark_background')
             # 視覺化架構：建立四層聯動畫布
-            fig, (ax_s, ax_d, ax_t, ax_b) = plt.subplots(4, 1, figsize=(12, 12), height_ratios=[3, 2, 1.5, 1], sharex=True)
+            fig, (ax_s, ax_d, ax_t, ax_b) = plt.subplots(4, 1, figsize=(12, 9), height_ratios=[3, 2, 1.5, 1], sharex=True)
     
             # [Layer 1] 時速對比層 (Speed)
             ax_s.set_title(f"{current_year} {selected_event}: {driver1} vs {driver2} ({selected_type_code})", fontsize=14)
@@ -171,8 +199,10 @@ if ready:
             ax_t.grid(True, linestyle=':', alpha=0.3)
     
             # [Layer 4] 煞車層 (Brake)
-            ax_b.plot(ref_tel['Distance'], ref_tel['Brake'], color='cyan')
-            ax_b.plot(comp_tel['Distance'], comp_tel['Brake'], color='magenta', alpha=0.5)
+            ax_b.step(ref_tel['Distance'], ref_tel['Brake'], color='cyan', where='post')
+            ax_b.step(comp_tel['Distance'], comp_tel['Brake'], color='magenta', linestyle='--', where='post')
+            ax_b.set_yticks([0, 1])
+            ax_t.set_ylim(-5, 105)
             ax_b.set_ylabel('Brake')
             ax_b.set_xlabel('Distance (m)')
             ax_b.grid(True, linestyle=':', alpha=0.3)
@@ -219,7 +249,8 @@ if ready:
     
             ax_track.set_title(f"{current_year} {selected_event} - {driver1} Track Speed Map", fontsize=14, pad=15)
     
-            st.pyplot(fig_track)
+            with st.expander(f"查看 {driver1} 的賽道路線配速圖"):
+                st.pyplot(fig_track)
             plt.close(fig_track)
             
         except Exception as e:
@@ -230,10 +261,10 @@ if ready:
     
 
     with tab2:
-        st.subheader("戰情摘要")
+        st.subheader("所選兩圈的資料")
         for column, code in zip(st.columns(2), [driver1, driver2]):
             info = drivers[code]
-            column.markdown(f"**{code} — {info['name']}**")
+            column.markdown(f"**{driver_label(code)}**")
             column.write(info["team"])
             column.metric("最快圈", format_lap(info["lap_seconds"]))
             lap_number = info["lap_number"]
@@ -241,7 +272,7 @@ if ready:
                 column.write("最快圈圈次：未提供")
             else:
                 column.write(f"最快圈圈次：第 {lap_number} 圈")
-            column.write(f"輪胎：{info['compound']}")
+            column.write("輪胎：" + {"SOFT": "軟胎（SOFT）", "MEDIUM": "中性胎（MEDIUM）", "HARD": "硬胎（HARD）", "INTERMEDIATE": "半雨胎（INTERMEDIATE）", "WET": "全雨胎（WET）"}.get(info["compound"], known(info["compound"])))
             tyre_life = info["tyre_life"]
             if tyre_life is None:
                 column.write("最快圈胎齡：未提供")
