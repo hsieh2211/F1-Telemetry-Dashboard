@@ -33,7 +33,7 @@ class HomepageTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertEqual(app.session_state["page"], "analysis")
         self.assertEqual(app.selectbox(key="session_code").value, "Q")
-        self.assertIn("United States", app.selectbox(key="event_index").options[app.selectbox(key="event_index").value])
+        self.assertIn("美國站", app.selectbox(key="event_index").options[app.selectbox(key="event_index").value])
         app.button[0].click().run()
         self.assertFalse(app.exception)
         self.assertEqual(app.session_state["page"], "home")

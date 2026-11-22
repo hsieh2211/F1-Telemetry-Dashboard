@@ -14,6 +14,31 @@ def analysis_app():
 
 
 class AppTests(unittest.TestCase):
+    def test_same_driver_is_not_presented_as_comparison(self):
+        app = analysis_app().run()
+        app.selectbox(key='analysis_b').set_value(app.selectbox(key='analysis_a').value).run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('兩位不同車手' in x.value for x in app.info))
+        self.assertFalse(app.metric)
+
+    def test_home_pair_handoff_and_return_preserve_selection(self):
+        with patch('fastf1.get_session', side_effect=AssertionError('offline')):
+            app = AppTest.from_file(str(ROOT / 'demo.py'), default_timeout=30).run()
+            app.selectbox(key='case_a').set_value('NOR').run()
+            app.selectbox(key='case_b').set_value('PIA').run()
+            app.button(key='home_analysis').click().run()
+            self.assertEqual(app.selectbox(key='analysis_a').value, 'NOR')
+            self.assertEqual(app.selectbox(key='analysis_b').value, 'PIA')
+            self.assertTrue(any('諾里斯' in x for x in app.selectbox(key='analysis_a').options))
+            app.selectbox(key='event_index').set_value(19).run()
+            app.selectbox(key='session_code').set_value('Q').run()
+            app.button[0].click().run()
+            self.assertEqual(app.selectbox(key='home_event').value, 19)
+            self.assertEqual(app.selectbox(key='home_session').value, 'Q')
+            self.assertEqual(app.selectbox(key='case_a').value, 'NOR')
+            self.assertEqual(app.selectbox(key='case_b').value, 'PIA')
+            self.assertFalse(app.exception)
+
     def test_barcelona_sessions_stay_offline(self):
         with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
             app = analysis_app().run()
@@ -63,6 +88,10 @@ class AppTests(unittest.TestCase):
         with patch('fastf1.get_session', side_effect=AssertionError('Website must stay offline')):
             app = analysis_app().run()
             app.selectbox[0].set_value(9).run()
+            # Preserve the selected driver across events, including a no-lap driver.
+            self.assertTrue(any('沒有有效最快圈' in i.value for i in app.info))
+            app.selectbox(key='analysis_a').set_value('ANT').run()
+            app.selectbox(key='analysis_b').set_value('LEC').run()
             self.assertFalse(app.exception)
             self.assertFalse(app.error)
             self.assertEqual(len(app.selectbox[2].options), 22)
