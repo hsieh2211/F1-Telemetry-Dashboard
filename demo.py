@@ -12,6 +12,7 @@ import matplotlib.collections as mcoll
 from season_content import comparison_flags
 from season_profiles import load_profiles, known
 from race_guide import start_label
+from race_pace_ui import render_race_pace
 
 # Keep the UI session list self-contained so Streamlit hot reloads a newly
 # deployed session type even when an older imported race_data module is still
@@ -34,10 +35,10 @@ if st.button("← 回到 2026 首頁"):
         if st.session_state.get(source):
             st.session_state[target] = st.session_state[source]
     st.rerun()
-st.title("🏁 Fastlap Pro：最快圈數據比對")
+st.title("🏁 Fastlap Pro：賽事數據比對")
 st.caption("已保存賽事資料｜正賽／排位賽／衝刺賽最快圈比較；尚未開賽或尚未匯出的場次會顯示提示。")
 context_slot = st.container()
-tab1, tab2 = st.tabs(["📊 圈速與遙測比較", "📋 單圈資料摘要"])
+tab1, tab2, pace_tab = st.tabs(["📊 圈速與遙測比較", "📋 單圈資料摘要", "🏎️ 整場節奏與輪胎"])
 
 
 @st.cache_data(max_entries=4, show_spinner=False)
@@ -121,6 +122,15 @@ except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError) as
         st.info("請切換其他分站或重新匯出；名詞解說可回首頁的「2026 賽季知識」查看。")
     with tab2:
         st.info("有效資料載入後即可查看摘要。")
+
+with pace_tab:
+    if not ready:
+        st.info("請先選擇已保存且可讀取的場次。")
+    elif selected_type_code == "Q":
+        st.info("整場節奏適用正賽與衝刺賽；排位賽請使用最快圈比較。")
+    else:
+        render_race_pace(root, (current_year, selected_event, selected_type_code),
+                         guide_titles.get(selected_event, {}).get("title", selected_event))
 
 if ready:
     driver_list = list(drivers)

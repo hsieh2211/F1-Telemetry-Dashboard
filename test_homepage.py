@@ -64,7 +64,7 @@ class HomepageTests(unittest.TestCase):
         app.text_input(key="glossary_search").set_value("Brake").run()
         self.assertTrue(any("這不是煞車壓力" in x.value for x in app.markdown))
         app.button(key="home_analysis").click().run()
-        self.assertEqual(len(app.tabs), 2)
+        self.assertEqual(len(app.tabs), 3)
         self.assertFalse(any("百科" in x.label for x in app.tabs))
         app.button[0].click().run()
         self.assertTrue(any("數據名詞與讀圖說明" in x.value for x in app.subheader))
