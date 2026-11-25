@@ -41,9 +41,9 @@ class RaceGuideTests(unittest.TestCase):
     def test_missing_export_still_shows_upcoming_guide(self):
         with patch("fastf1.get_session", side_effect=AssertionError("offline only")):
             app = AppTest.from_file(str(ROOT / "demo.py"), default_timeout=30).run()
-            app.selectbox(key="home_event").set_value(20).run()
+            app.selectbox(key="home_event").set_value(21).run()
             self.assertFalse(app.exception)
-            self.assertTrue(any("Las Vegas Strip" in x.value for x in app.markdown))
+            self.assertTrue(any("Lusail" in x.value for x in app.markdown))
             self.assertTrue(any("尚無離線資料" in x.value for x in app.info))
             self.assertTrue(any("第一次看 F1" in x.value for x in app.header))
 
