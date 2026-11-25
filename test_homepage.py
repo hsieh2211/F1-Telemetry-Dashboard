@@ -72,11 +72,11 @@ class HomepageTests(unittest.TestCase):
 
     def test_quick_entries_change_destination_and_selected_race(self):
         events = read_catalogue(ROOT / "data/schedule_2026.json")["events"]
-        with patch("race_guide.next_race", return_value=events[20]), patch("fastf1.get_session", side_effect=AssertionError("offline only")):
+        with patch("race_guide.next_race", return_value=events[21]), patch("fastf1.get_session", side_effect=AssertionError("offline only")):
             app = self.app().run()
             app.button(key="home_next").click().run()
             self.assertEqual(app.session_state["home_section"], "賽程與賽道")
-            self.assertEqual(app.selectbox(key="home_event").value, 20)
+            self.assertEqual(app.selectbox(key="home_event").value, 21)
             self.assertEqual(app.selectbox(key="home_session").value, "R")
             self.assertTrue(any("尚無離線資料" in x.value for x in app.info))
             app.button(key="home_beginner").click().run()

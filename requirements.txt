@@ -3,3 +3,4 @@ streamlit>=1.67,<2
 matplotlib
 numpy
 pandas
+altair>=5,<7
