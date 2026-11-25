@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 import logging
+from html import escape
 from datetime import datetime, timezone
 from race_data import read_catalogue, existing_path, read_payload, session_state, SESSION_NAMES
 
@@ -14,6 +15,7 @@ from season_profiles import load_profiles, known
 from race_guide import start_label
 from race_pace_ui import render_race_pace
 from analysis_theme import PALETTE, style_chart
+from telemetry_charts import telemetry_chart
 
 # Keep the UI session list self-contained so Streamlit hot reloads a newly
 # deployed session type even when an older imported race_data module is still
@@ -30,15 +32,17 @@ if st.session_state.get("page", "home") == "home":
     render_home(Path(__file__).resolve().parent)
     st.stop()
 st.html("<style>" + (Path(__file__).resolve().parent / "analysis.css").read_text(encoding="utf-8") + "</style>")
-if st.button("回到 2026 首頁"):
+nav = st.container(key="analysis_nav")
+brand, back = nav.columns([5, 1.4])
+if back.button("回到首頁"):
     st.session_state.update(page="home", home_event=st.session_state.get("event_index", 0),
                             home_session=st.session_state.get("session_code", "R"), home_section="案例與分析")
     for source, target in (("analysis_a", "case_a"), ("analysis_b", "case_b")):
         if st.session_state.get(source):
             st.session_state[target] = st.session_state[source]
     st.rerun()
-st.html('<div class="fp-analysis-brand"><strong>FASTLAP <span>PRO</span></strong><small>2026 賽季 · 離線數據分析</small></div>')
-st.title("賽事數據比對")
+brand.html('<div class="fp-analysis-brand"><strong>FASTLAP <span>PRO</span></strong><h1>賽事分析</h1><small>2026 賽季</small></div>')
+settings_slot = st.container(key="analysis_settings")
 context_slot = st.container()
 tab1, pace_tab, tab2 = st.tabs(["最快圈比對", "整場節奏與輪胎", "單圈資料"])
 
@@ -68,7 +72,9 @@ def format_lap(seconds):
 
 ready = False
 root = Path(__file__).resolve().parent
-st.sidebar.header("比較設定")
+with settings_slot:
+    controls = st.expander("比較設定 · 分站／場次／車手", expanded=False)
+    event_control, session_control = controls.columns([3, 1])
 try:
     catalogue = read_catalogue(root / "data" / "schedule_2026.json")
     current_year = catalogue["year"]
@@ -85,18 +91,18 @@ try:
         available = sum(existing_path(root, current_year, event["event"], code).is_file()
                         for code in session_codes)
         return f'{guide_titles.get(event["event"], {}).get("title", event["event"])} ｜已存 {available}/{len(session_codes)} 場'
-    event_index = st.sidebar.selectbox("1. 選擇分站", range(len(events)), format_func=event_label, key="event_index")
+    event_index = event_control.selectbox("分站", range(len(events)), format_func=event_label, key="event_index")
     selected = events[event_index]
     selected_event = selected["event"]
     selected_session_codes = [code for code in SESSION_NAMES if code in selected["sessions"]]
     if st.session_state.get("session_code") not in selected_session_codes:
         st.session_state["session_code"] = selected_session_codes[0]
-    selected_type_code = st.sidebar.selectbox(
-        "2. 比賽類型", selected_session_codes, format_func=SESSION_NAMES.get, key="session_code"
+    selected_type_code = session_control.selectbox(
+        "場次", selected_session_codes, format_func=SESSION_NAMES.get, key="session_code"
     )
     start = selected["sessions"][selected_type_code]["start_utc"]
     state, message = session_state(start, now)
-    st.sidebar.caption("分站、場次與 A／B 車手會沿用到各個分析分頁。")
+
     path = existing_path(root, current_year, selected_event, selected_type_code)
     if state in ("future", "unknown"):
         for tab in (tab1, tab2):
@@ -141,12 +147,13 @@ if ready:
     if st.session_state.get("analysis_b") not in driver_list:
         st.session_state["analysis_b"] = next(
             code for code in available_codes if code != st.session_state["analysis_a"])
-    driver1 = st.sidebar.selectbox("3. 基準車手 (A)", driver_list, format_func=driver_label, key="analysis_a")
-    driver2 = st.sidebar.selectbox("4. 對比車手 (B)", driver_list, format_func=driver_label, key="analysis_b")
+    with controls:
+        choose_a, choose_b = st.columns(2)
+        driver1 = choose_a.selectbox("A · 基準車手", driver_list, format_func=driver_label, key="analysis_a")
+        driver2 = choose_b.selectbox("B · 比較車手", driver_list, format_func=driver_label, key="analysis_b")
     with context_slot:
-        st.subheader(f"{current_year} · {guide_titles.get(selected_event, {}).get('title', selected_event)} · {SESSION_NAMES[selected_type_code]}")
-        st.caption(f"A｜{driver1}　／　B｜{driver2} · 車隊依本場匯出紀錄顯示。")
-    st.sidebar.caption(f"完整車手名單 {len(drivers)} 位；其中 {len(available_codes)} 位有可比較的最快圈遙測。")
+        st.html(f'<div class="fp-session-line">{current_year} · {escape(guide_titles.get(selected_event, {}).get("title", selected_event))} <span>{escape(SESSION_NAMES[selected_type_code])} · 個人最快圈／整場資料分頁查看</span></div>')
+
     if driver1 == driver2:
         with context_slot:
             st.info("請選擇兩位不同車手，才能比較差異。")
@@ -166,74 +173,56 @@ if ready:
                     st.info(f"{code} — {drivers[code]['name']}：{drivers[code]['reason']}，因此無法繪製最快圈比較。")
         st.stop()
     if skipped:
-        st.sidebar.warning("部分車手資料未通過檢查")
-        with st.sidebar.expander("查看原因"):
+        with context_slot, st.expander("部分車手資料未通過檢查 · 查看原因"):
             st.write(skipped)
-    with tab1, st.container(border=True, key="lap_summary"):
-        left, right, gap_column = st.columns(3)
-        left.metric(f"A｜{driver1} 最快圈", format_lap(drivers[driver1]["lap_seconds"]))
-        right.metric(f"B｜{driver2} 最快圈", format_lap(drivers[driver2]["lap_seconds"]))
+    with tab1:
+        st.html('<div class="fp-section-kicker">個人最快圈 · 同一場次的兩圈比較</div>')
+        summary = st.container(key="lap_summary")
+        left, right, gap_column = summary.columns([1.2, 1.2, 1])
+        tyre_names = {"SOFT":"軟胎", "MEDIUM":"中性胎", "HARD":"硬胎", "INTERMEDIATE":"半雨胎", "WET":"全雨胎"}
+        for column, code, role, colour in ((left,driver1,"A",PALETTE[0]),(right,driver2,"B",PALETTE[1])):
+            info = drivers[code]
+            name = profiles["drivers"].get(code,{}).get("name_zh") or known(info.get("name"))
+            with column, st.container(border=True, key=f"driver_card_{role}"):
+                st.html(f'<div class="fp-driver-heading" style="--driver-colour:{colour}"><span>{role} · {escape(code)}</span><strong>{escape(name)}</strong><small>{escape(known(info.get("team")))}</small></div>')
+                st.metric(f"{role}｜{code} 最快圈", format_lap(info["lap_seconds"]))
+                lap = info.get("lap_number")
+                life = info.get("tyre_life")
+                condition = f"第 {int(lap)} 圈" if lap is not None else "圈次未提供"
+                condition += " · " + tyre_names.get(info.get("compound"), "胎種未提供")
+                condition += f" · 胎齡 {life:g} 圈" if life is not None else " · 胎齡未提供"
+                st.caption(condition)
         gap = drivers[driver2]["lap_seconds"] - drivers[driver1]["lap_seconds"]
-        gap_column.metric("兩個最快圈用時差", f"{abs(gap):.3f} 秒", delta=None)
-        st.caption("依匯出精度兩圈用時相同。" if abs(gap) < .0005 else f"{driver1 if gap > 0 else driver2} 的這個最快圈用時較少；這不是完賽差距。")
+        with gap_column, st.container(border=True, key="lap_gap"):
+            st.html('<div class="fp-gap-label">這兩圈的差距</div>')
+            st.metric("兩個最快圈用時差", f"{abs(gap):.3f} 秒", delta=None)
+            st.caption("依匯出精度兩圈用時相同。" if abs(gap) < .0005 else f"{driver1 if gap > 0 else driver2} 這一圈用時較少")
+            st.caption("個人最快圈，並非完賽差距。")
         notes = comparison_flags(drivers[driver1], drivers[driver2])
         if notes:
-            st.caption("比較條件｜" + "　".join(notes))
-        st.caption("個人最快圈比較，不能代表整場比賽節奏。")
+            st.html('<div class="fp-condition-note"><strong>比較前先確認</strong><span>' + escape("　".join(notes).replace("SOFT", "軟胎").replace("MEDIUM", "中性胎").replace("HARD", "硬胎").replace("INTERMEDIATE", "半雨胎").replace("WET", "全雨胎")) + '</span></div>')
+        else:
+            st.caption("胎種、胎齡與圈次欄位相同，仍不代表油量與賽道條件相同。")
     ref_tel = drivers[driver1]["telemetry"].copy()
     comp_tel = drivers[driver2]["telemetry"].copy()
     delta_time = comparison_delta(ref_tel, comp_tel)
 
     with tab1:
         try:
-            plt.style.use('dark_background')
-            # 視覺化架構：建立四層聯動畫布
-            fig, (ax_s, ax_d, ax_t, ax_b) = plt.subplots(4, 1, figsize=(12, 9), height_ratios=[3, 2, 1.5, 1], sharex=True)
-    
-            # [Layer 1] 時速對比層 (Speed)
-            ax_s.set_title(f"{current_year} {selected_event}: {driver1} vs {driver2} ({selected_type_code})", fontsize=14)
-            ax_s.plot(ref_tel['Distance'], ref_tel['Speed'], color=PALETTE[0], label=f"{driver1} (Base)")
-            ax_s.plot(comp_tel['Distance'], comp_tel['Speed'], color=PALETTE[1], linestyle='--', label=f"{driver2} (Comp)")
-            ax_s.set_ylabel('Speed (km/h)')
-            ax_s.legend(loc='lower right')
-            ax_s.grid(True, linestyle=':', alpha=0.3)
-    
-            # [Layer 2] Delta Time (時間差)
-            ax_d.plot(ref_tel['Distance'], delta_time, color='white', linewidth=1)
-            ax_d.axhline(0, color='grey', linestyle='--')
-            ax_d.set_ylabel(f"Delta (s)\n(+) {driver1} Faster\n(-) {driver2} Faster")
-            ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time > 0), color='green', alpha=0.3)
-            ax_d.fill_between(ref_tel['Distance'], delta_time, 0, where=(delta_time < 0), color='red', alpha=0.3)
-            ax_d.grid(True, linestyle=':', alpha=0.3)
-    
-            # [Layer 3] 油門訊號
-            ax_t.plot(ref_tel['Distance'], ref_tel['Throttle'], color=PALETTE[0], alpha=0.8)
-            ax_t.plot(comp_tel['Distance'], comp_tel['Throttle'], color=PALETTE[1], linestyle='--', alpha=0.8)
-            ax_t.set_ylabel('Throttle (%)')
-            ax_t.axhline(100, color='grey', linestyle=':', alpha=0.5)
-            ax_t.grid(True, linestyle=':', alpha=0.3)
-    
-            # [Layer 4] 煞車層 (Brake)
-            ax_b.step(ref_tel['Distance'], ref_tel['Brake'], color=PALETTE[0], where='post')
-            ax_b.step(comp_tel['Distance'], comp_tel['Brake'], color=PALETTE[1], linestyle='--', where='post')
-            ax_b.set_yticks([0, 1])
-            ax_t.set_ylim(-5, 105)
-            ax_b.set_ylabel('Brake')
-            ax_b.set_xlabel('Distance (m)')
-            ax_b.grid(True, linestyle=':', alpha=0.3)
-    
-            style_chart(fig, (ax_s, ax_d, ax_t, ax_b))
-            fig.tight_layout(pad=1.3)
-            st.pyplot(fig, width='stretch')
-            plt.close(fig)
-    
-            st.caption("時間差為依各圈相對行駛進度對齊的近似值，不是官方分段計時或比賽即時差距。正值表示基準車手在對齊位置用時較少。")
-            st.caption("油門與煞車保留匯出數值；僅憑這些訊號不能直接判定電池回充或動力分配。")
-    # ==========================================
-            # 🌟 視覺大絕招：2D 賽道路線與配速熱力圖
-            # ==========================================
-            st.markdown("### 🗺️ 賽道路線與配速熱力圖 (Track Speed Map)")
-            
+            chart_title, chart_controls = st.columns([1.2, 1])
+            chart_title.html(f'<div class="fp-chart-heading"><h3>差距，從哪裡開始？</h3><div class="fp-chart-legend"><span style="color:{PALETTE[0]}">A · {escape(driver1)}</span><span style="color:{PALETTE[1]}">B · {escape(driver2)}</span></div></div>')
+            view = chart_controls.radio("訊號顯示", ["重點檢視", "完整訊號", "油門訊號", "煞車訊號"], horizontal=True, key="telemetry_view", label_visibility="collapsed")
+            st.caption(f"點選速度圖查值，雙擊清除。時間差：正值 {driver1} 用時較少；負值 {driver2} 用時較少。")
+            with st.container(key="telemetry_plot"):
+                st.altair_chart(telemetry_chart(ref_tel, comp_tel, delta_time, driver1, driver2, view), width="stretch", theme=None)
+            with st.expander("對齊方法與判讀限制"):
+                st.write("兩圈依各自相對行駛進度對齊，以 A 車手圈內距離顯示。時間差與 B 車手連續訊號採插值估計；B 煞車取對齊位置之前的樣本，保持 0／1。這不是相同實體座標的精確同步，也不是官方分段或比賽即時差距。")
+                st.write("最快圈不能代表整場節奏；未控制油量、交通與賽道條件。油門及煞車訊號不能直接判定電池回充、動力分配或策略優劣。")
+            with st.expander("下載兩圈原始遙測 CSV"):
+                st.caption("保留各車手原始樣本與原始欄位，不含畫面查值的插值。")
+                for code, frame in ((driver1, ref_tel), (driver2, comp_tel)):
+                    st.download_button(f"下載 {code} 原始遙測", frame.to_csv(index=False).encode("utf-8-sig"),
+                                       file_name=f"{current_year}_{selected_event}_{selected_type_code}_{code}_telemetry.csv", mime="text/csv", key=f"telemetry_csv_{code}")
             # 1. 取得基準車手 (ref_tel) 的 X, Y 座標與速度數據
             # 從已驗證的 JSON 遙測讀取座標
             raw_tel = ref_tel
@@ -262,9 +251,9 @@ if ready:
     
             # 5. 加入側邊顏色條 (Colorbar) 標示速度數值
             cbar = fig_track.colorbar(lc, ax=ax_track, pad=0.02)
-            cbar.set_label('Speed (km/h)', fontsize=12)
+            cbar.set_label('km/h', fontsize=12)
     
-            ax_track.set_title(f"{current_year} {selected_event} - {driver1} Track Speed Map", fontsize=14, pad=15)
+            ax_track.set_title(f"{current_year} · {driver1}", fontsize=14, pad=15)
     
             style_chart(fig_track, (ax_track,))
             with st.expander(f"查看 {driver1} 的賽道路線配速圖"):
