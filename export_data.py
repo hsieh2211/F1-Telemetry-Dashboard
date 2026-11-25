@@ -15,6 +15,7 @@ import numpy as np
 
 from race_data import (UTC, COLUMNS, SESSION_NAMES, read_catalogue, read_payload,
                        validate_payload, existing_path, data_path, session_state)
+from race_pace import export_laps, laps_path, read_laps
 
 ROOT = Path(__file__).resolve().parent
 MAX_TELEMETRY_POINTS = 300
@@ -165,6 +166,9 @@ def export_session(fastf1, year, event, code):
 
 
 def run(args, fastf1, root=ROOT):
+    pace_mode = getattr(args, "race_laps", False)
+    if pace_mode and any(code not in ("R", "S") for code in args.sessions):
+        raise ValueError("--race-laps 請搭配 --sessions R 或 S；排位賽仍使用原最快圈匯出")
     cache = root / "f1_cache_v99"
     cache.mkdir(exist_ok=True)
     fastf1.Cache.enable_cache(str(cache))
@@ -177,7 +181,7 @@ def run(args, fastf1, root=ROOT):
         raise ValueError("賽程年份不符")
     entries, failures = [], 0
     now = datetime.now(UTC)
-    report_path = root / "data" / f"export_report_{args.year}.json"
+    report_path = root / "data" / f"export_{'laps_' if pace_mode else ''}report_{args.year}.json"
     tried = False
     for event in catalogue["events"]:
         if args.event and event["event"] != args.event:
@@ -187,7 +191,8 @@ def run(args, fastf1, root=ROOT):
                 continue
             record = {"event": event["event"], "session": code}
             state, message = session_state(event["sessions"][code]["start_utc"], now)
-            path = existing_path(root, args.year, event["event"], code)
+            path = (laps_path(root, args.year, event["event"], code) if pace_mode else
+                    existing_path(root, args.year, event["event"], code))
             if state in ("future", "unknown", "waiting"):
                 record.update(status=state, detail=message)
             elif failures >= 3:
@@ -195,7 +200,7 @@ def run(args, fastf1, root=ROOT):
             else:
                 valid_saved = False
                 try:
-                    read_payload(path, (args.year, event["event"], code))
+                    (read_laps if pace_mode else read_payload)(path, (args.year, event["event"], code))
                     valid_saved = True
                 except (OSError, ValueError, KeyError, TypeError):
                     pass
@@ -207,12 +212,20 @@ def run(args, fastf1, root=ROOT):
                         time.sleep(3)
                     tried = True
                     try:
-                        payload = export_session(fastf1, args.year, event["event"], code)
-                        destination = data_path(root, args.year, event["event"], code)
+                        if pace_mode:
+                            session = fastf1.get_session(args.year, event["event"], code)
+                            session.load(laps=True, telemetry=False, weather=False, messages=True)
+                            payload = export_laps(session, args.year, event["event"], code, fastf1.__version__)
+                            destination = laps_path(root, args.year, event["event"], code)
+                        else:
+                            payload = export_session(fastf1, args.year, event["event"], code)
+                            destination = data_path(root, args.year, event["event"], code)
                         atomic_json(destination, payload)
                         failures = 0
                         record.update(status="exported", drivers=len(payload["drivers"]),
-                                      skipped=payload["skipped_drivers"], detail=str(destination.relative_to(root)))
+                                      skipped=payload.get("skipped_drivers", []), detail=str(destination.relative_to(root)))
+                        if pace_mode:
+                            record.update(laps=len(payload["laps"]), omitted_rows=payload["omitted_rows"])
                     except Exception as error:
                         failures += 1
                         record.update(status="failed", detail=str(error), preserved_existing=valid_saved)
@@ -233,10 +246,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--year", type=int, default=2026)
     parser.add_argument("--event", help="只處理指定分站的完整英文名稱")
-    parser.add_argument("--sessions", nargs="+", choices=SESSION_NAMES, default=["R", "Q"])
+    parser.add_argument("--sessions", nargs="+", choices=SESSION_NAMES, default=None)
+    parser.add_argument("--race-laps", action="store_true", help="另存逐圈資料 .laps.json，不覆寫最快圈檔案；預設只匯出正賽")
     parser.add_argument("--refresh", action="store_true", help="重新匯出已保存資料；失敗時保留舊檔")
     parser.add_argument("--saved-schedule", action="store_true", help="使用已保存賽程，不更新賽程")
     args = parser.parse_args()
+    args.sessions = args.sessions or (["R"] if args.race_laps else ["R", "Q"])
     import fastf1
     try:
         return run(args, fastf1)
