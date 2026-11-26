@@ -1,5 +1,7 @@
 """Windowing must preserve whole-lap timing and reset when context changes."""
 import unittest
+import types
+from unittest.mock import patch
 import numpy as np
 from telemetry_charts import aligned_samples, telemetry_chart
 from analysis_window import preset_window, window_observation
@@ -31,6 +33,18 @@ class AnalysisWindowTests(unittest.TestCase):
         self.assertEqual(preset_window(101), (0,101))
         parts=[preset_window(101,i) for i in range(3)]
         self.assertEqual(parts,[(0,33),(33,67),(67,101)])
+
+    def test_analysis_ignores_a_preloaded_legacy_chart_module(self):
+        legacy=types.ModuleType('telemetry_charts')
+        def old_chart(a,b,delta,a_code,b_code,view):
+            raise AssertionError('legacy chart must not be used')
+        legacy.telemetry_chart=old_chart
+        legacy.aligned_samples=lambda *args: None
+        with patch.dict('sys.modules', {'telemetry_charts': legacy}):
+            app=design_tests.AnalysisDesignTests().app().run()
+        self.assertFalse(app.exception)
+        self.assertFalse(app.error)
+        self.assertEqual(app.slider(key='telemetry_window').value[0],0)
 
     def test_range_reset_presets_and_driver_change(self):
         app=design_tests.AnalysisDesignTests().app().run()

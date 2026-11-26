@@ -15,7 +15,7 @@ from season_profiles import load_profiles, known
 from race_guide import start_label
 from race_pace_ui import render_race_pace
 from analysis_theme import PALETTE, style_chart
-from telemetry_charts import telemetry_chart, aligned_samples
+from analysis_telemetry import telemetry_chart, aligned_samples
 from analysis_window import distance_controls, set_window, window_observation
 
 # Keep the UI session list self-contained so Streamlit hot reloads a newly
