@@ -15,7 +15,8 @@ from season_profiles import load_profiles, known
 from race_guide import start_label
 from race_pace_ui import render_race_pace
 from analysis_theme import PALETTE, style_chart
-from telemetry_charts import telemetry_chart
+from telemetry_charts import telemetry_chart, aligned_samples
+from analysis_window import distance_controls, set_window, window_observation
 
 # Keep the UI session list self-contained so Streamlit hot reloads a newly
 # deployed session type even when an older imported race_data module is still
@@ -75,6 +76,9 @@ root = Path(__file__).resolve().parent
 with settings_slot:
     controls = st.expander("比較設定 · 分站／場次／車手", expanded=False)
     event_control, session_control = controls.columns([3, 1])
+    large = controls.checkbox("大字閱讀模式", key="analysis_large", help="放大分析頁文字與圖表標籤；不更改資料。")
+    if large:
+        st.html("<style>html{font-size:18px}</style>")
 try:
     catalogue = read_catalogue(root / "data" / "schedule_2026.json")
     current_year = catalogue["year"]
@@ -100,6 +104,8 @@ try:
     selected_type_code = session_control.selectbox(
         "場次", selected_session_codes, format_func=SESSION_NAMES.get, key="session_code"
     )
+    with context_slot:
+        st.html(f'<div class="fp-session-line"><strong>{escape(guide_titles.get(selected_event, {}).get("title", selected_event))}</strong><span>{current_year} · {escape(SESSION_NAMES[selected_type_code])}</span><small>依所選場次的離線資料比較</small></div>')
     start = selected["sessions"][selected_type_code]["start_utc"]
     state, message = session_state(start, now)
 
@@ -151,8 +157,6 @@ if ready:
         choose_a, choose_b = st.columns(2)
         driver1 = choose_a.selectbox("A · 基準車手", driver_list, format_func=driver_label, key="analysis_a")
         driver2 = choose_b.selectbox("B · 比較車手", driver_list, format_func=driver_label, key="analysis_b")
-    with context_slot:
-        st.html(f'<div class="fp-session-line">{current_year} · {escape(guide_titles.get(selected_event, {}).get("title", selected_event))} <span>{escape(SESSION_NAMES[selected_type_code])} · 個人最快圈／整場資料分頁查看</span></div>')
 
     if driver1 == driver2:
         with context_slot:
@@ -176,7 +180,7 @@ if ready:
         with context_slot, st.expander("部分車手資料未通過檢查 · 查看原因"):
             st.write(skipped)
     with tab1:
-        st.html('<div class="fp-section-kicker">個人最快圈 · 同一場次的兩圈比較</div>')
+
         summary = st.container(key="lap_summary")
         left, right, gap_column = summary.columns([1.2, 1.2, 1])
         tyre_names = {"SOFT":"軟胎", "MEDIUM":"中性胎", "HARD":"硬胎", "INTERMEDIATE":"半雨胎", "WET":"全雨胎"}
@@ -209,12 +213,22 @@ if ready:
 
     with tab1:
         try:
-            chart_title, chart_controls = st.columns([1.2, 1])
-            chart_title.html(f'<div class="fp-chart-heading"><h3>差距，從哪裡開始？</h3><div class="fp-chart-legend"><span style="color:{PALETTE[0]}">A · {escape(driver1)}</span><span style="color:{PALETTE[1]}">B · {escape(driver2)}</span></div></div>')
-            view = chart_controls.radio("訊號顯示", ["重點檢視", "完整訊號", "油門訊號", "煞車訊號"], horizontal=True, key="telemetry_view", label_visibility="collapsed")
-            st.caption(f"點選速度圖查值，雙擊清除。時間差：正值 {driver1} 用時較少；負值 {driver2} 用時較少。")
-            with st.container(key="telemetry_plot"):
-                st.altair_chart(telemetry_chart(ref_tel, comp_tel, delta_time, driver1, driver2, view), width="stretch", theme=None)
+            maximum = int(np.ceil(float(ref_tel.Distance.iloc[-1])))
+            with st.container(border=True, key="lap_workbench"):
+                chart_title, chart_controls, reset_control = st.columns([2, 2.5, 1])
+                chart_title.html(f'<div class="fp-chart-heading"><h3>單圈遙測</h3><div class="fp-chart-legend"><span style="color:{PALETTE[0]}">A · {escape(driver1)}</span><span style="color:{PALETTE[1]}">B · {escape(driver2)}</span></div></div>')
+                view = chart_controls.radio("訊號顯示", ["重點檢視", "完整訊號", "油門訊號", "煞車訊號"], horizontal=True, key="telemetry_view", label_visibility="collapsed")
+                reset_control.button("重設整圈", key="reset_distance", on_click=set_window, args=(maximum,), width="stretch")
+                window = distance_controls((current_year, selected_event, selected_type_code, driver1, driver2, file_info.st_mtime_ns), maximum)
+                samples = aligned_samples(ref_tel, comp_tel, delta_time)
+                observation = window_observation(samples, *window, driver1, driver2)
+                if observation is None:
+                    st.info("請拉開距離範圍的兩端，選擇有長度的區段。")
+                else:
+                    st.html('<div class="fp-observation"><strong>區段觀察 · 對齊估計</strong><p>' + escape(observation["text"]) + '</p><small>顏色與正負值只表示兩圈的相對用時；無法單憑這張圖判定差距原因。</small></div>')
+                    st.caption(f"速度圖點選或移動游標查值，雙擊清除。時間差正值：{driver1} 用時較少；負值：{driver2} 用時較少。")
+                    with st.container(key="telemetry_plot"):
+                        st.altair_chart(telemetry_chart(ref_tel, comp_tel, delta_time, driver1, driver2, view, window=window, large=large), width="stretch", theme=None)
             with st.expander("對齊方法與判讀限制"):
                 st.write("兩圈依各自相對行駛進度對齊，以 A 車手圈內距離顯示。時間差與 B 車手連續訊號採插值估計；B 煞車取對齊位置之前的樣本，保持 0／1。這不是相同實體座標的精確同步，也不是官方分段或比賽即時差距。")
                 st.write("最快圈不能代表整場節奏；未控制油量、交通與賽道條件。油門及煞車訊號不能直接判定電池回充、動力分配或策略優劣。")
