@@ -21,7 +21,7 @@ def distance_controls(identity, maximum):
         presets = st.container(key='window_presets')
         for column, label, part in zip(presets.columns(4), ['整圈', '前 1/3', '中 1/3', '後 1/3'], [None, 0, 1, 2]):
             column.button(label, on_click=set_window, args=(maximum, part), key=f'window_part_{part}', width='stretch')
-        selected = st.slider('A 車手圈內距離（公尺）', 0, maximum, key='telemetry_window', step=1)
+        selected = st.slider('A 車手圈內距離（公尺）', 0, maximum, key='telemetry_window', step=1, persist_state='session')
         st.caption('拖動兩端放大區段；也可用鍵盤方向鍵調整。時間差保留整圈累積值，不會從區段起點歸零。')
     return selected
 

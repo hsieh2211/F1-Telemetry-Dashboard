@@ -17,6 +17,7 @@ from race_pace_ui import render_race_pace
 from analysis_theme import PALETTE, style_chart
 from analysis_telemetry import telemetry_chart, aligned_samples
 from analysis_window import distance_controls, set_window, window_observation
+from site_navigation import render_navigation, share_current, go_to
 
 # Keep the UI session list self-contained so Streamlit hot reloads a newly
 # deployed session type even when an older imported race_data module is still
@@ -28,24 +29,31 @@ SESSION_NAMES = {
 }
 
 st.set_page_config(page_title="Fastlap Pro - F1 Analytics", page_icon="🏎️", layout="wide")
-if st.session_state.get("page", "home") == "home":
+site_root = Path(__file__).resolve().parent
+st.html("<style>" + (site_root / "site_navigation.css").read_text(encoding="utf-8") + "</style>")
+page = render_navigation(site_root)
+if page == "home":
     from homepage import render_home
-    render_home(Path(__file__).resolve().parent)
+    render_home(site_root)
+    share_current(site_root)
+    st.stop()
+if page in ("calendar", "learn"):
+    from site_sections import render_calendar, render_learning
+    try:
+        (render_calendar if page == "calendar" else render_learning)(site_root)
+        share_current(site_root)
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        st.error(f"2026 內容暫時無法讀取：{error}")
     st.stop()
 st.html("<style>" + (Path(__file__).resolve().parent / "analysis.css").read_text(encoding="utf-8") + "</style>")
 nav = st.container(key="analysis_nav")
 brand, back = nav.columns([5, 1.4])
-if back.button("回到首頁"):
-    st.session_state.update(page="home", home_event=st.session_state.get("event_index", 0),
-                            home_session=st.session_state.get("session_code", "R"), home_section="案例與分析")
-    for source, target in (("analysis_a", "case_a"), ("analysis_b", "case_b")):
-        if st.session_state.get(source):
-            st.session_state[target] = st.session_state[source]
-    st.rerun()
+back.button("回到首頁", on_click=go_to, args=("觀賽首頁",))
 brand.html('<div class="fp-analysis-brand"><strong>FASTLAP <span>PRO</span></strong><h1>賽事分析</h1><small>2026 賽季</small></div>')
 settings_slot = st.container(key="analysis_settings")
 context_slot = st.container()
-tab1, pace_tab, tab2 = st.tabs(["最快圈比對", "整場節奏與輪胎", "單圈資料"])
+share_slot = st.container()
+tab1, pace_tab, tab2 = st.tabs(["最快圈比對", "整場節奏與輪胎", "單圈資料"], key="analysis_tab", bind="query-params", on_change="rerun")
 
 
 @st.cache_data(max_entries=4, show_spinner=False)
@@ -137,11 +145,16 @@ except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError) as
         st.info("有效資料載入後即可查看摘要。")
 
 if not ready:
+    with share_slot:
+        share_current(site_root)
     with pace_tab:
         st.info("請先選擇已保存且可讀取的場次。")
 
 if ready:
     driver_list = list(drivers)
+    if any(st.session_state.get(key) and st.session_state[key] not in driver_list for key in ("analysis_a", "analysis_b")):
+        with context_slot:
+            st.info("連結中的部分車手不在本場名單，已改用可比較車手。")
     available_codes = [code for code, info in drivers.items() if info["available"]]
     def driver_label(code):
         info = drivers[code]
@@ -158,6 +171,8 @@ if ready:
         driver1 = choose_a.selectbox("A · 基準車手", driver_list, format_func=driver_label, key="analysis_a")
         driver2 = choose_b.selectbox("B · 比較車手", driver_list, format_func=driver_label, key="analysis_b")
 
+    with share_slot:
+        share_current(site_root)
     if driver1 == driver2:
         with context_slot:
             st.info("請選擇兩位不同車手，才能比較差異。")
