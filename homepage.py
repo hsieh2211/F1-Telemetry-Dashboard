@@ -34,13 +34,17 @@ def open_analysis(index, code):
 
 def choose_home_entry(section, index=None):
     """Apply a quick entry before its dependent widgets are instantiated."""
+    from site_navigation import go_to
+    if index is not None:
+        st.session_state.update(home_event=index, home_session="R")
+    if section in ("賽程與賽道", "2026 賽季知識"):
+        go_to("賽程與賽道" if section == "賽程與賽道" else "車迷入門")
+        return
     st.session_state["home_section"] = section
     st.session_state["home_jump"] = {
         "賽程與賽道": "race-weekend", "2026 賽季知識": "getting-started", "案例與分析": "real-example"
     }[section]
     st.session_state["home_jump_id"] = st.session_state.get("home_jump_id", 0) + 1
-    if index is not None:
-        st.session_state.update(home_event=index, home_session="R")
 
 
 def render_home(root):
@@ -114,7 +118,7 @@ def render_home(root):
             available = [c for c, d in drivers.items() if d["available"]]
             st.success(f"已讀取並驗證：{len(drivers)} 位車手名單，{len(available)} 位可比較最快圈。")
             left, right = st.columns(2)
-            if left.button("直接分析 →", key="home_analysis", type="primary", use_container_width=True):
+            if left.button("進入數據分析", key="home_analysis", type="primary", use_container_width=True):
                 open_analysis(index, code)
             right.markdown('[帶我看懂：閱讀下方真實資料範例 ↓](#real-example)')
             with st.expander("資料來源、匯出時間與缺漏"):

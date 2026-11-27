@@ -116,6 +116,16 @@ def render_navigation(root):
     view=st.session_state['site_view']
     st.session_state['page']=VIEWS[view]
     st.session_state['_rendered_page']=VIEWS[view]
+    if st.session_state.get('_scroll_view')!=view:
+        st.session_state['_scroll_view']=view
+        # A destination change starts at its heading. Ordinary widget reruns
+        # must leave the visitor's reading/chart position alone.
+        st.html('<script>/* destination: '+VIEWS[view]+''' */
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            const main = document.querySelector('[data-testid="stMain"]');
+            if (main) main.scrollTo({top: 0, behavior: 'instant'});
+          }));
+        </script>''',unsafe_allow_javascript=True)
     for notice in st.session_state.pop('_route_notice',[]):
         st.info(notice)
     return VIEWS[view]
@@ -156,5 +166,5 @@ def share_current(root):
     except (OSError,ValueError,TypeError,KeyError):
         return
     with st.expander('分享這個頁面與比較選擇'):
-        st.caption('複製下方連結，可在另一台電腦開啟相同分站、場次、車手與分析分頁。暫時放大的距離範圍與游標不包含在連結中。')
+        st.caption('複製下方連結，可在另一台電腦開啟相同分站、場次、A／B 車手、分析分頁與大字設定。額外加入的節奏車手、圈次範圍、距離放大與圖表游標不包含在連結中。')
         st.code(url,language=None)

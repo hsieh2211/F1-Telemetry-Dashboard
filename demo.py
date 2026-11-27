@@ -17,6 +17,14 @@ from race_pace_ui import render_race_pace
 from analysis_theme import PALETTE, style_chart
 from analysis_telemetry import telemetry_chart, aligned_samples
 from analysis_window import distance_controls, set_window, window_observation
+# Long-lived Streamlit workers can retain imported UI modules after a deploy.
+# Refresh this release's UI modules once, before constructing any widgets.
+import importlib
+for module_name in ("site_navigation", "homepage", "site_sections"):
+    ui_module = importlib.import_module(module_name)
+    if getattr(ui_module, "_fp_ui_release", None) != "2026-11-27-review":
+        importlib.reload(ui_module)
+        ui_module._fp_ui_release = "2026-11-27-review"
 from site_navigation import render_navigation, share_current, go_to
 
 # Keep the UI session list self-contained so Streamlit hot reloads a newly
