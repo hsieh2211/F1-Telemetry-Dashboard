@@ -89,6 +89,14 @@ def restore_link(root):
     query=st.query_params.to_dict()
     signature=query_signature(query)
     last=st.session_state.get('_route_query')
+    # Native tab binding has already restored its own value. A tab-only URL
+    # change must not reinterpret an omitted/default navigation parameter as
+    # a request to leave the current analysis destination.
+    if last is not None:
+        changed={key for (key,value),(_,old) in zip(signature,last) if value!=old}
+        if changed=={'analysis_tab'}:
+            st.session_state['_route_query']=signature
+            return
     explicit=any(k in query for k in ('site_view','analysis_tab')+QUERY_KEYS)
     if explicit and signature!=last:
         catalogue=read_catalogue(root/'data/schedule_2026.json')
@@ -166,5 +174,5 @@ def share_current(root):
     except (OSError,ValueError,TypeError,KeyError):
         return
     with st.expander('分享這個頁面與比較選擇'):
-        st.caption('複製下方連結，可在另一台電腦開啟相同分站、場次、A／B 車手、分析分頁與大字設定。額外加入的節奏車手、圈次範圍、距離放大與圖表游標不包含在連結中。')
+        st.caption('複製下方連結，可在另一台電腦開啟相同分站、場次、A／B 車手、分析分頁與大字設定。額外加入的節奏車手、圈次範圍、同步查看圈次、距離放大與圖表游標不包含在連結中。')
         st.code(url,language=None)
