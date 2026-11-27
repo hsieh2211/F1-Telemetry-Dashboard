@@ -3,10 +3,10 @@ import pandas as pd
 import streamlit as st
 
 from analysis_theme import PALETTE
-from analysis_charts import pace_charts, tyre_chart
 from race_pace import laps_path, read_laps, pace_rows, stint_summary
 from race_guide import start_label
 from season_profiles import load_profiles
+from race_lap_workbench import render_lap_workbench
 
 TYRES = {"SOFT": ("軟胎", "#ff605b"), "MEDIUM": ("中性胎", "#ffd447"),
          "HARD": ("硬胎", "#e5e7eb"), "INTERMEDIATE": ("半雨胎", "#55c985"), "WET": ("全雨胎", "#5da5ff")}
@@ -71,14 +71,10 @@ def render_race_pace(root, identity, title, selected_drivers=None):
                 column.metric(f"{driver} 有效圈中位數", "資料不足" if group.empty else f"{group['lap_seconds'].median():.3f} 秒")
                 total = int((annotated["driver"] == driver).sum())
                 column.caption(f"採用 {len(group)} / {total} 圈")
-    curve, exclusions = pace_charts(annotated, chosen, colours, lower, upper)
-    st.altair_chart(curve, width="stretch", theme=None)
-    st.altair_chart(exclusions, width="stretch", theme=None)
+    render_lap_workbench(annotated, chosen, colours, TYRES, lower, upper, identity)
     st.caption("下方 × 為未納入節奏的圈，點選或懸停可查原因。中位數未校正油量、交通、天候與輪胎條件。")
     if clean.empty:
         st.info("所選範圍沒有符合條件的圈；請查看排除原因或改選圈次。")
-    st.subheader("輪胎使用")
-    st.altair_chart(tyre_chart(selected, chosen, TYRES, lower, upper), width="stretch", theme=None)
     st.caption("每格是一圈的胎種紀錄；顏色改變須搭配輪胎段與進出站紀錄判讀，不直接代表衰退或策略優劣。")
     with st.expander("輪胎段明細"):
         summary = stint_summary(selected).rename(columns={"driver": "車手", "stint": "輪胎段（Stint）", "compound": "胎種",
