@@ -6,6 +6,14 @@ from homepage import beginner_section, render_glossary
 from season_content import load_season_content
 from season_profiles import render_profiles
 from site_navigation import go_to
+from race_pace import laps_path
+
+
+def calendar_event_label(root, event, guides):
+    title=guides['events'].get(event['event'],{}).get('title',event['event'])
+    codes=[code for code in SESSION_NAMES if code in event['sessions']]
+    saved=sum(existing_path(root,2026,event['event'],code).is_file() for code in codes)
+    return f'{title} · 已存 {saved}/{len(codes)} 場'
 
 
 def section_style(root):
@@ -24,13 +32,19 @@ def render_calendar(root):
         index=0
     left,right=st.columns([2,1])
     index=left.selectbox('選擇 2026 分站',range(len(events)),index=index,key='home_event',
-                         format_func=lambda i:guides['events'].get(events[i]['event'],{}).get('title',events[i]['event']))
+                         format_func=lambda i:calendar_event_label(root,events[i],guides))
     event=events[index]
     codes=[code for code in SESSION_NAMES if code in event['sessions']]
     if st.session_state.get('home_session') not in codes:
         st.session_state['home_session']='R'
     code=right.selectbox('場次',codes,format_func=SESSION_NAMES.get,key='home_session')
     exists=existing_path(root,2026,event['event'],code).is_file()
+    has_laps=code in ('R','S') and laps_path(root,2026,event['event'],code).is_file()
+    with st.container(border=True):
+        st.markdown('**所選場次的分析資料**')
+        st.write(f"最快圈比對：{'已收錄' if exists else '尚未收錄'}")
+        st.write(f"整場逐圈：{'不適用於排位賽' if code=='Q' else '已收錄' if has_laps else '尚未收錄'}")
+        st.caption('分站選單的已存場數計算最快圈檔案；逐圈資料另外收錄。進入分析時會再檢查檔案內容。')
     st.button('分析這個場次',key='calendar_analysis',on_click=go_to,args=('數據分析',),disabled=not exists,type='primary')
     if not exists:
         st.info('這個場次尚無離線最快圈檔案，可先閱讀賽道與賽程，或選擇其他已收錄場次。')

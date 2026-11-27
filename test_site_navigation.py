@@ -84,5 +84,36 @@ class SiteNavigationTests(unittest.TestCase):
         app.radio(key='site_view').set_value('車迷入門').run()
         self.assertFalse(app.exception)
 
+    def test_reading_detour_preserves_analysis_context(self):
+        app=self.app(dict(site_view='數據分析',event='las_vegas_grand_prix',a='NOR',b='VER',analysis_tab='單圈資料',large='1')).run()
+        app.radio(key='site_view').set_value('車迷入門').run()
+        # Two learning reruns exercise Streamlit's cleanup of hidden widgets.
+        app.text_input(key='glossary_search').set_value('Brake').run()
+        app.radio(key='site_view').set_value('數據分析').run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.session_state['analysis_tab'],'單圈資料')
+        self.assertTrue(app.checkbox(key='analysis_large').value)
+        self.assertEqual(app.selectbox(key='analysis_a').value,'NOR')
+        self.assertEqual(app.selectbox(key='analysis_b').value,'VER')
+
+    def test_calendar_distinguishes_fastest_and_lap_coverage(self):
+        app=self.app(dict(site_view='賽程與賽道',event='las_vegas_grand_prix',session='R')).run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('拉斯維加斯站 · 已存 2/2 場' in option for option in app.selectbox(key='home_event').options))
+        self.assertTrue(any('整場逐圈：已收錄' in x.value for x in app.markdown))
+        app.selectbox(key='home_session').set_value('Q').run()
+        self.assertTrue(any('不適用於排位賽' in x.value for x in app.markdown))
+        app.selectbox(key='home_event').set_value(21).run()
+        self.assertTrue(app.button(key='calendar_analysis').disabled)
+        self.assertTrue(any('最快圈比對：尚未收錄' in x.value for x in app.markdown))
+
+    def test_deploy_replaces_retained_homepage_callback(self):
+        import homepage
+        with patch.object(homepage,'choose_home_entry',side_effect=AssertionError('stale UI callback')), patch.object(homepage,'_fp_ui_release','older',create=True):
+            app=self.app().run()
+            app.button(key='home_beginner').click().run()
+            self.assertFalse(app.exception)
+            self.assertEqual(app.session_state['site_view'],'車迷入門')
+
 if __name__=='__main__':
     unittest.main()
